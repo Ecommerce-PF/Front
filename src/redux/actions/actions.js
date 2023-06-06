@@ -15,11 +15,7 @@ export const GET_USER = "GET_USER";
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
-      const products = await axios.get("http://localhost:3001/products");
-=======
       const products = await axios.get("/products");
->>>>>>> b28d869 (front/beta0)
       dispatch({ type: GET_ALL_PRODUCTS, payload: products.data });
     } catch (error) {
       console.log(error);
@@ -30,13 +26,7 @@ export const getAllProducts = () => {
 export const getAllProductByName = (name) => {
   return async (dispatch) => {
     try {
-      const products = await axios.get(
-<<<<<<< HEAD
-        `http://localhost:3001/products?name=${name}`
-=======
-        `/products?name=${name}`
->>>>>>> b28d869 (front/beta0)
-      );
+      const products = await axios.get(`/products?name=${name}`);
       dispatch({ type: GET_BY_NAME, payload: products.data });
     } catch (error) {
       console.log(error);
@@ -68,11 +58,7 @@ export function orderByName(payload) {
 export function getDetail(id) {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get(`http://localhost:3001/products/${id}`);
-=======
       const response = await axios.get(`/products/${id}`);
->>>>>>> b28d869 (front/beta0)
       dispatch({
         type: GET_DETAIL,
         payload: response.data,
@@ -113,14 +99,7 @@ export const resetFilters = () => {
 export function createPost(newprod) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-<<<<<<< HEAD
-        `http://localhost:3001/product`,
-=======
-        `/product`,
->>>>>>> b28d869 (front/beta0)
-        newprod
-      );
+      const response = await axios.post(`/product`, newprod);
       console.log("prod created por redux");
     } catch (error) {
       console.log(error.message);
@@ -129,18 +108,10 @@ export function createPost(newprod) {
   };
 }
 
-
 export function createUser(user) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-<<<<<<< HEAD
-        `http://localhost:3001/user`,
-=======
-        `/user`,
->>>>>>> b28d869 (front/beta0)
-        user
-      );
+      const response = await axios.post(`/user`, user);
       console.log("user created por redux");
     } catch (error) {
       console.log(error.message);
@@ -152,20 +123,13 @@ export function createUser(user) {
 export const getUserByEmail = (email) => {
   return async (dispatch) => {
     try {
-      const user = await axios.get(
-<<<<<<< HEAD
-        `http://localhost:3001/user?email=${email}`
-=======
-        `/user?email=${email}`
->>>>>>> b28d869 (front/beta0)
-      );
+      const user = await axios.get(`/user?email=${email}`);
       dispatch({ type: GET_USER, payload: user.data });
     } catch (error) {
       console.log(error);
     }
   };
 };
-
 
 export function cleanMyStore() {
   return {

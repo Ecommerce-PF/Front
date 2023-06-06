@@ -99,7 +99,7 @@ export const resetFilters = () => {
 export function createPost(newprod) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`/product`, newprod);
+      //const response = await axios.post(`/product`, newprod);
       console.log("prod created por redux");
     } catch (error) {
       console.log(error.message);
@@ -111,7 +111,7 @@ export function createPost(newprod) {
 export function createUser(user) {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`/user`, user);
+      //const response = await axios.post(`/user`, user);
       console.log("user created por redux");
     } catch (error) {
       console.log(error.message);

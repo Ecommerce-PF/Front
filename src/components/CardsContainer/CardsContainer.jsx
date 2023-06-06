@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Card from "../Card/Card";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import style from "./CardsContainer.module.css";
 
 const CardsContainer = () => {
@@ -14,7 +14,7 @@ const CardsContainer = () => {
     currentPage,
     currentPage + productsPerPage
   );
-  const totalPages = Math.ceil(products.length / productsPerPage);
+//  const totalPages = Math.ceil(products.length / productsPerPage);
 
   const nextPage = () => {
     document.documentElement.scrollTop = 100;

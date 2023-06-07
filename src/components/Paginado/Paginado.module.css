@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.previousPage {
+  background-color: #8a1d8a;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nextPage {
+  background-color: #8a1d8a;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.input{
+    width: 25px;
+    padding: 5px 25px;
+    border: 1px solid #8a1d8a;
+    text-align: center;
+}

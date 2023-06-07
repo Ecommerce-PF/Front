@@ -28,6 +28,7 @@ const CardsContainer = () => {
   return (
     <div>
       <div className={style.container}>
+        {console.log(filterProducts, "esto es filterProducts")}
         {filterProducts?.map((product) => {
           return (
             <>
@@ -36,6 +37,7 @@ const CardsContainer = () => {
                   key={product.id}
                   name={product.name}
                   image={product.image}
+                  price={product.price}
                   id={product.id}
                 />
               </div>

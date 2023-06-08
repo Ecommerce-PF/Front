@@ -11,6 +11,7 @@ export const FILTER_BY_PRICE = "FILTER_BY_PRICE";
 export const FILTER_BY_COLOR = "FILTER_BY_COLOR"; // Nueva acción agregada
 export const RESET_FILTERS = "RESET_FILTERS";
 export const GET_USER = "GET_USER";
+export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -77,6 +78,7 @@ export function filterByCategory(category) {
 }
 
 export function filterByPrice(priceRange) {
+  console.log(priceRange, "priceRange aaa");
   return {
     type: FILTER_BY_PRICE,
     payload: priceRange,
@@ -87,6 +89,13 @@ export function filterByColor(color) {
   return {
     type: FILTER_BY_COLOR,
     payload: color,
+  };
+}
+
+export function orderByPrice(priceRange) {
+  return {
+    type: ORDER_BY_PRICE,
+    payload: priceRange,
   };
 }
 

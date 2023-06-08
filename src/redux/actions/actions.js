@@ -16,6 +16,7 @@ export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -75,12 +76,13 @@ export const filterByCategory = (category) => {
   };
 };
 
-export const filterByPrice = (priceRange) => {
+export function filterByPrice(priceRange) {
+  console.log(priceRange, "priceRange aaa");
   return {
     type: FILTER_BY_PRICE,
     payload: priceRange,
   };
-};
+}
 
 export const filterByColor = (color) => {
   return {
@@ -88,6 +90,13 @@ export const filterByColor = (color) => {
     payload: color,
   };
 };
+
+export function orderByPrice(priceRange) {
+  return {
+    type: ORDER_BY_PRICE,
+    payload: priceRange,
+  };
+}
 
 export const resetFilters = () => {
   return {

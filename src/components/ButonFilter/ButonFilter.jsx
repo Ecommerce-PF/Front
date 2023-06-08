@@ -6,6 +6,8 @@ import abajo from "../../img/abajo.png";
 
 const Buttons = () => {
   const [showFilters, setShowFilters] = useState(false);
+  const [price, setPrice] = useState("");
+
 
   const handleButtonClick = () => {
     setShowFilters(!showFilters);
@@ -26,7 +28,7 @@ const Buttons = () => {
           </div>
         )}
       </button>
-      {showFilters && <Filters />}
+      {showFilters && <Filters setprice={setPrice} />}
     </div>
   );
 };

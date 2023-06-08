@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../../redux/actions/actions";
-import { validate } from "./validator.js";
 import styles from "./SignUp.module.css"; // Importar el módulo CSS
 
 const SignUp = () => {
@@ -24,7 +23,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationErrors = validate(user);
+    const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
         // Aquí realizas la llamada al backend para guardar la información del usuario
@@ -57,6 +56,42 @@ const SignUp = () => {
     } else {
       setErrors(validationErrors);
     }
+  };
+
+  const validateUser = (user) => {
+    const errors = {};
+
+    if (!user.name.trim()) {
+      errors.name = "Name is required";
+    }
+
+    if (!user.userName.trim()) {
+      errors.userName = "Username is required";
+    }
+
+    if (!user.phone.trim()) {
+      errors.phone = "Phone is required";
+    }
+
+    if (!user.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!isValidEmail(user.email)) {
+      errors.email = "Invalid email format";
+    }
+
+    if (!user.password.trim()) {
+      errors.password = "Password is required";
+    } else if (user.password.length < 6) {
+      errors.password = "Password should be at least 6 characters long";
+    }
+
+    return errors;
+  };
+
+  const isValidEmail = (email) => {
+    // Validación simple de formato de correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (

@@ -1,268 +1,133 @@
-// import React, { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
-// import { validate } from "./validator.js";
-// import { createUser } from "../../redux/actions/actions";//
-// import styles from "./SignUp.module.css";
-// import { getAllProducts } from "../../redux/actions/actions";//
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../../redux/actions/actions";
+import { validate } from "./validator.js";
+import styles from "./SignUp.module.css"; // Importar el módulo CSS
 
+const SignUp = () => {
+  const dispatch = useDispatch();
 
-// //
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  const [errors, setErrors] = useState({});
 
-// export default function SignUp() {
-//   const dispatch = useDispatch();
-//   const products = useSelector((state) => state.products);
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
-//   // Obtenemos todas las categorías únicas de los productos
-//   const uniqueCategories = Array.from(
-//     new Set(products.map((product) => product.category))
-//   );
-//   const [categories, setCategories] = useState(uniqueCategories);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//   useEffect(() => {
-//     dispatch(getAllProducts());
-//   }, [dispatch]);
+    const validationErrors = validate(user);
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        // Aquí realizas la llamada al backend para guardar la información del usuario
+        const response = await fetch("http://localhost:3001/users/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
 
-//   const [error, setError] = useState({
-//     name: "",
-//     phone: "",
-//     email: "",
-//     image: "",
-//     category: [],
-//   });
+        if (response.ok) {
+          // La solicitud se completó con éxito, puedes mostrar un mensaje de éxito al usuario
+          alert("Registro exitoso");
+          // También puedes redirigir al usuario a otra página, como la página de inicio de sesión
+          // window.location.href = "/login";
 
-//   const [input, setInput] = useState({
-//     name: "",
-//     color: "",
-//     price: "",
-//     image: "",
-//     category: [],
-//     description: "",
-//   });
+          // Dispatch de la acción signUpUser
+          dispatch(signUpUser(user));
+        } else {
+          // Si la solicitud no fue exitosa, puedes manejar el error aquí
+          // Por ejemplo, mostrar un mensaje de error al usuario o registrar el error en el backend
+          alert("Error al registrarse");
+        }
+      } catch (error) {
+        // Si se produce un error durante la solicitud, puedes manejarlo aquí
+        // Por ejemplo, mostrar un mensaje de error genérico o registrar el error en el backend
+        alert("Error al procesar la solicitud");
+      }
+    } else {
+      setErrors(validationErrors);
+    }
+  };
 
-//   const handleInputChange = (e) => {
-//     setInput({
-//       ...input,
-//       [e.target.name]: e.target.value,
-//     });
+  return (
+    <div className={styles.container} style={{ backgroundImage: `url("../../assets/pika.gif")` }}>
+      <h2 className={styles.title}>Sign Up</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name" className={styles.label}>
+            Name:
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={user.name}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.name && <p className={styles.error}>{errors.name}</p>}
+        </div>
+        <div>
+          <label htmlFor="email" className={styles.label}>
+            Email:
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.email && <p className={styles.error}>{errors.email}</p>}
+        </div>
+        <div>
+          <label htmlFor="password" className={styles.label}>
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={user.password}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.password && <p className={styles.error}>{errors.password}</p>}
+        </div>
+        <div>
+          <label htmlFor="confirmPassword" className={styles.label}>
+            Confirm Password:
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={user.confirmPassword}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
+        </div>
+        <button type="submit" className={styles.button}>
+          Sign Up
+        </button>
+      </form>
+    </div>
+  );
+};
 
-//     setError(
-//       validate({
-//         ...input,
-//         [e.target.name]: e.target.value,
-//       })
-//     );
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     if (input.category.length > 2) {
-//       return alert("Choose only two types");
-//     }
-
-//     if (input.category.length === 0) {
-//       return alert("Select a Category");
-//     }
-
-//     dispatch(createPost(input));
-
-//     setInput({
-//       name: "",
-//       color: "",
-//       price: "",
-//       image: "",
-//       category: [],
-//       description: "",
-//     });
-
-//     setError({
-//       name: "",
-//       color: "",
-//       price: "",
-//       image: "",
-//       category: [],
-//       description: "",
-//     });
-
-//     e.target.reset();
-
-//     alert("Post created!");
-//   };
-
-//   const handleCategoriesChange = (e) => {
-//     const selectedCategories = [...input.category];
-
-//     if (e.target.checked) {
-//       if (!selectedCategories.includes(e.target.value)) {
-//         selectedCategories.push(e.target.value);
-//       }
-//     } else {
-//       const index = selectedCategories.indexOf(e.target.value);
-//       if (index > -1) {
-//         selectedCategories.splice(index, 1);
-//       }
-//     }
-
-//     setInput({ ...input, category: selectedCategories });
-//   };
-
-//   return (
-//     <div className={styles.body}>
-//       <form onSubmit={(e) => handleSubmit(e)}>
-//         <div className={styles.nav}>
-//           <h1>Publicate</h1>
-//           <button className={styles.button}>Create</button>
-//           <Link to="/">
-//             <button className={styles.button}>Back</button>
-//           </Link>
-//         </div>
-
-//         <div className={styles.statsAndTypes}>
-
-//           <div className={styles.stats}>
-//             <h3>Characteristics</h3>
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="name"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.name}
-//                   onChange={handleInputChange}
-//                 />
-//                 {error.name && <p>{error.name}</p>}
-//                 <span className={styles.placeholder}>Name</span>
-//               </div>
-//             </div>
-
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="color"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.attack}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Color</span>
-//               </div>
-//             </div>
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="number"
-//                   name="price"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.defense}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Price</span>
-//               </div>
-//             </div>
-
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="image"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.image}
-//                   onChange={handleInputChange}
-//                 />
-//                 {error.image && <p>{error.image}</p>}
-//                 <span className={styles.placeholder}>Image Link: </span>
-//               </div>
-//             </div>
-          
-
-//           <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="description"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.weight}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Description</span>
-//               </div>
-//             </div>
-            
-//           </div>
-          
-          
-//           <div className={styles.types}>
-//             <h3>Categories</h3>
-//             <div className={styles.typesOrder}>
-//               {uniqueCategories.map((e) => (
-//                 <div className={styles.container}>
-//                   <ul className={styles.ksCboxtags}>
-//                     <li>
-//                       <input
-//                         onChange={handleCategoriesChange}
-//                         type="checkbox"
-//                         id={`checkbox${e}`}
-//                         value={e}
-//                       />
-//                       <label htmlFor={`checkbox${e}`}>{e}</label>
-//                     </li>
-//                   </ul>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-          
-//         </div>
-        
-//       </form>
-//     </div>
-//   );
-// }
-
-
-// //////
-// // const SignUp = async (req, res) => {
-// //     try {
-// //       const {   name, phone, email, password, admin } = req.body;
-// //       const findUser = await User.findOne({
-// //         where: { name: name.toLowerCase() },//ver esto de lowerCase
-// //       });//Solo se fija si existe entre los creados
-// //       if (findUser) {
-// //         res.status(400).send("User already exists");
-// //       } else {
-// //         let newPokemon = await Pokemon.create({
-// //           name: name.toLowerCase(),
-// //           image: image,
-// //           hp: hp,
-// //           attack: attack,
-// //           defense: defense,
-// //           speed: speed,
-// //           height: height,
-// //           weight: weight,
-// //         });
-// //         let pokemonType = await Type.findAll({
-// //           where: {
-// //             name: types,
-// //           },
-// //         });
-// //         await newPokemon.addTypes(pokemonType);
-// //         res.status(200).send("Pokemon Created")
-// //       }
-// //     } catch (error) {
-// //       console.log(error)}};
+export default SignUp;

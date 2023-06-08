@@ -1,263 +1,115 @@
-// import React, { useState, useEffect, useRef } from "react";
+//import React, { useState, useEffect, useRef } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
-// import { validate } from "./validator.js";
-// // import { login } from "../../redux/actions/actions";//
-// import styles from "./Login.module.css";
-// import { getUserByEmail } from "../../redux/actions/actions";//
 
 
-// //
+import { getUserByEmail, login } from "../../redux/actions/actions";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styles from "./Login.module.css";
 
+const Login = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-// export default function Login() {
-//   const dispatch = useDispatch();
-//   const products = useSelector((state) => state.products);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setError("");
+  };
 
-//   // Obtenemos todas las categorías únicas de los productos
-//   const uniqueCategories = Array.from(
-//     new Set(products.map((product) => product.category))
-//   );
-//   const [categories, setCategories] = useState(uniqueCategories);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setError("");
+  };
 
-//   useEffect(() => {
-//     dispatch(getUserByEmail());
-//   }, [dispatch]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-//   const [error, setError] = useState({
-//     name: "",
-//     color: "",
-//     price: "",
-//     image: "",
-//     category: [],
-//     description: "",
-//   });
+    // Validar campos obligatorios
+    if (!email || !password) {
+      setError("Please enter your email and password");
+      return;
+    }
 
-//   const [input, setInput] = useState({
-//     name: "",
-//     color: "",
-//     price: "",
-//     image: "",
-//     category: [],
-//     description: "",
-//   });
+    // Obtener información del usuario por correo electrónico
+    dispatch(getUserByEmail(email))
+      .then((user) => {
+        // Verificar si el usuario existe y la contraseña es correcta
+        if (user && user.password === password) {
+          // Enviar solicitud de inicio de sesión
+          dispatch(login(email, password))
+            .then(() => {
+              // Limpiar campos y mostrar éxito
+              setEmail("");
+              setPassword("");
+              setError("");
+              // Aquí puedes realizar otras acciones después de un inicio de sesión exitoso, como redireccionar a otra página
+            })
+            .catch((error) => {
+              // Mostrar error de inicio de sesión
+              setError(error.message);
+            });
+        } else {
+          setError("Invalid email or password");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Error occurred while retrieving user information");
+      });
+  };
 
-//   const handleInputChange = (e) => {
-//     setInput({
-//       ...input,
-//       [e.target.name]: e.target.value,
-//     });
+  return (
+    <div className={styles.body}>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.nav}>
+          <h1>Login</h1>
+        </div>
 
-//     setError(
-//       validate({
-//         ...input,
-//         [e.target.name]: e.target.value,
-//       })
-//     );
-//   };
+        <div className={styles.statsAndTypes}>
+          <div className={styles.stats}>
+            <div className={styles.centralize}>
+              <div className={styles.inputBlock}>
+                <input
+                  type="email"
+                  name="email"
+                  id="input-email"
+                  required
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+                <span className={styles.placeholder}>Email</span>
+              </div>
+            </div>
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
+            <div className={styles.centralize}>
+              <div className={styles.inputBlock}>
+                <input
+                  type="password"
+                  name="password"
+                  id="input-password"
+                  required
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <span className={styles.placeholder}>Password</span>
+              </div>
+            </div>
 
-//     if (input.category.length > 2) {
-//       return alert("Choose only two types");
-//     }
+            {error && <p className={styles.error}>{error}</p>}
+          </div>
 
-//     if (input.category.length === 0) {
-//       return alert("Select a Category");
-//     }
+          <div className={styles.types}>
+            <button type="submit" className={styles.button}>
+              Login
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
 
-//     dispatch(validateUser(input));
-
-//     setInput({
-//       name: "",
-//       color: "",
-//       price: "",
-//       image: "",
-//       category: [],
-//       description: "",
-//     });
-
-//     setError({
-//       name: "",
-//       color: "",
-//       price: "",
-//       image: "",
-//       category: [],
-//       description: "",
-//     });
-
-//     e.target.reset();
-
-//     alert("Post created!");
-//   };
-
-//   const handleCategoriesChange = (e) => {
-//     const selectedCategories = [...input.category];
-
-//     if (e.target.checked) {
-//       if (!selectedCategories.includes(e.target.value)) {
-//         selectedCategories.push(e.target.value);
-//       }
-//     } else {
-//       const index = selectedCategories.indexOf(e.target.value);
-//       if (index > -1) {
-//         selectedCategories.splice(index, 1);
-//       }
-//     }
-
-//     setInput({ ...input, category: selectedCategories });
-//   };
-
-//   return (
-//     <div className={styles.body}>
-//       <form onSubmit={(e) => handleSubmit(e)}>
-//         <div className={styles.nav}>
-//           <h1>Publicate</h1>
-//           <button className={styles.button}>Create</button>
-//           <Link to="/">
-//             <button className={styles.button}>Back</button>
-//           </Link>
-//         </div>
-
-//         <div className={styles.statsAndTypes}>
-
-//           <div className={styles.stats}>
-//             <h3>Characteristics</h3>
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="name"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.name}
-//                   onChange={handleInputChange}
-//                 />
-//                 {error.name && <p>{error.name}</p>}
-//                 <span className={styles.placeholder}>Name</span>
-//               </div>
-//             </div>
-
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="color"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.attack}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Color</span>
-//               </div>
-//             </div>
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="number"
-//                   name="price"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.defense}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Price</span>
-//               </div>
-//             </div>
-
-
-//             <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="image"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.image}
-//                   onChange={handleInputChange}
-//                 />
-//                 {error.image && <p>{error.image}</p>}
-//                 <span className={styles.placeholder}>Image Link: </span>
-//               </div>
-//             </div>
-          
-
-//           <div className={styles.centralize}>
-//               <div className={styles.inputBlock}>
-//                 <input
-//                   type="text"
-//                   name="description"
-//                   id="input-text"
-//                   required
-//                   spellCheck="false"
-//                   value={input.weight}
-//                   onChange={handleInputChange}
-//                 />
-//                 <span className={styles.placeholder}>Description</span>
-//               </div>
-//             </div>
-            
-//           </div>
-          
-          
-//           <div className={styles.types}>
-//             <h3>Categories</h3>
-//             <div className={styles.typesOrder}>
-//               {uniqueCategories.map((e) => (
-//                 <div className={styles.container}>
-//                   <ul className={styles.ksCboxtags}>
-//                     <li>
-//                       <input
-//                         onChange={handleCategoriesChange}
-//                         type="checkbox"
-//                         id={`checkbox${e}`}
-//                         value={e}
-//                       />
-//                       <label htmlFor={`checkbox${e}`}>{e}</label>
-//                     </li>
-//                   </ul>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-          
-//         </div>
-        
-//       </form>
-//     </div>
-//   );
-// }
-
-
-// ////
-
-
-
-
-
-// // const { Clothes } = require("../db");
-// // const { Op } = require("sequelize");
-
-
-// // const getUserByEmail = async function (email) {
-
-// //   const user = await Clothes.findOne({
-// //     where: {
-// //       name: {
-// //         [Op.like]: `%${email}%`,
-// //       },
-// //     },
-// //   });
-  
-// //   return user;
-// // };
-
-// // module.exports = getUserByEmail;
+export default Login;

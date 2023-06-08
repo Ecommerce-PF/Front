@@ -4,10 +4,11 @@ import {
   filterByCategory,
   filterByPrice,
   resetFilters,
+  orderByPrice,
 } from "../../redux/actions/actions";
 import styles from "./Filters.module.css";
 
-const Filters = () => {
+const Filters = ({setprice}) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -45,6 +46,11 @@ const Filters = () => {
   const handleFilterByPrice = () => {
     dispatch(filterByPrice(priceRange));
   };
+
+  function handleOderByPrice(e) {
+    dispatch(orderByPrice(e.target.value));
+    setprice(e.target.value)
+  }
 
   return (
     <div className={styles["filter-container"]}>
@@ -102,6 +108,17 @@ const Filters = () => {
           </button>
         </div>
       </div>
+
+
+      {/* --------------------------------------------------------------- */}
+
+
+      <select onChange={handleOderByPrice} name="price" id="price">
+        <option value="asc">Lower</option>
+        <option value="des">Higher</option>
+      </select>
+
+      {/* --------------------------------------------------------------- */}
       <div className={styles["filter-section"]}>
         <button className={styles["restFiltros"]} onClick={handleResetFilter}>
           Reset Filters

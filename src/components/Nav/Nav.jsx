@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 
 const Nav = () => {
+  
   return (
     <div className={style.mainContainer}>
       <Link className={style.link} to="/">

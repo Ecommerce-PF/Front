@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/actions";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,7 +31,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/login", {
+      const response = await fetch("http://localhost:3001/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +47,8 @@ const Login = () => {
         setUserName("");
         setPassword("");
         setError("");
-        // Aquí puedes realizar otras acciones después de un inicio de sesión exitoso, como redireccionar a otra página
+        // Redireccionar al usuario al home
+        navigate("/home");
       } else {
         // Manejar error de inicio de sesión
         setError("Invalid username or password");

@@ -10,25 +10,37 @@
     border: 1px solid black;
     width: 90vw;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.trash{
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .cantidadProducto{
     /* border: 1px solid black; */
     border-radius: 20px;
     width: fit-content;
+    margin-bottom: 10px;
 }
 
 .bttnAdd{
     border-radius: 0 20px 20px 0;
     border: none;
-    /* border-left: 1px solid black; */
+    height: 20px;
 
 }
 
 .bttnSub{
     border-radius: 20px 0 0 20px;
     border: none;
-    /* border-right: 1px solid black; */
+    height: 20px;
 }
 
 .emptyCart{
@@ -44,6 +56,15 @@
 
 .productAmout{
     text-align: center;
-    width: 60px;
+    width: 100px;
     border: 1px solid black;
+}
+
+.containerCart{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
 }

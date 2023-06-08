@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaTrash } from "react-icons/fa";
 
 import styles from "../carrito.module.css";
 
@@ -22,6 +23,7 @@ export default function CartProduct() {
             <h3>Descripción del producto</h3>
             <div>
                 <h3>Precio: $999.99</h3>
+                <FaTrash className={styles.trash} style={{color: "#d65757",}} />
                 <div className={styles.cantidadProducto}>
                     <button onClick={ handleSubtraction} className={styles.bttnSub} >-</button>
                     <input className={styles.productAmout} type="text" value={valueInp} />

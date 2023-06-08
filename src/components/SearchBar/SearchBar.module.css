@@ -24,7 +24,8 @@ div.inputBlock input {
 	border-radius: 1rem;
 	border: 0.01rem solid  #c0c0c0;
 	outline:none;
-	background-color: #a5a5a5;
+	background-color: #f1f1f1;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	
 }
 div.inputBlock span.placeholder {

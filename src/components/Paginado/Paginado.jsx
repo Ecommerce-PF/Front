@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Paginado.module.css";
 
 export const Paginado = ({ pagina, setPagina, maximo }) => {
@@ -15,17 +15,14 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
   };
 
   const onKeyDown = (e) => {
-    if (e.keyCode == 13) {
-      setPagina(parseInt(e.target.value));
-      if (
-        parseInt(e.target.value < 1) ||
-        parseInt(e.target.value) > Math.ceil(maximo) ||
-        isNaN(parseInt(e.target.value))
-      ) {
+    if (e.keyCode === 13) {
+      const newPage = parseInt(e.target.value);
+      if (newPage < 1 || newPage > Math.ceil(maximo) || isNaN(newPage)) {
         setPagina(1);
         setInput(1);
       } else {
-        setPagina(parseInt(e.target.value));
+        setPagina(newPage);
+        setInput(newPage);
       }
     }
   };
@@ -34,6 +31,12 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
     setInput(e.target.value);
   };
 
+  useEffect(() => {
+    if (pagina > maximo) {
+      setPagina(1);
+      setInput(1);
+    }
+  }, [maximo]);
 
   return (
     <div className={style.container}>

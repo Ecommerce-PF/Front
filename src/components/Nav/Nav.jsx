@@ -11,16 +11,15 @@ const Nav = () => {
 
       <SearchBar />
 
+      <div className={style.loginSing}>
+        <Link className={style.link} to="/login">
+          <h1 className={style.titleLogin}>Log in</h1>
+        </Link>
 
-      <Link className={style.link} to="/login">
-        <h1 className={style.title}>Log in</h1>
-      </Link>
-
-      <Link className={style.link} to="/signup">
-        <h1 className={style.title}>Sign up</h1>
-      </Link>
-
-
+        <Link className={style.link} to="/signup">
+          <h1 className={style.titleLogin}>Sign up</h1>
+        </Link>
+      </div>
     </div>
   );
 };

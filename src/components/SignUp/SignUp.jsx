@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../../redux/actions/actions";
-import styles from "./SignUp.module.css"; // Importar el módulo CSS
+import { useNavigate } from "react-router-dom";
+import styles from "./SignUp.module.css";
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     name: "",
@@ -26,7 +28,6 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        // Aquí realizas la llamada al backend para guardar la información del usuario
         const response = await fetch("http://localhost:3001/users/signup", {
           method: "POST",
           headers: {
@@ -36,21 +37,13 @@ const SignUp = () => {
         });
 
         if (response.ok) {
-          // La solicitud se completó con éxito, puedes mostrar un mensaje de éxito al usuario
           alert("Registro exitoso");
-          // También puedes redirigir al usuario a otra página, como la página de inicio de sesión
-          // window.location.href = "/login";
-
-          // Dispatch de la acción signUpUser
+          navigate("/login");
           dispatch(signUpUser(user));
         } else {
-          // Si la solicitud no fue exitosa, puedes manejar el error aquí
-          // Por ejemplo, mostrar un mensaje de error al usuario o registrar el error en el backend
           alert("Error al registrarse");
         }
       } catch (error) {
-        // Si se produce un error durante la solicitud, puedes manejarlo aquí
-        // Por ejemplo, mostrar un mensaje de error genérico o registrar el error en el backend
         alert("Error al procesar la solicitud");
       }
     } else {
@@ -89,7 +82,6 @@ const SignUp = () => {
   };
 
   const isValidEmail = (email) => {
-    // Validación simple de formato de correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };

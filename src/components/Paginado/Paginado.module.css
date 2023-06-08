@@ -3,10 +3,14 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
+  background-color: rgb(204, 204, 204);
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 }
 
 .previousPage {
-  background-color: #8a1d8a;
+  background-color: #686868;
   border: none;
   padding: 8px;
   display: flex;
@@ -16,7 +20,7 @@
 }
 
 .nextPage {
-  background-color: #8a1d8a;
+  background-color: #686868;
   border: none;
   padding: 8px;
   display: flex;
@@ -27,7 +31,12 @@
 
 .input{
     width: 25px;
+    font-size: 20px;
     padding: 5px 25px;
-    border: 1px solid #8a1d8a;
+    border: 1px solid #4a4a4a;
     text-align: center;
+}
+
+.p{
+    font-size: 20px;
 }

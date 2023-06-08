@@ -76,14 +76,13 @@ export const filterByCategory = (category) => {
   };
 };
 
-export const filterByPrice = (priceRange) => {
 export function filterByPrice(priceRange) {
   console.log(priceRange, "priceRange aaa");
   return {
     type: FILTER_BY_PRICE,
     payload: priceRange,
   };
-};
+}
 
 export const filterByColor = (color) => {
   return {

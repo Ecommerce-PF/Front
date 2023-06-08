@@ -9,9 +9,10 @@ const SignUp = () => {
 
   const [user, setUser] = useState({
     name: "",
+    userName: "",
+    phone: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -78,6 +79,36 @@ const SignUp = () => {
           {errors.name && <p className={styles.error}>{errors.name}</p>}
         </div>
         <div>
+          <label htmlFor="userName" className={styles.label}>
+            Username:
+          </label>
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            value={user.userName}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.userName && <p className={styles.error}>{errors.userName}</p>}
+        </div>
+        <div>
+          <label htmlFor="phone" className={styles.label}>
+            Phone:
+          </label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={user.phone}
+            onChange={handleChange}
+            required
+            className={styles.input}
+          />
+          {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+        </div>
+        <div>
           <label htmlFor="email" className={styles.label}>
             Email:
           </label>
@@ -106,21 +137,6 @@ const SignUp = () => {
             className={styles.input}
           />
           {errors.password && <p className={styles.error}>{errors.password}</p>}
-        </div>
-        <div>
-          <label htmlFor="confirmPassword" className={styles.label}>
-            Confirm Password:
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={user.confirmPassword}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-          {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
         </div>
         <button type="submit" className={styles.button}>
           Sign Up

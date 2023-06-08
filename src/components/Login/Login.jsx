@@ -1,11 +1,6 @@
-//import React, { useState, useEffect, useRef } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
-
-
-import { getUserByEmail, login } from "../../redux/actions/actions";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/actions";
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -24,7 +19,7 @@ const Login = () => {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar campos obligatorios
@@ -33,32 +28,32 @@ const Login = () => {
       return;
     }
 
-    // Obtener información del usuario por correo electrónico
-    dispatch(getUserByEmail(email))
-      .then((user) => {
-        // Verificar si el usuario existe y la contraseña es correcta
-        if (user && user.password === password) {
-          // Enviar solicitud de inicio de sesión
-          dispatch(login(email, password))
-            .then(() => {
-              // Limpiar campos y mostrar éxito
-              setEmail("");
-              setPassword("");
-              setError("");
-              // Aquí puedes realizar otras acciones después de un inicio de sesión exitoso, como redireccionar a otra página
-            })
-            .catch((error) => {
-              // Mostrar error de inicio de sesión
-              setError(error.message);
-            });
-        } else {
-          setError("Invalid email or password");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setError("Error occurred while retrieving user information");
+    try {
+      const response = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Enviar acción de inicio de sesión a Redux
+        dispatch(login(data.user));
+        // Limpiar campos y mostrar éxito
+        setEmail("");
+        setPassword("");
+        setError("");
+        // Aquí puedes realizar otras acciones después de un inicio de sesión exitoso, como redireccionar a otra página
+      } else {
+        // Manejar error de inicio de sesión
+        setError("Invalid email or password");
+      }
+    } catch (error) {
+      // Manejar error de red o del servidor
+      setError("Error occurred while logging in");
+    }
   };
 
   return (

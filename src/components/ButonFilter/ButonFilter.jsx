@@ -6,6 +6,7 @@ import abajo from "../../img/abajo.png";
 
 const Buttons = () => {
   const [showFilters, setShowFilters] = useState(false);
+  // eslint-disable-next-line
   const [price, setPrice] = useState("");
 
 

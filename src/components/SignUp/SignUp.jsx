@@ -28,7 +28,7 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:3001/users/signup", {
+        const response = await fetch("/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

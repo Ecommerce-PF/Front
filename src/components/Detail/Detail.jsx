@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { getDetail } from "../../redux/actions/actions.js";
+import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
 import styles from "./detail.module.css";
@@ -13,6 +13,12 @@ export default function Detail() {
   const { id } = useParams();
   const state = useSelector((state) => state.productDetail);
 
+  const cart = useSelector(state => state.cart);
+    console.log(cart);
+
+  const handleAddCart = () => {
+    dispatch(addCart(state));
+  }
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -65,7 +71,7 @@ export default function Detail() {
               <button className={styles.color} style={{backgroundColor: 'blue'}}></button> */}
         </div>
         <div className={styles.cart}>
-          <button onClick={() => alert("En producción")}>
+          <button onClick={handleAddCart}>
             Add to Cart{" "}
             <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
           </button>

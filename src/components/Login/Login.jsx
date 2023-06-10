@@ -47,7 +47,7 @@ const Login = () => {
         setUserName("");
         setPassword("");
         setError("");
-        // Redireccionar al usuario al home
+        // Redireccionar al usuario a la página de inicio
         navigate("/home");
       } else {
         // Manejar error de inicio de sesión

@@ -5,14 +5,21 @@ import { deleteCart } from '../../../redux/actions/actions.js';
 
 import styles from "../carrito.module.css";
 
-export default function CartProduct({product}) {
+export default function CartProduct({ product }) {
+
+    // console.log(product);
 
     const dispatch = useDispatch();
     // const cart = useSelector(state => state.cart);
     // const [hndlDelete, setHndlDelete] = useState(false);
 
     const handleDelete = () => {
-        dispatch(deleteCart(product.id));
+        // dispatch(deleteCart(product.id));
+        const cart = JSON.parse(localStorage.getItem("carritoLS"));
+        let deleteCart = cart.filter(e => {
+            return e.id !== product.id;
+        });
+        localStorage.setItem("carritoLS", JSON.stringify(deleteCart));
     }
 
     const [valueInp, setValueInp] = useState(1);
@@ -30,10 +37,13 @@ export default function CartProduct({product}) {
     return (
 
         <div className={styles.crtPrdct} >
-            <h2>Producto</h2>
-            <h3>Descripción del producto</h3>
+            <img src={product.image} alt={product.name} className={styles.imgCarrito} />
             <div>
-                <h3>Precio: $999.99</h3>
+            <h2>{product.name}</h2>
+            <h3>{product.category}</h3>
+            </div>
+            <div>
+                <h3>Precio: ${product.price}</h3>
                 <button className={styles.trash} onClick={handleDelete}>
                     <FaTrash style={{ color: "#d65757", }} />
                 </button>

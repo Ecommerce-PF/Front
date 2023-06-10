@@ -9,18 +9,17 @@ import styles from "./carrito.module.css";
 
 export default function Carrito() {
 
-    const cart = useSelector(state => state.cart);
+    const cart = JSON.parse(localStorage.getItem("carritoLS"));
     console.log(cart);
 
     return (
         <section>
             <Nav />
-            {cart.lenght > 0 ?
+            {cart ===null || cart.length > 0 ?
                 <div className={styles.containerCart}>
                     {cart.map(product => {
                         return (<CartProduct key={product.id} product={product} />)
                     })}
-                    {/* <CartProduct /> */}
                 </div> :
                 <section className={styles.emptyCart}>
                     <div className={styles.cart}></div>

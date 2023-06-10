@@ -14,7 +14,17 @@ export default function Detail() {
   const state = useSelector((state) => state.productDetail);
 
   const cart = useSelector(state => state.cart);
-    console.log(cart);
+  // console.log(cart);
+  let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+  if(listaCart === null){
+    listaCart = [];
+  }else{
+    cart.map(e =>{
+      listaCart.push(e);
+    })
+  }
+  localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
 
   const handleAddCart = () => {
     dispatch(addCart(state));

@@ -47,7 +47,7 @@ const Login = () => {
         setUserName("");
         setPassword("");
         setError("");
-        // Redireccionar al usuario al home
+        // Redireccionar al usuario a la página de inicio
         navigate("/home");
       } else {
         // Manejar error de inicio de sesión
@@ -101,7 +101,7 @@ const Login = () => {
 
           <div className={styles.types}>
             <button type="submit" className={styles.button}>
-              Login
+               Login
             </button>
           </div>
         </div>

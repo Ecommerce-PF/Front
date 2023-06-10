@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes,} from "react-router-dom";
 import Home from "./components/Home/Home";
 import Carrito from "./components/carrito/Carrito.jsx";
 import CreatePost from "./components/CreatePost/CreatePost";
@@ -7,12 +7,14 @@ import DashBoard from "./components/DashBoard/DashBoard";
 import Detail from "./components/Detail/Detail";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
+import Profile from "./components/Profile/Profile";
+import LandingPage from "./components/LandingPage/LandingPage"; // Importa la componente LandingPage
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<LandingPage />} /> {/* Ruta para la LandingPage */}
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -20,6 +22,7 @@ function App() {
         <Route path="/post" element={<CreatePost />} />
         <Route path='/carrito' element={<Carrito/>}/>
         <Route path="/dash" element={<DashBoard />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

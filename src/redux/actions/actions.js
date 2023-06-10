@@ -17,6 +17,8 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const GET_USER_ALL = "GET_USER_ALL";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -135,6 +137,28 @@ export const getUserByEmail = (email) => {
     try {
       const user = await axios.get(`/user?email=${email}`);
       dispatch({ type: GET_USER, payload: user.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getUserAll = () => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`/users`);
+      dispatch({ type: GET_USER_ALL, payload: user.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`/user/${id}`);
+      dispatch({ type: GET_USER_BY_ID, payload: user.data });
     } catch (error) {
       console.log(error);
     }

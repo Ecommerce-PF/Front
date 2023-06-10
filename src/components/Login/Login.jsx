@@ -101,7 +101,7 @@ const Login = () => {
 
           <div className={styles.types}>
             <button type="submit" className={styles.button}>
-              Login
+               Login
             </button>
           </div>
         </div>

@@ -10,6 +10,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import CreatePost from "./components/DashBoardAdmin/CreatePost";
 import Delete from "./components/DashBoardAdmin/Delete";
 
+import EditProduct from "./components/DashBoardAdmin/EditProduct";
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/detail/:id" element={<Detail />} />
+
+        <Route path="/edit/:id" element={<EditProduct />} />
+
         <Route path="/DashBoardAdmin/*" element={<DashBoardAdmin />} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path="/Delete" element={<Delete />} />

@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
@@ -17,9 +16,14 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
+
+export const DELETE_PRODUCT_SUCCESS = "DELETE_PRODUCT_SUCCESS";
+export const DELETE_PRODUCT_FAILURE = "DELETE_PRODUCT_FAILURE";
+
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const GET_USER_ALL = "GET_USER_ALL";
 export const ID_USER = "ID_USER";
+
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -87,19 +91,19 @@ export function filterByPrice(priceRange) {
   };
 }
 
-export const filterByColor = (color) => {
-  return {
-    type: FILTER_BY_COLOR,
-    payload: color,
-  };
-};
-
 export function orderByPrice(priceRange) {
   return {
     type: ORDER_BY_PRICE,
     payload: priceRange,
   };
 }
+
+export const filterByColor = (color) => {
+  return {
+    type: FILTER_BY_COLOR,
+    payload: color,
+  };
+};
 
 export const resetFilters = () => {
   return {
@@ -212,6 +216,18 @@ export const login = (email, password) => {
     } catch (error) {
       console.log(error.response.data);
       dispatch({ type: LOGIN_FAILURE, payload: error.response.data.msg });
+    }
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`/products/${id}`);
+      dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: id });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
     }
   };
 };

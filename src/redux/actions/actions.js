@@ -19,6 +19,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const GET_USER_ALL = "GET_USER_ALL";
+export const ID_USER = "ID_USER";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -174,6 +175,14 @@ export const cleanMyStore = () => {
 export const setPage = () => {
   return {
     type: SET_PAGE,
+  };
+};
+
+export const idUser = (id) => {
+  console.log("llegue aca");
+  return {
+    type: ID_USER,
+    payload: id,
   };
 };
 

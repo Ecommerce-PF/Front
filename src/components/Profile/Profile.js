@@ -1,50 +1,57 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll } from "../../redux/actions/actions";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const id = useSelector((state) => state.idUsuario);
+
+  const [loading, setLoading] = useState(true);
+  const [userOnline, setUserOnline] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getUserAll());
+      setLoading(false);
     };
     fetchData();
   }, [dispatch]);
 
-  console.log(user, "esto es user");
-
-  const userOnline = user[user.length - 1];
+  useEffect(() => {
+    if (user && user.length > 0) {
+      setUserOnline(user[user.length - 1]);
+    }
+  }, [user]);
 
   console.log(userOnline, "hola");
-  // Verifica si el usuario está autenticado
-  if (!user) {
-    // Redirige al usuario a la página de inicio de sesión u otra página apropiada
-    // ...
-    return null;
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  // Autocompleta los datos del perfil con los datos del usuario
-  // const { name, email, password, phone, address, purchaseHistory } = user;
+  if (!userOnline) {
+    return null; // O redirige al usuario a la página de inicio de sesión u otra página apropiada
+  }
+
+  const { name, email, password, phone, address, purchaseHistory } = userOnline;
 
   return (
     <div>
       <h2 className={styles.title}>Profile</h2>
-      <p className={styles.info}>Name: {userOnline.name}</p>
+      <p className={styles.info}>Name: {name}</p>
       <p className={styles.info}>Username: {userOnline.userName}</p>
-      <p className={styles.info}>Email: {userOnline.email}</p>
-      <p className={styles.info}>Password: {userOnline.password}</p>
-      <p className={styles.info}>Phone: {userOnline.phone}</p>
+      <p className={styles.info}>Email: {email}</p>
+      <p className={styles.info}>Password: {password}</p>
+      <p className={styles.info}>Phone: {phone}</p>
 
-      <h3 className={styles.subtitle}>Address {userOnline.address}</h3>
+      <h3 className={styles.subtitle}>Address {address}</h3>
       <p className={styles.address}></p>
 
       <h3 className={styles.subtitle}>Purchase History </h3>
-      {/* <ul className={styles.purchaseList}>
+      <ul className={styles.purchaseList}>
         {purchaseHistory &&
           purchaseHistory.map((purchase) => (
             <li key={purchase.id}>
@@ -53,7 +60,7 @@ const Profile = () => {
               <p className={styles.purchaseInfo}>Date: {purchase.date}</p>
             </li>
           ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

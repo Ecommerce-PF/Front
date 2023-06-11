@@ -69,7 +69,7 @@ export default function Detail() {
             Add to Cart{" "}
             <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
           </button>
-          <NavLink to="/">
+          <NavLink to="/home">
             <button className={styles.bttnBack}>
               Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
             </button>

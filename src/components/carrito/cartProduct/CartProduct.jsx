@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteCart } from '../../../redux/actions/actions.js';
+// import { useDispatch } from 'react-redux';
 
 import styles from "../carrito.module.css";
 
 export default function CartProduct({ product }) {
 
-    // console.log(product);
-
-    const dispatch = useDispatch();
-    // const cart = useSelector(state => state.cart);
-    // const [hndlDelete, setHndlDelete] = useState(false);
+    // const dispatch = useDispatch();
 
     const handleDelete = () => {
         // dispatch(deleteCart(product.id));
@@ -20,6 +15,7 @@ export default function CartProduct({ product }) {
             return e.id !== product.id;
         });
         localStorage.setItem("carritoLS", JSON.stringify(deleteCart));
+        window.location.reload();
     }
 
     const [valueInp, setValueInp] = useState(1);
@@ -39,8 +35,8 @@ export default function CartProduct({ product }) {
         <div className={styles.crtPrdct} >
             <img src={product.image} alt={product.name} className={styles.imgCarrito} />
             <div>
-            <h2>{product.name}</h2>
-            <h3>{product.category}</h3>
+                <h2>{product.name}</h2>
+                <h3>{product.category}</h3>
             </div>
             <div>
                 <h3>Precio: ${product.price}</h3>

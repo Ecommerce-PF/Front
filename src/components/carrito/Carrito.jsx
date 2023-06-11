@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Nav from '../Nav/Nav.jsx';
 import { FaSadTear } from 'react-icons/fa';
 import CartProduct from "./cartProduct/CartProduct.jsx";
-import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { TfiReload } from 'react-icons/tfi'
 
 import styles from "./carrito.module.css";
 
@@ -12,14 +12,25 @@ export default function Carrito() {
     const cart = JSON.parse(localStorage.getItem("carritoLS"));
     console.log(cart);
 
+    if(cart !==null && cart.length > 0){
+        var precioTotal = 0;
+        for(let i = 0; i < cart.length; i++){
+            precioTotal += cart[i].price;
+        }
+    }
+
     return (
-        <section>
+        <section className={styles.componentCart} >
             <Nav />
             {cart ===null || cart.length > 0 ?
                 <div className={styles.containerCart}>
                     {cart.map(product => {
                         return (<CartProduct key={product.id} product={product} />)
                     })}
+
+                    <div className={styles.carritoTotalPrecio} >
+                        <h3>Total del carrito: {precioTotal}</h3> <button onClick={() => alert("En producción")} >Proceder al pago</button>
+                    </div>
                 </div> :
                 <section className={styles.emptyCart}>
                     <div className={styles.cart}></div>
@@ -30,6 +41,7 @@ export default function Carrito() {
                         <NavLink to='/home'>
                             <button>Buscar articulos</button>
                         </NavLink>
+                        <button onClick={() => window.location.reload()} > <TfiReload/> </button>
                     </div>
                 </section>
             }

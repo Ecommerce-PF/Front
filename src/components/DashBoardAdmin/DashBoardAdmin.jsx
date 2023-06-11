@@ -1,7 +1,6 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import Create from './CreatePost.jsx';
-import Delete from './Delete.jsx';
+import {  Link } from 'react-router-dom';
+
 import { useSelector } from 'react-redux';
 
 const Admin = () => {
@@ -10,25 +9,28 @@ const Admin = () => {
   return (
     <div>
       <div className="btn-group btn-group-toggle m-1">
-        {/* Botones y enlaces */}
+        
+        <div>
         <Link to="/CreatePost" className="btn btn-primary">
           Create Product
         </Link>
+        </div>
+        
+        <div>
         <Link to="/Delete" className="btn btn-danger">
           Delete Product
         </Link>
+        </div>
+       
+        <div>
+        <Link to="/Put" className="btn btn-warning">
+          Edit Product
+        </Link>
+        </div>
+
       </div>
 
-      <Routes>
-        <Route
-          path="/CreatePost"
-          element={<Create style={styles} />}
-        />
-        <Route
-          path="/Delete"
-          element={<Delete style={styles} />}
-        />
-      </Routes>
+  
     </div>
   );
 };

@@ -74,6 +74,18 @@ export default function Detail() {
               Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
             </button>
           </NavLink>
+
+          <h3>Quantity:</h3>
+          <form action="">
+            <label htmlFor="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" min="1" />
+            <button type="submit">
+                <FaCartArrowDown className={styles.icon} />
+            </button>
+
+
+            
+        </form>
         </div>
       </div>
     </div>

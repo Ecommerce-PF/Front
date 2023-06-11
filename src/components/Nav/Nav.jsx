@@ -11,7 +11,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    navigate("/"); // Redirecciona a la LandingPage al hacer clic en Log out
+    navigate("/");
   };
 
   return (
@@ -31,6 +31,9 @@ const Nav = () => {
             <button className={`${style.link} ${style.profileTitle} ${style.logoutButton}`} onClick={handleLogout}>
               Log out
             </button>
+            <Link className={style.link} to="/DashBoardAdmin">
+              <h1 className={`${style.titleLogin} ${style.profileTitle}`}>Admin</h1>
+            </Link>
           </React.Fragment>
         ) : null}
       </div>

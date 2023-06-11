@@ -1,19 +1,28 @@
 import {
   GET_ALL_PRODUCTS,
   FILTER_BY_CATEGORY,
+  GET_BY_NAME,
   FILTER_BY_PRICE,
   FILTER_BY_COLOR,
   RESET_FILTERS,
   GET_DETAIL,
   GET_USER,
   ORDER_BY_PRICE,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAILURE,
+  GET_USER_BY_ID,
+  GET_USER_ALL,
+  ID_USER,
 } from "../actions/actions";
+
 
 const initialState = {
   products: [],
   allProducts: [],
   productDetail: {},
   user: {},
+  idUsuario: [],
+  userId: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -25,10 +34,10 @@ const rootReducer = (state = initialState, action) => {
         allProducts: action.payload,
       };
 
-    case "GET_BY_NAME":
+    case GET_BY_NAME:
       if (!action.payload.length) {
         console.log("Prod not Found");
-        return alert("Prod not Found");
+        alert("Prod not Found");
       }
       return {
         ...state,
@@ -101,6 +110,9 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByColorProducts,
         };
       }
+    case GET_USER_BY_ID:
+      return { ...state, userId: action.payload };
+
     case RESET_FILTERS:
       return {
         ...state,
@@ -112,11 +124,43 @@ const rootReducer = (state = initialState, action) => {
         productDetail: action.payload,
       };
 
+    case GET_USER_ALL:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case GET_USER:
       return {
         ...state,
         user: action.payload,
       };
+
+
+    case DELETE_PRODUCT_SUCCESS:
+      const updatedProducts = state.products.filter(
+        (product) => product.id !== action.payload
+      );
+      return {
+        ...state,
+        products: updatedProducts,
+      };
+
+    case DELETE_PRODUCT_FAILURE:
+      // Agregar lógica adicional si deseas manejar el error de borrado de producto
+      console.log(action.payload);
+      alert('Ha ocurrido un error al eliminar la prenda');
+
+      return state;
+
+
+    case ID_USER:
+      console.log("llegue aca");
+      return {
+        ...state,
+        idUsuario: action.payload,
+      };
+
     default:
       return state;
   }

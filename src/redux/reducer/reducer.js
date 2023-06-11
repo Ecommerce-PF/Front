@@ -1,12 +1,16 @@
 import {
   GET_ALL_PRODUCTS,
   FILTER_BY_CATEGORY,
+  GET_BY_NAME,
   FILTER_BY_PRICE,
   FILTER_BY_COLOR,
   RESET_FILTERS,
   GET_DETAIL,
   GET_USER,
   ORDER_BY_PRICE,
+  GET_USER_BY_ID,
+  GET_USER_ALL,
+  ID_USER,
 } from "../actions/actions";
 
 const initialState = {
@@ -14,6 +18,8 @@ const initialState = {
   allProducts: [],
   productDetail: {},
   user: {},
+  idUsuario: [],
+  userId: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -25,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
         allProducts: action.payload,
       };
 
-    case "GET_BY_NAME":
+    case GET_BY_NAME:
       if (!action.payload.length) {
         console.log("Prod not Found");
         return alert("Prod not Found");
@@ -101,6 +107,9 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByColorProducts,
         };
       }
+    case GET_USER_BY_ID:
+      return { ...state, userId: action.payload };
+
     case RESET_FILTERS:
       return {
         ...state,
@@ -112,11 +121,25 @@ const rootReducer = (state = initialState, action) => {
         productDetail: action.payload,
       };
 
+    case GET_USER_ALL:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     case GET_USER:
       return {
         ...state,
         user: action.payload,
       };
+
+    case ID_USER:
+      console.log("llegue aca");
+      return {
+        ...state,
+        idUsuario: action.payload,
+      };
+
     default:
       return state;
   }

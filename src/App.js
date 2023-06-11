@@ -9,6 +9,7 @@ import Profile from "./components/Profile/Profile";
 import LandingPage from "./components/LandingPage/LandingPage";
 import CreatePost from "./components/DashBoardAdmin/CreatePost";
 import Delete from "./components/DashBoardAdmin/Delete";
+import Order from "./components/DashBoardAdmin/OrdersUsers"; 
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path="/Delete" element={<Delete />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/order" element={<Order />} /> 
       </Routes>
     </div>
   );

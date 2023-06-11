@@ -10,21 +10,38 @@ import styles from "./carrito.module.css";
 export default function Carrito() {
 
     const cart = JSON.parse(localStorage.getItem("carritoLS"));
-    console.log(cart);
+    // console.log(cart);
 
-    if(cart !==null && cart.length > 0){
+    if (cart !== null && cart.length > 0) {
         var precioTotal = 0;
-        for(let i = 0; i < cart.length; i++){
+        for (let i = 0; i < cart.length; i++) {
             precioTotal += cart[i].price;
         }
     }
 
+    function eliminarObjetosRepetidos(array) {
+        var objetosUnicos = [];
+      
+        array.forEach(function(objeto) {
+          if (!objetosUnicos.some(function(item) {
+            return item.id === objeto.id; // Compara las propiedades relevantes
+          })) {
+            objetosUnicos.push(objeto);
+          }
+        });
+      
+        return objetosUnicos;
+      }
+
+    const productosUnicos = eliminarObjetosRepetidos(cart);
+    console.log(productosUnicos)
+
     return (
         <section className={styles.componentCart} >
             <Nav />
-            {cart ===null || cart.length > 0 ?
+            {cart === null || cart.length > 0 ?
                 <div className={styles.containerCart}>
-                    {cart.map(product => {
+                    {productosUnicos.map(product => {
                         return (<CartProduct key={product.id} product={product} />)
                     })}
 
@@ -41,7 +58,7 @@ export default function Carrito() {
                         <NavLink to='/home'>
                             <button>Buscar articulos</button>
                         </NavLink>
-                        <button onClick={() => window.location.reload()} > <TfiReload/> </button>
+                        <button onClick={() => window.location.reload()} > <TfiReload /> </button>
                     </div>
                 </section>
             }

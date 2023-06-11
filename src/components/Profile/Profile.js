@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
-import { getUserAll } from "../../redux/actions/actions";
+import { getUserAll, getUserById } from "../../redux/actions/actions";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
 
-  const [loading, setLoading] = useState(true);
+  console.log(userId, "userId");
+  console.log(id, "id");
+
   const [userOnline, setUserOnline] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getUserAll());
-      setLoading(false);
+      await dispatch(getUserById(id));
     };
     fetchData();
+    console.log(fetchData, "fetchData");
   }, [dispatch]);
 
   useEffect(() => {
@@ -28,21 +31,17 @@ const Profile = () => {
 
   console.log(userOnline, "hola");
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (!userOnline) {
     return null; // O redirige al usuario a la página de inicio de sesión u otra página apropiada
   }
 
-  const { name, email, password, phone, address, purchaseHistory } = userOnline;
+  const { name, email, password, phone, address, purchaseHistory } = userId;
 
   return (
     <div>
       <h2 className={styles.title}>Profile</h2>
       <p className={styles.info}>Name: {name}</p>
-      <p className={styles.info}>Username: {userOnline.userName}</p>
+      <p className={styles.info}>Username: {userId.userName}</p>
       <p className={styles.info}>Email: {email}</p>
       <p className={styles.info}>Password: {password}</p>
       <p className={styles.info}>Phone: {phone}</p>

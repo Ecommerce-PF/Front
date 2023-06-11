@@ -157,12 +157,9 @@ export const getUserAll = () => {
 
 export const getUserById = (id) => {
   return async (dispatch) => {
-    try {
-      const user = await axios.get(`/user/${id}`);
-      dispatch({ type: GET_USER_BY_ID, payload: user.data });
-    } catch (error) {
-      console.log(error);
-    }
+    const user = await axios.get(`/users/${id}`);
+    console.log(user.data, "que carajos es user");
+    dispatch({ type: GET_USER_BY_ID, payload: user.data });
   };
 };
 
@@ -179,7 +176,6 @@ export const setPage = () => {
 };
 
 export const idUser = (id) => {
-  console.log("llegue aca");
   return {
     type: ID_USER,
     payload: id,

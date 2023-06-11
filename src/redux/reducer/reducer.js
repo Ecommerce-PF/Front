@@ -10,6 +10,7 @@ import {
   ORDER_BY_PRICE,
   GET_USER_BY_ID,
   GET_USER_ALL,
+  ID_USER,
 } from "../actions/actions";
 
 const initialState = {
@@ -17,6 +18,8 @@ const initialState = {
   allProducts: [],
   productDetail: {},
   user: {},
+  idUsuario: [],
+  userId: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -104,9 +107,8 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByColorProducts,
         };
       }
-
     case GET_USER_BY_ID:
-      return { ...state, user: action.payload };
+      return { ...state, userId: action.payload };
 
     case RESET_FILTERS:
       return {
@@ -130,6 +132,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+
+    case ID_USER:
+      console.log("llegue aca");
+      return {
+        ...state,
+        idUsuario: action.payload,
+      };
+
     default:
       return state;
   }

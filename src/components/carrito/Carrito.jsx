@@ -49,9 +49,9 @@ export default function Carrito() {
         }
         const newOrder = await axios.post('http://localhost:3001/payment/create-order', {
             "products": arrProducts,
-            "userId": idUser
+            "userId": 1
         });
-        console.log(newOrder);
+        console.log(newOrder.data);
     }
 
     return (

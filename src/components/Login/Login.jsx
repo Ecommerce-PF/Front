@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import { idUser } from "../../redux/actions/actions";
+import { idUser, admin } from "../../redux/actions/actions";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -43,9 +43,12 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const userId = data.user.id;
+        const trueOrFalse = data.user.admin;
+
         // Enviar acción de inicio de sesión a Redux
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
+        await dispatch(admin(trueOrFalse));
         // Limpiar campos y mostrar éxito
         setUserName("");
         setPassword("");

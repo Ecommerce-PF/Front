@@ -16,6 +16,11 @@
   font-size: 10px;
 }
 
+.carrito{
+  width: 40px;
+  height: 40px;
+}
+
 .link:hover {
   cursor: pointer;
   text-shadow: 1px 1px 2px #0000005d;

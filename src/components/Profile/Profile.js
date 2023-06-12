@@ -9,27 +9,31 @@ const Profile = () => {
   const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
 
-  console.log(userId, "userId");
-  console.log(id, "id");
+  console.log(id);
+
+  if (id.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("id", id);
+  }
+
+  const idUser = localStorage.getItem("id");
 
   const [userOnline, setUserOnline] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getUserAll());
-      await dispatch(getUserById(id));
+      await dispatch(getUserById(idUser));
     };
     fetchData();
-    console.log(fetchData, "fetchData");
-  }, [dispatch]);
+  }, [dispatch, idUser]);
 
   useEffect(() => {
     if (user && user.length > 0) {
       setUserOnline(user[user.length - 1]);
     }
   }, [user]);
-
-  console.log(userOnline, "hola");
 
   if (!userOnline) {
     return null; // O redirige al usuario a la página de inicio de sesión u otra página apropiada

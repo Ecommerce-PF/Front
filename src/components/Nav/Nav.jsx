@@ -61,7 +61,7 @@ const Nav = () => {
             </div>
 
             <div className={style.contenedor_imagen}>
-              {adminUsers === "true" ? (
+              {admin === "true" ? (
                 <Link className={style.link} to="/DashBoardAdmin">
                   <img className={style.carrito} src={Admin} alt="" />
                   <div className={style.texto_imagen}>

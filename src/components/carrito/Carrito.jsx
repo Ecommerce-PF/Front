@@ -12,7 +12,7 @@ export default function Carrito() {
 
     const cart = JSON.parse(localStorage.getItem("carritoLS"));
     const idUser = localStorage.getItem("id");
-    console.log(idUser, "id");
+    // console.log(idUser, "id");
     // console.log(cart);
 
     if (cart !== null && cart.length > 0) {
@@ -47,11 +47,14 @@ export default function Carrito() {
                 quantity: cart[i].quantity,
             });
         }
-        const newOrder = await axios.post('http://localhost:3001/payment/create-order', {
+        const body = {
             "products": arrProducts,
-            "userId": 1
-        });
+            "userId": idUser
+        }
+        const newOrder = await axios.post('http://localhost:3001/payment/create-order', body );
+
         console.log(newOrder.data);
+        window.location.replace(newOrder.data);
     }
 
     return (

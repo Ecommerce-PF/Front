@@ -70,20 +70,30 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
+
     
+
+
     try{
         axios.put(`http://localhost:3001/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
+
            
            
           }
+
+        }
+
         )
 
     }
     catch(error){
     alert("No se pudo editar el producto");
+
        
+
+
     }
 
 };

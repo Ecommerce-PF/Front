@@ -112,14 +112,8 @@ export default function CreatePost() {
 
   return (
     <div className={styles.body}>
-      <form onSubmit={submitHandler}>
-        <div className={styles.nav}>
-          <h1>Publicate</h1>
-          <button className={styles.button}>Create</button>
-          <Link to="/">
-            <button className={styles.button}>Back</button>
-          </Link>
-        </div>
+      <form className={styles.form} onSubmit={submitHandler}>
+
 
         <div className={styles.statsAndTypes}>
           <div className={styles.stats}>
@@ -128,6 +122,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="number"
                   name="id"
                   id="input-text"
@@ -144,6 +139,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="name"
                   id="input-text"
@@ -160,6 +156,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="parentCategory"
                   id="input-text"
@@ -176,15 +173,9 @@ export default function CreatePost() {
             <form onSubmit={addColors}>
               <div>
                 <label className="name">Colors: {count + 1} </label>
-                {/* <input
-                  type="text"
-                  value={colores.color}
-                  onChange={changeHandlerColors}
-                  name="color"
-                  className="input"
-                /> */}
                 <label htmlFor="color">Color</label>
                 <input
+                className={styles.input}
                   type="text"
                   name="color"
                   id="color"
@@ -202,6 +193,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="number"
                   name="price"
                   id="input-text"
@@ -217,6 +209,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="image"
                   id="input-text"
@@ -233,6 +226,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="description"
                   id="input-text"
@@ -274,7 +268,13 @@ export default function CreatePost() {
         <button className="enviar" type="submit">
           ENVIAR
         </button>
+        <div className={styles.nav}>
+          <Link to="/home">
+            <button className={styles.button}>Back</button>
+          </Link>
+        </div>
       </form>
+
     </div>
   );
 }

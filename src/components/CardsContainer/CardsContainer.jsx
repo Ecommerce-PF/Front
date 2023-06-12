@@ -12,7 +12,6 @@ const CardsContainer = () => {
   const [porPagina, setPorPagina] = useState(6);
   const maximo = products.length / porPagina;
 
-  console.log(products, "esto es prod");
 
   return (
     <div>

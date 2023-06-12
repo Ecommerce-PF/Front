@@ -89,10 +89,6 @@ export default function Detail() {
 
   }
 
-  // console.log({
-  //   ...state,
-  //   quantity: input,
-  // });
 
   useEffect(() => {
     dispatch(getDetail(id));

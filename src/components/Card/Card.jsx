@@ -15,10 +15,7 @@ const Card = ({ name, image, id, price }) => {
 
   const userAdmin = localStorage.getItem("admins");
 
-  console.log(
-    userAdmin,
-    "userAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdmin"
-  );
+
 
   return (
     <div className={style.mainContainer}>

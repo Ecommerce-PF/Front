@@ -45,13 +45,8 @@ export default function CreatePost() {
     color: "",
   });
 
-  console.log(colores, "colores");
 
-  // const changeHandlerColors = (event) => {
-  //   const property = event.target.name;
-  //   const value = event.target.value;
-  //   setColores({ ...colores, [property]: value });
-  // };
+
 
 
   const handleChange = (e) => {
@@ -92,11 +87,9 @@ export default function CreatePost() {
     }
   }, [colors]);
 
-  console.log(input);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
-    console.log(value, "esto es name");
     if (name === "category") {
       setAllCategories(value);
     }

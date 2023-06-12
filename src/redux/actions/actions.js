@@ -32,9 +32,7 @@ export const getAllProducts = () => {
     try {
       const products = await axios.get("/products");
       dispatch({ type: GET_ALL_PRODUCTS, payload: products.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -43,9 +41,7 @@ export const getAllProductByName = (name) => {
     try {
       const products = await axios.get(`/products?name=${name}`);
       dispatch({ type: GET_BY_NAME, payload: products.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -54,9 +50,7 @@ export const getCategories = () => {
     try {
       const response = await axios.get(`/types`);
       dispatch({ type: GET_CATEGORIES, payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -72,9 +66,7 @@ export const getDetail = (id) => {
     try {
       const response = await axios.get(`/products/${id}`);
       dispatch({ type: GET_DETAIL, payload: response.data });
-    } catch (error) {
-      console.log("Product not found");
-    }
+    } catch (error) {}
   };
 };
 
@@ -116,9 +108,7 @@ export const createPost = (newprod) => {
   return async (dispatch) => {
     try {
       // const response = await axios.post(`/product`, newprod);
-      console.log("Product created by Redux");
     } catch (error) {
-      console.log(error.message);
       alert("This process is under development...");
     }
   };
@@ -128,10 +118,9 @@ export const createUser = (user) => {
   return async (dispatch) => {
     try {
       // const response = await axios.post(`/user`, user);
-      console.log("User created by Redux");
+
       dispatch({ type: SIGN_UP_SUCCESS, payload: user });
     } catch (error) {
-      console.log(error.message);
       alert("This process is under development...");
       dispatch({ type: SIGN_UP_FAILURE, payload: error.message });
     }
@@ -163,7 +152,6 @@ export const getUserAll = () => {
 export const getUserById = (id) => {
   return async (dispatch) => {
     const user = await axios.get(`/users/${id}`);
-    console.log(user.data, "que carajos es user");
     dispatch({ type: GET_USER_BY_ID, payload: user.data });
   };
 };
@@ -214,7 +202,6 @@ export const login = (email, password) => {
       const { token } = response.data;
       dispatch({ type: LOGIN_SUCCESS, payload: token });
     } catch (error) {
-      console.log(error.response.data);
       dispatch({ type: LOGIN_FAILURE, payload: error.response.data.msg });
     }
   };
@@ -239,7 +226,6 @@ export const deleteProduct = (id) => {
       await axios.delete(`/products/${id}`);
       dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: id });
     } catch (error) {
-      console.log(error);
       dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
     }
   };
@@ -251,7 +237,6 @@ export const deleteUser = (id) => {
       await axios.delete(`/users/${id}`);
       dispatch({ type: DELETE_USER_SUCCESS, payload: id });
     } catch (error) {
-      console.log(error);
       dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
     }
   };

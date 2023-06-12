@@ -4,6 +4,7 @@ import { signUpUser } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:3001/users/signup", {
+        const response = await axios("/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

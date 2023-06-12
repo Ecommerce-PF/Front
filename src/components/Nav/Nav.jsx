@@ -12,14 +12,6 @@ const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
 
-  if (admin === false) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("admin", admin);
-  }
-
-  const adminUsers = localStorage.getItem("admin");
-
   /**************************************** */
 
   function mostrarTexto(elemento) {

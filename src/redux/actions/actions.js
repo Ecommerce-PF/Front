@@ -26,7 +26,7 @@ export const GET_USER_ALL = "GET_USER_ALL";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
-
+export const ADMIN_USER = "ADMIN_USER";
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {

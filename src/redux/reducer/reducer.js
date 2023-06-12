@@ -8,8 +8,6 @@ import {
   GET_DETAIL,
   GET_USER,
   ORDER_BY_PRICE,
-  ADD_CART,
-  DELETE_CART,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
   GET_USER_BY_ID,
@@ -17,6 +15,7 @@ import {
   ID_USER,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE, // Nueva acción para el caso de fallo en la eliminación del usuario
+  ADMIN_USER,
 } from "../actions/actions";
 
 const initialState = {

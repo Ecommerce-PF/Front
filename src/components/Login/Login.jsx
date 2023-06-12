@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { idUser, admin } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/users/login", {
+      const response = await axios("/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -40,3 +40,12 @@ border-radius: 3%;
 .link{
   text-decoration: none;
 }
+
+.edit{
+  width: 20px;
+  height: 20px;
+}
+
+.edit:hover{
+  box-shadow: 0 16px 25px rgba(0, 0, 0, 0.827);
+}

@@ -17,6 +17,15 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
+export const ADD_CART = "ADD_CART";
+export const DELETE_CART = "DELETE_CART";
+export const DELETE_PRODUCT_SUCCESS = "DELETE_PRODUCT_SUCCESS";
+export const DELETE_PRODUCT_FAILURE = "DELETE_PRODUCT_FAILURE";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const GET_USER_ALL = "GET_USER_ALL";
+export const ID_USER = "ID_USER";
+export const GET_ORDERS_USERS = "GET_ORDERS_USERS"; // Agregada acción para obtener las órdenes de los usuarios
+export const ADMIN_USER = "ADMIN_USER";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -77,9 +86,15 @@ export const filterByCategory = (category) => {
 };
 
 export function filterByPrice(priceRange) {
-  console.log(priceRange, "priceRange aaa");
   return {
     type: FILTER_BY_PRICE,
+    payload: priceRange,
+  };
+}
+
+export function orderByPrice(priceRange) {
+  return {
+    type: ORDER_BY_PRICE,
     payload: priceRange,
   };
 }
@@ -90,13 +105,6 @@ export const filterByColor = (color) => {
     payload: color,
   };
 };
-
-export function orderByPrice(priceRange) {
-  return {
-    type: ORDER_BY_PRICE,
-    payload: priceRange,
-  };
-}
 
 export const resetFilters = () => {
   return {
@@ -141,6 +149,36 @@ export const getUserByEmail = (email) => {
   };
 };
 
+export const getUserAll = () => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`/users`);
+      dispatch({ type: GET_USER_ALL, payload: user.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getUserById = (id) => {
+  return async (dispatch) => {
+    const user = await axios.get(`/users/${id}`);
+    console.log(user.data, "que carajos es user");
+    dispatch({ type: GET_USER_BY_ID, payload: user.data });
+  };
+};
+
+export const getOrdersUsers = () => {
+  return async (dispatch) => {
+    try {
+      const orders = await axios.get("/orders");
+      dispatch({ type: GET_ORDERS_USERS, payload: orders.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const cleanMyStore = () => {
   return {
     type: CLEAN_STORE,
@@ -153,15 +191,25 @@ export const setPage = () => {
   };
 };
 
+export const idUser = (id) => {
+  return {
+    type: ID_USER,
+    payload: id,
+  };
+};
+
+export const admin = (trueOrFalse) => {
+  return {
+    type: ADMIN_USER,
+    payload: trueOrFalse,
+  };
+};
+
 export const signUpUser = (userData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post("/signup", userData);
       const { token } = response.data;
-
-      // Puedes almacenar el token en el local storage o en un estado global según tu necesidad
-      // Ejemplo: localStorage.setItem("token", token);
-
       dispatch({ type: SIGN_UP_SUCCESS, payload: token });
     } catch (error) {
       console.log(error.response.data);
@@ -175,14 +223,35 @@ export const login = (email, password) => {
     try {
       const response = await axios.post("/login", { email, password });
       const { token } = response.data;
-
-      // Puedes almacenar el token en el local storage o en un estado global según tu necesidad
-      // Ejemplo: localStorage.setItem("token", token);
-
       dispatch({ type: LOGIN_SUCCESS, payload: token });
     } catch (error) {
       console.log(error.response.data);
       dispatch({ type: LOGIN_FAILURE, payload: error.response.data.msg });
+    }
+  };
+};
+
+export const addCart = (producto) => {
+  return {
+    type: ADD_CART,
+    payload: producto,
+  };
+};
+
+export const deleteCart = (id) => {
+  return {
+    type: DELETE_CART,
+    payload: id,
+  };
+};
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`/products/${id}`);
+      dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: id });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
     }
   };
 };

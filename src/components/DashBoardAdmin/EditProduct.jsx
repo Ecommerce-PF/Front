@@ -1,9 +1,10 @@
 import React, { useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getDetail } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+
 
 import styles from "./EditProduct.module.css";
 import axios from "axios";
@@ -65,20 +66,24 @@ const handleChange = (e) => {
     }
   };
 
-
+  
 
 const handleSubmit = (e) => {
     e.preventDefault();
+
+    
+
+
     try{
         axios.put(`http://localhost:3001/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
-        }
-        )
+     
+        } )
 
-    }
-    catch(error){
+    }catch(error){
     alert("No se pudo editar el producto");
+
     }
 
 };
@@ -87,76 +92,49 @@ const handleSubmit = (e) => {
   return (
     <>
 
-    ESto es el Edit del ADMIN!!
     
-    <div className={styles.mainContainer}>
-      <div className={styles.productImg}>
-        <h3>{state?.name}</h3>
-        <div className={styles.img}>
-          <img
-            src={state?.image}
-            alt={state?.name}
-            className={styles.imgProducto}
-          />
-        </div>
-        <div className={styles.buyNow}>
-          <h3>BUY NOW</h3>
-          <h3>${state?.price}</h3>
-        </div>
-        <div>
-          <label htmlFor="color">Color:</label>
-          <select type="select" name="color">
-            <option>None</option>
-            {state?.color &&
-              state.color.map((e) => (
-                <option
-                  className={styles.color}
-                  name={e.ColorName}
-                  key={e.ColorName}
-                >
-                  {e.ColorName}
-                </option>
-              ))}
-          </select>
+    {/* /**************************************************************************************** */      }
 
-        </div>
-      </div>
-
-    
-    
-    
+<div className={styles.main_container}>
 
 
+  <div className={styles.info_container}>
+              <h1>PRODUCT DATA</h1>
+              <h3>{state?.name}</h3>
+              <img src={state?.image} alt={state?.name} className={styles.image}/>
+     
+              <h3>${state?.price}</h3>
+          
+              <label htmlFor="color">Color:</label>            
+              <select type="select" name="color">
+                <option>None</option>
+               {state?.color &&
+                  state.color.map((e) => (
+                    <option name={e.ColorName}  key={e.ColorName} > {e.ColorName} </option> ))}
+              </select>
+                    
+                    <label htmlFor="">Descrition:</label>
+                    {/* <p>{state?.description}</p> */}
+        <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
+     
+        <button onClick={handleGoBack}> Back <FaArrowLeft className={styles.icon} /> </button>
       
 
-       <div className={styles.details}>
-        <div>
-          <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
-
-        </div>
-
-        <div className={styles.cart}>
-         
-         <button onClick={handleGoBack}>
-         Back <FaArrowLeft className={styles.icon} />
-         </button>
-       
-        </div>
-      </div>
-    </div>
-
-    {/* /**************************************************************************************** */      }
+  </div>
     
-    <form action="" onSubmit={handleSubmit} >
-         <h1>Editar Producto</h1>
+    {/* /**************************************************************************************** */      }
+  
+  <div className={styles.form_container}>
 
-          
+    <form action="" onSubmit={handleSubmit} >
+         <h1>EDIT PRODUCT</h1>
 
             <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" onChange={handleChange} value={form.name}/>
 
-            <label htmlFor="color">Color</label>
-            {/* <input type="text" name="color" id="color" onChange={handleChange} value={form.color}/> */}
+             <label htmlFor="image">Image</label>
+           <input type="text" name="image" id="imagen" onChange={handleChange} value={form.image} placeholder="Could copy from URL"/>
+           
 
             <label htmlFor="color">Color</label>
       <input
@@ -165,14 +143,11 @@ const handleSubmit = (e) => {
         id="color"
         onChange={handleChange}
         value={form.color.map((color) => color.name).join(", ")}
-      />
+        />
 
 
             <label htmlFor="price">Price</label>
-            <input type="text" name="price" id="price" onChange={handleChange} value={form.price}/>
-
-            <label htmlFor="image">Image</label>
-            <input type="text" name="image" id="image" onChange={handleChange} value={form.image}/>
+            <input type="number" name="price" id="price" onChange={handleChange} value={form.price}/>
 
             <label htmlFor="category">Category</label>
             <input type="text" name="category" id="category" onChange={handleChange} value={form.category}/>
@@ -181,10 +156,10 @@ const handleSubmit = (e) => {
             <input type="text" name="parentCategory" id="description" onChange={handleChange} value={form.parentCategory}/>
 
             <label htmlFor="description">Description</label>
-            <input type="text" name="description" id="description" onChange={handleChange} value={form.description}/>
+            <input type="textarea" name="description" id="description" onChange={handleChange} value={form.description}/>
 
             <label htmlFor="stock">Stock</label>
-            <input type="text" name="stock" id="stock" onChange={handleChange} value={form.stock}/>
+            <input type="number" name="stock" id="stock" onChange={handleChange} value={form.stock}/>
 
          
           <button type="submit">
@@ -194,9 +169,11 @@ const handleSubmit = (e) => {
 
        </form>
 
+      </div>
 
 
 
+  </div>
     </>
   );
 };

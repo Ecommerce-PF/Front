@@ -1,9 +1,5 @@
-/* body{
-    background-image: url("../../assets/pika.gif");
-} */
 
-
-/* .nav {
+ .nav {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -259,4 +255,4 @@ ul.ksCboxtags li input[type="checkbox"] {
 ul.ksCboxtags li input[type="checkbox"] {
     position: absolute;
     opacity: 0;
-} */
+} 

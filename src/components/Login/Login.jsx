@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { idUser, admin } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
+// eslint-disable-next-line
 import axios from "axios";
 
 const Login = () => {

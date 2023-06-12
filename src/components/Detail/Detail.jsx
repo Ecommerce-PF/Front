@@ -34,11 +34,11 @@ export default function Detail() {
 
 
   const [input, setInput] = useState(1);
-
+// eslint-disable-next-line
   const handleChange = (e) => {
     setInput(e.target.value);
   }
-
+// eslint-disable-next-line
   const handleSubmit = (e) => {
     e.preventDefault();
     let listaCart = JSON.parse(localStorage.getItem("carritoLS"));

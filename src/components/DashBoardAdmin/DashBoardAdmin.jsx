@@ -8,16 +8,21 @@ const Admin = () => {
   return (
     <div>
       <div className="btn-group btn-group-toggle m-1">
-        {/* Botones y enlaces */}
+        
+        <div>
         <Link to="/CreatePost" className="btn btn-primary">
           Create Product
         </Link>
+        </div>
+        
+        <div>
         <Link to="/Delete" className="btn btn-danger">
           Delete Product
         </Link>
         <Link to="/Order" className="btn btn-info">
           Order Users
         </Link>
+        </div>
       </div>
     </div>
   );

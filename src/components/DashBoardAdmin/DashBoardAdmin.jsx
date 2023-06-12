@@ -9,16 +9,16 @@ const Admin = () => {
       <div className="btn-group btn-group-toggle m-1">
         
         <div>
-        <Link to="/CreatePost" className="btn btn-primary">
+        <Link  to="/CreatePost" className={style.link}>
           Create Product
         </Link>
         </div>
         
         <div>
-        <Link to="/Delete" className="btn btn-danger">
+        <Link to="/Delete" className={style.link}>
           Delete Product
         </Link>
-        <Link to="/Order" className="btn btn-info">
+        <Link to="/Order" className={style.link}>
           Order Users
         </Link>
         </div>

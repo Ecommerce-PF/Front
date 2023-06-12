@@ -30,7 +30,7 @@ const Card = ({ name, image, id, price }) => {
         null
       )}
 
-      {/* hasta */}
+      
 
       <Link className={style.link} to={`/detail/${id}`}>
         <h2 className={style.title}>{name}</h2>

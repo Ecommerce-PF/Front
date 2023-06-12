@@ -12,6 +12,15 @@ const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
 
+  if (admin.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("admins", admin);
+  }
+
+
+  const userAdmin = localStorage.getItem("admins");
+
   /**************************************** */
 
   function mostrarTexto(elemento) {
@@ -61,14 +70,18 @@ const Nav = () => {
             </div>
 
             <div className={style.contenedor_imagen}>
-              {admin === "true" ? (
+
+{userAdmin === "true" ? (
                 <Link className={style.link} to="/DashBoardAdmin">
-                  <img className={style.carrito} src={Admin} alt="" />
-                  <div className={style.texto_imagen}>
-                    ADMINISTRACION DE ADMINISTRADOR
-                  </div>
-                </Link>
-              ) : null}
+                <img className={style.carrito} src={Admin} alt="" />
+                <div className={style.texto_imagen}>
+                  ADMINISTRACION DE ADMINISTRADOR
+                </div>
+              </Link>
+      ) : (
+        null
+      )}
+
             </div>
 
             <div className={style.contenedor_imagen2}>

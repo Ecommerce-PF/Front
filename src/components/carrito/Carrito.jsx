@@ -40,6 +40,7 @@ export default function Carrito() {
     console.log(productosUnicos)
 
     return (
+        <section>
         <section className={styles.componentCart} >
             <Nav />
             {cart === null || cart.length > 0 ?
@@ -72,7 +73,7 @@ export default function Carrito() {
         </Link>
       </div>
         </section>
-      )}
+      
     </section>
   );
 }

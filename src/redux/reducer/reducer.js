@@ -15,8 +15,8 @@ import {
   GET_USER_BY_ID,
   GET_USER_ALL,
   ID_USER,
+  ADMIN_USER,
 } from "../actions/actions";
-
 
 const initialState = {
   products: [],
@@ -26,6 +26,7 @@ const initialState = {
   cart: [],
   idUsuario: [],
   userId: [],
+  adminUser: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -140,19 +141,18 @@ const rootReducer = (state = initialState, action) => {
       };
     case ADD_CART:
       let cartPayload = [...state.cart, action.payload];
-      return{
+      return {
         ...state,
-        cart: cartPayload
-      }
+        cart: cartPayload,
+      };
     case DELETE_CART:
-      let deleteCartPayload = state.cart.filter(e => {
+      let deleteCartPayload = state.cart.filter((e) => {
         return e.id !== action.payload;
       });
-      return{
+      return {
         ...state,
         cart: deleteCartPayload,
-      }
-
+      };
 
     case DELETE_PRODUCT_SUCCESS:
       const updatedProducts = state.products.filter(
@@ -166,16 +166,21 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_PRODUCT_FAILURE:
       // Agregar lógica adicional si deseas manejar el error de borrado de producto
       console.log(action.payload);
-      alert('Ha ocurrido un error al eliminar la prenda');
+      alert("Ha ocurrido un error al eliminar la prenda");
 
       return state;
-
 
     case ID_USER:
       console.log("llegue aca");
       return {
         ...state,
         idUsuario: action.payload,
+      };
+
+    case ADMIN_USER:
+      return {
+        ...state,
+        adminUser: action.payload,
       };
 
     default:

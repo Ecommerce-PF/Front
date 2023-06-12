@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actions";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import Nav from "../Nav/Nav";
-// import Buttons from "../ButonFilter/ButonFilter"
+import Buttons from "../ButonFilter/ButonFilter"
 
 import style from "./Home.module.css";
 
@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div className={style.container}>
       <Nav />
-      {/* <Buttons /> */}
+      <Buttons />
       <CardsContainer />
     </div>
   );

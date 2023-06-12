@@ -4,15 +4,24 @@ import s from "./LandingPage.module.css";
 
 export default function LandingPage() {
   return (
-    <div className={s.divLP}>
-      <h1 className={s.title}>THRIFT SHOP</h1>
-      <div className={s.divTextBtn}>
-        <h1 className={s.text}>should be better</h1>
-        <div className={s.btnContainer}>
-          <Link className={`${s.btn} ${s.loginBtn}`} to="/login">Log In</Link>
-          <Link className={`${s.btn} ${s.signupBtn}`} to="/signup">Sign Up</Link>
+    <section className={s.back}>
+      <div className={s.body}>
+        <div className={s.titles}>
+          <h1 className={s.title}>THRIFT SHOP</h1>
+          <h1 className={s.text}>should be better</h1>
+        </div>
+
+        <div className={s.divTextBtn}>
+          <div className={s.btnContainer}>
+            <Link className={s.btnS} to="/login">
+              <button className={s.btn}>Log In</button>
+            </Link>
+            <Link className={s.btnS} to="/signup">
+              <button className={s.btn}>Sign Up</button>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

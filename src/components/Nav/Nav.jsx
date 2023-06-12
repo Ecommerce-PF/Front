@@ -4,12 +4,26 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import carrito from "../../assets/carrito-de-compras.png";
+import Admin from "../../assets/ajustes.png"
+import Usuario from "../../assets/usuario.png"
+import Logout from "../../assets/cerrar-sesion.png"
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
 
-  console.log(admin, "esto es admin");
+
+  /**************************************** */
+
+  function mostrarTexto(elemento) {
+    elemento.nextSibling.style.display = "block";
+ }
+ 
+ function ocultarTexto(elemento) {
+    elemento.nextSibling.style.display = "none";
+ }
+
+  /**************************************** */
 
   const [isLoggedIn, setIsLoggedIn] = useState(!!user);
   const navigate = useNavigate();
@@ -28,36 +42,49 @@ const Nav = () => {
       <SearchBar />
 
       <div className={style.loginSing}>
+
         {isLoggedIn ? (
           <React.Fragment>
+
+
+<div className={style.contenedor_imagen}>
             <Link className={style.link} to="/profile">
-              <h1 className={`${style.titleLogin} ${style.profileTitle}`}>
-                Profile
-              </h1>
+              <img className={style.carrito} src={Usuario} alt="" onmouseover={mostrarTexto} onmouseout={ocultarTexto}/>
+              <div class={style.texto_imagen}>PROFILE</div>
             </Link>
+  </div>
+  
+  <div className={style.contenedor_imagen}>
             <button
-              className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
-              onClick={handleLogout}
-            >
-              Log out
+              className={`${style.link} ${style.profileTitle} ${style.logoutButton}`} onClick={handleLogout}>
+              <img className={style.carrito} src={Logout} alt="" onmouseover={mostrarTexto} onmouseout={ocultarTexto}/>
+              <div class={style.texto_imagen}>LogOut</div>
             </button>
+                </div>
+
+            <div className={style.contenedor_imagen}>
 
             {admin === true ? (
-              <Link className={style.link} to="/DashBoardAdmin">
-                <h1 className={`${style.titleLogin} ${style.profileTitle}`}>
-                  Admin
-                </h1>
-              </Link>
-            ) : null}
 
+              <Link className={style.link} to="/DashBoardAdmin">
+                <img className={style.carrito} src={Admin} alt="" onmouseover={mostrarTexto} onmouseout={ocultarTexto}/>
+                <div class={style.texto_imagen}>ADMINISTRACION DE ADMINISTRADOR</div>
+              </Link>
+              
+            ) : null}
+            </div>
+
+            <div className={style.contenedor_imagen}>
             <Link to="/carrito">
-              <img className={style.carrito} src={carrito} alt="" />
+              <img className={style.carrito} src={carrito} alt="" onmouseover={mostrarTexto} onmouseout={ocultarTexto}/>
+              <div class={style.texto_imagen}>CARRITO DE COMPRAS</div>
             </Link>
+            </div>
           </React.Fragment>
         ) : null}
       </div>
     </div>
-  );
-};
+    );
+  };
 
 export default Nav;

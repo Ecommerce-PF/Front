@@ -7,6 +7,20 @@
   background-color: rgb(252, 218, 255);
   padding: 60px 50px 40px 50px;
   max-height: 10px;
+
+  color: white;
+
+    opacity: 0.9;
+
+    flex-flow: initial;
+    
+    justify-content: space-around;
+    align-items: center;
+    
+   
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2); 
+      
+
 }
 
 .link {
@@ -132,4 +146,44 @@
 .logoutButton:hover {
   text-decoration: underline;
   text-shadow: none;
+}
+
+.nav__img{
+  height: 15%;
+  width: 15%;
+}
+
+
+
+
+/***************** Ventana de dialogo ************************/
+
+
+.contenedor_imagen {
+  position: relative;
+  display: inline-block;
+}
+.texto_imagen {
+  display: none;
+  position: absolute;
+
+  background-image: linear-gradient(to top, #eda6f4 0%, #a64bc4 100%);
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5); 
+  color: #fff;
+  text-align: center;
+ 
+  font-size: 24px;
+  margin : 10px;
+  padding: 10px;
+  width: 300px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -150px;
+  border-radius: 10px;
+ 
+}
+.contenedor_imagen:hover .texto_imagen {
+  display: block;
+  transform: translateY(5px);
+  transition: all 1s ease-in-out;
 }

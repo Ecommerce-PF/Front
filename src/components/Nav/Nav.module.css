@@ -128,3 +128,8 @@
   text-decoration: underline;
   text-shadow: none;
 }
+
+.nav__img{
+  height: 15%;
+  width: 15%;
+}

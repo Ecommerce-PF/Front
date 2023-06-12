@@ -1,0 +1,135 @@
+.cart{
+    width: 300px;
+    height:300px;
+    background-image: url('../../assets/cart.png');
+    background-position: center;
+    background-size: contain;
+    margin: 20px;
+}
+.crtPrdct{
+    background-color: rgba(0, 0, 0, 0.059);;
+    width: 90vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.trash{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.cantidadProducto{
+    /* border: 1px solid black; */
+    border-radius: 20px;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.bttnAdd{
+    border-radius: 0 20px 20px 0;
+    border: none;
+    height: 20px;
+
+}
+
+.bttnSub{
+    border-radius: 20px 0 0 20px;
+    border: none;
+    height: 20px;
+}
+
+.emptyCart{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
+    color: #af1cc2;
+}
+
+.productAmout{
+    text-align: center;
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.containerCart{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.imgCarrito{
+    height: 150px;
+}
+
+
+
+.carritoTotalPrecio{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 90vw;
+    border-radius: 20px;
+    position: fixed;
+    bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.059);;
+}
+
+
+.button {
+    width: 150px;
+    height: 50px;
+    font-size: 14px;
+    color: #383838;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #eeeeee;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
+    color: #000000;
+    transform: translateY(-1px);
+  }
+  
+  .button:active {
+    transform: translateY(-1px);
+  }
+
+  .buttonReload {
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
+    color: #383838;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .buttonReload:hover {
+    background-color: #eeeeee;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
+    color: #000000;
+    transform: translateY(-1px);
+  }
+  
+  .buttonReload:active {
+    transform: translateY(-1px);
+  }

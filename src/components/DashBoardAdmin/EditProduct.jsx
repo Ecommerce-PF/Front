@@ -2,7 +2,6 @@ import React, { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { getDetail } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
@@ -45,14 +44,6 @@ const [form , setForm] = useState({
     });
 
 
-// const handleChange = (e) => {
-//     setForm({
-//         ...form,
-//         [e.target.name]: e.target.value,
-//     });
-
-// };
-
 const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -80,7 +71,7 @@ const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
     try{
-        axios.put(`http://localhost:3001/products/${id}`, form)
+        axios.put(`/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
             console.log(res);

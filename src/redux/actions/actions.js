@@ -17,6 +17,8 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
+export const ADD_CART = "ADD_CART";
+export const DELETE_CART = "DELETE_CART";
 export const DELETE_PRODUCT_SUCCESS = "DELETE_PRODUCT_SUCCESS";
 export const DELETE_PRODUCT_FAILURE = "DELETE_PRODUCT_FAILURE";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
@@ -185,6 +187,13 @@ export const idUser = (id) => {
   };
 };
 
+export const admin = (trueOrFalse) => {
+  return {
+    type: ADMIN_USER,
+    payload: trueOrFalse,
+  };
+};
+
 export const signUpUser = (userData) => {
   return async (dispatch) => {
     try {
@@ -211,6 +220,19 @@ export const login = (email, password) => {
   };
 };
 
+export const addCart = (producto) => {
+  return {
+    type: ADD_CART,
+    payload: producto,
+  };
+};
+
+export const deleteCart = (id) => {
+  return {
+    type: DELETE_CART,
+    payload: id,
+  };
+};
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {

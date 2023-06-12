@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../redux/actions/actions";
+import Buttons from "../ButonFilter/ButonFilter";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import Nav from "../Nav/Nav";
-import Buttons from "../ButonFilter/ButonFilter"
 
 import style from "./Home.module.css";
 

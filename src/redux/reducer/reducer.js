@@ -8,6 +8,8 @@ import {
   GET_DETAIL,
   GET_USER,
   ORDER_BY_PRICE,
+  ADD_CART,
+  DELETE_CART,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
   GET_USER_BY_ID,
@@ -22,8 +24,11 @@ const initialState = {
   allProducts: [],
   productDetail: {},
   users: [],
+  user: {},
+  cart: [],
   idUsuario: [],
   userId: [],
+  adminUser: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -175,6 +180,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         idUsuario: action.payload,
+      };
+
+    case ADMIN_USER:
+      return {
+        ...state,
+        adminUser: action.payload,
       };
 
     default:

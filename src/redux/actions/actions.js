@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ORDER_PRODUCTS = "ORDER_PRODUCTS";
@@ -16,14 +17,12 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
-
 export const DELETE_PRODUCT_SUCCESS = "DELETE_PRODUCT_SUCCESS";
 export const DELETE_PRODUCT_FAILURE = "DELETE_PRODUCT_FAILURE";
-
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const GET_USER_ALL = "GET_USER_ALL";
 export const ID_USER = "ID_USER";
-
+export const GET_ORDERS_USERS = "GET_ORDERS_USERS"; // Agregada acción para obtener las órdenes de los usuarios
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -84,7 +83,6 @@ export const filterByCategory = (category) => {
 };
 
 export function filterByPrice(priceRange) {
-  console.log(priceRange, "priceRange aaa");
   return {
     type: FILTER_BY_PRICE,
     payload: priceRange,
@@ -167,6 +165,17 @@ export const getUserById = (id) => {
   };
 };
 
+export const getOrdersUsers = () => {
+  return async (dispatch) => {
+    try {
+      const orders = await axios.get('/orders');
+      dispatch({ type: GET_ORDERS_USERS, payload: orders.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const cleanMyStore = () => {
   return {
     type: CLEAN_STORE,
@@ -191,10 +200,6 @@ export const signUpUser = (userData) => {
     try {
       const response = await axios.post("/signup", userData);
       const { token } = response.data;
-
-      // Puedes almacenar el token en el local storage o en un estado global según tu necesidad
-      // Ejemplo: localStorage.setItem("token", token);
-
       dispatch({ type: SIGN_UP_SUCCESS, payload: token });
     } catch (error) {
       console.log(error.response.data);
@@ -208,10 +213,6 @@ export const login = (email, password) => {
     try {
       const response = await axios.post("/login", { email, password });
       const { token } = response.data;
-
-      // Puedes almacenar el token en el local storage o en un estado global según tu necesidad
-      // Ejemplo: localStorage.setItem("token", token);
-
       dispatch({ type: LOGIN_SUCCESS, payload: token });
     } catch (error) {
       console.log(error.response.data);

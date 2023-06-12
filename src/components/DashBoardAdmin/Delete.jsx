@@ -5,12 +5,16 @@ import { deleteProduct, getAllProducts } from "../../redux/actions/actions.js";
 export default function Delete() {
   const [borrar, setBorrar] = useState(false);
   const [errors, setErrors] = useState({ noInputs: "No hay inputs" });
-  const [input, setInputs] = useState({ id: "" }); // Cambiado a 'id' en lugar de 'name'
+  const [input, setInputs] = useState({ id: "" });
+  const [selectedProductName, setSelectedProductName] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = function (e) {
-    setErrors(validate({ ...input, [e.target.name]: e.target.value }));
-    setInputs({ ...input, [e.target.name]: e.target.value });
+    const productId = e.target.value;
+    const productName = getProductById(productId)?.name;
+    setErrors(validate({ ...input, id: productId }));
+    setInputs({ id: productId });
+    setSelectedProductName(productName);
   };
 
   const products = useSelector(state => state.products);
@@ -26,8 +30,8 @@ export default function Delete() {
 
   function deletee(e, input) {
     e.preventDefault();
-    dispatch(deleteProduct(input.id)); // Cambiado a 'id' en lugar de 'name'
-    setInputs({ id: "" }); // Cambiado a 'id' en lugar de 'name'
+    dispatch(deleteProduct(input.id));
+    setInputs({ id: "" });
     setBorrar(false);
     setShowAlert(true);
     setTimeout(() => {
@@ -37,6 +41,10 @@ export default function Delete() {
 
   function isNotEmpty(obj) {
     return Object.keys(obj).length !== 0;
+  }
+
+  function getProductById(productId) {
+    return products.find(product => product.id === productId);
   }
 
   var danger = {
@@ -50,17 +58,17 @@ export default function Delete() {
     <div className="container text-center d-flex justify-content-center align-items-center">
       <form className="m-5">
         <select
-          name="id" // Cambiado a 'id' en lugar de 'name'
+          name="id"
           className="btn btn-light dropdown-toggle m-3"
-          value={input.id} // Cambiado a 'id' en lugar de 'name'
+          value={input.id}
           onChange={handleInputChange}
         >
           <option value="" disabled>SELECCIONAR PRENDA</option>
           {products.map((product) => {
-            return <option key={product.id}>{product.id}</option>; // Utilizando 'id' en lugar de 'name'
+            return <option key={product.id} value={product.id}>{product.name}</option>;
           })}
         </select>
-        {errors.name && <p style={danger}>{errors.name}</p>}
+        {errors.id && <p style={danger}>{errors.id}</p>}
       </form>
       <button
         className="btn btn-warning d-print-block p-2"
@@ -74,7 +82,7 @@ export default function Delete() {
           <div className="row">
             <div className="col align-self-center">
               <div className="card-body">
-                <p className="card-text">¿Está seguro de borrar el producto?</p>
+                <p className="card-text">¿Está seguro de borrar el producto: {selectedProductName}?</p>
                 <button className="btn btn-danger" onClick={toggle}>
                   No
                 </button>
@@ -91,7 +99,7 @@ export default function Delete() {
       )}
       {showAlert && (
         <div className="alert alert-success mt-3" role="alert">
-          ¡La prenda ha sido borrada exitosamente!
+          ¡La prenda {selectedProductName} ha sido borrada exitosamente!
         </div>
       )}
     </div>
@@ -100,6 +108,6 @@ export default function Delete() {
 
 export function validate(input) {
   let errors = {};
-  if (!input.id) errors.name = "Seleccione una prenda para borrar"; // Cambiado a 'id' en lugar de 'name'
+  if (!input.id) errors.id = "Seleccione una prenda para borrar";
   return errors;
 }

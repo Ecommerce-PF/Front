@@ -6,10 +6,7 @@ import styles from "../carrito.module.css";
 
 export default function CartProduct({ product }) {
 
-    // const dispatch = useDispatch();
-
     const handleDelete = () => {
-        // dispatch(deleteCart(product.id));
         const cart = JSON.parse(localStorage.getItem("carritoLS"));
         let deleteCart = cart.filter(e => {
             return e.id !== product.id;
@@ -18,15 +15,35 @@ export default function CartProduct({ product }) {
         window.location.reload();
     }
 
-    const [valueInp, setValueInp] = useState(product.quantity);
+    const [valueInp, setValueInp] = useState(parseInt(product.quantity));
+
+    function modificarObjetoPorId(arreglo, id, nuevosDatos) {
+        const indice = arreglo.findIndex(objeto => objeto.id === id);
+        if (indice !== -1) {
+            arreglo[indice] = { ...arreglo[indice], ...nuevosDatos };
+        } else {
+            console.log('No se encontró el objeto con el ID especificado.');
+        }
+
+    }
 
     const handleAddition = () => {
-        setValueInp(valueInp + 1);
+        setValueInp(parseInt(valueInp + 1));
+        const cart = JSON.parse(localStorage.getItem("carritoLS"));
+
+        modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp + 1, })
+        localStorage.setItem("carritoLS", JSON.stringify(cart));
+        window.location.reload();
     }
 
     const handleSubtraction = () => {
         if (valueInp > 1) {
-            setValueInp(valueInp - 1);
+            setValueInp(parseInt(valueInp - 1));
+            const cart = JSON.parse(localStorage.getItem("carritoLS"));
+
+            modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp - 1, })
+            localStorage.setItem("carritoLS", JSON.stringify(cart));
+            window.location.reload();
         }
     }
 

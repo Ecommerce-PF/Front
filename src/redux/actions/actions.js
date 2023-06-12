@@ -21,8 +21,9 @@ export const DELETE_PRODUCT_SUCCESS = "DELETE_PRODUCT_SUCCESS";
 export const DELETE_PRODUCT_FAILURE = "DELETE_PRODUCT_FAILURE";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const GET_USER_ALL = "GET_USER_ALL";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
-export const GET_ORDERS_USERS = "GET_ORDERS_USERS"; // Agregada acción para obtener las órdenes de los usuarios
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -165,17 +166,6 @@ export const getUserById = (id) => {
   };
 };
 
-export const getOrdersUsers = () => {
-  return async (dispatch) => {
-    try {
-      const orders = await axios.get('/orders');
-      dispatch({ type: GET_ORDERS_USERS, payload: orders.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
 export const cleanMyStore = () => {
   return {
     type: CLEAN_STORE,
@@ -229,6 +219,18 @@ export const deleteProduct = (id) => {
     } catch (error) {
       console.log(error);
       dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
+    }
+  };
+};
+
+export const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`/users/${id}`);
+      dispatch({ type: DELETE_USER_SUCCESS, payload: id });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
     }
   };
 };

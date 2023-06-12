@@ -13,14 +13,15 @@ import {
   GET_USER_BY_ID,
   GET_USER_ALL,
   ID_USER,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE, // Nueva acción para el caso de fallo en la eliminación del usuario
 } from "../actions/actions";
-
 
 const initialState = {
   products: [],
   allProducts: [],
   productDetail: {},
-  user: {},
+  users: [],
   idUsuario: [],
   userId: [],
 };
@@ -100,7 +101,8 @@ const rootReducer = (state = initialState, action) => {
           if (product.color && product.color.length > 0) {
             return product.color.some(
               (c) =>
-                c.ColorName && c.ColorName.toLowerCase() === color.toLowerCase()
+                c.ColorName &&
+                c.ColorName.toLowerCase() === color.toLowerCase()
             );
           }
           return false;
@@ -110,6 +112,7 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByColorProducts,
         };
       }
+      
     case GET_USER_BY_ID:
       return { ...state, userId: action.payload };
 
@@ -118,6 +121,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: state.allProducts,
       };
+      
     case GET_DETAIL:
       return {
         ...state,
@@ -127,7 +131,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_USER_ALL:
       return {
         ...state,
-        user: action.payload,
+        users: action.payload,
       };
 
     case GET_USER:
@@ -135,7 +139,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
-
 
     case DELETE_PRODUCT_SUCCESS:
       const updatedProducts = state.products.filter(
@@ -147,12 +150,25 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case DELETE_PRODUCT_FAILURE:
-      // Agregar lógica adicional si deseas manejar el error de borrado de producto
       console.log(action.payload);
-      alert('Ha ocurrido un error al eliminar la prenda');
+      alert("Ha ocurrido un error al eliminar la prenda");
 
       return state;
 
+    case DELETE_USER_SUCCESS: // Nueva acción para el caso de éxito en la eliminación del usuario
+      const updatedUsers = state.users.filter(
+        (user) => user.id !== action.payload
+      );
+      return {
+        ...state,
+        users: updatedUsers,
+      };
+
+    case DELETE_USER_FAILURE: // Nueva acción para el caso de fallo en la eliminación del usuario
+      console.log(action.payload);
+      alert("Ha ocurrido un error al eliminar el usuario");
+
+      return state;
 
     case ID_USER:
       console.log("llegue aca");

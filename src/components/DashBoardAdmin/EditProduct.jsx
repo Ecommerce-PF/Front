@@ -78,21 +78,11 @@ const handleSubmit = (e) => {
         axios.put(`http://localhost:3001/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
+     
+        } )
 
-           
-           
-          }
-
-        }
-
-        )
-
-    }
-    catch(error){
+    }catch(error){
     alert("No se pudo editar el producto");
-
-       
-
 
     }
 
@@ -102,7 +92,6 @@ const handleSubmit = (e) => {
   return (
     <>
 
-    ESto es el Edit del ADMIN!!
     
     {/* /**************************************************************************************** */      }
 

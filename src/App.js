@@ -2,15 +2,15 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Carrito from "./components/carrito/Carrito.jsx";
-import CreatePost from "./components/CreatePost/CreatePost";
-import DashBoard from "./components/DashBoard/DashBoard";
+// import CreatePost from "./components/CreatePost/CreatePost";
+// import DashBoard from "./components/DashBoard/DashBoard";
 import DashBoardAdmin from "./components/DashBoardAdmin/DashBoardAdmin";
 import Detail from "./components/Detail/Detail";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import Profile from "./components/Profile/Profile";
 import LandingPage from "./components/LandingPage/LandingPage";
-// import CreatePost from "./components/DashBoardAdmin/CreatePost";
+import CreatePost from "./components/DashBoardAdmin/CreatePost";
 import Delete from "./components/DashBoardAdmin/Delete";
 import Order from "./components/DashBoardAdmin/OrdersUsers"; 
 
@@ -25,9 +25,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/post" element={<CreatePost />} />
+        {/* <Route path="/post" element={<CreatePost />} /> */}
         <Route path='/carrito' element={<Carrito/>}/>
-        <Route path="/dash" element={<DashBoard />} />
+        {/* <Route path="/dash" element={<DashBoard />} /> */}
 
         <Route path="/edit/:id" element={<EditProduct />} />
 

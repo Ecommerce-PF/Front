@@ -12,6 +12,14 @@ const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
 
+  if (admin === false) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("admin", admin);
+  }
+
+  const adminUsers = localStorage.getItem("admin");
+
   /**************************************** */
 
   function mostrarTexto(elemento) {
@@ -49,8 +57,6 @@ const Nav = () => {
                   className={style.carrito}
                   src={Usuario}
                   alt=""
-                  onmouseover={mostrarTexto}
-                  onmouseout={ocultarTexto}
                 />
                 <div class={style.texto_imagen}>PROFILE</div>
               </Link>
@@ -65,28 +71,24 @@ const Nav = () => {
                   className={style.carrito}
                   src={Logout}
                   alt=""
-                  onmouseover={mostrarTexto}
-                  onmouseout={ocultarTexto}
                 />
                 <div class={style.texto_imagen}>LogOut</div>
               </button>
             </div>
 
             <div className={style.contenedor_imagen}>
-              {admin === true ? (
+              {adminUsers === "false" ? null : (
                 <Link className={style.link} to="/DashBoardAdmin">
                   <img
                     className={style.carrito}
                     src={Admin}
                     alt=""
-                    onmouseover={mostrarTexto}
-                    onmouseout={ocultarTexto}
                   />
-                  <div class={style.texto_imagen}>
+                  <div className={style.texto_imagen}>
                     ADMINISTRACION DE ADMINISTRADOR
                   </div>
                 </Link>
-              ) : null}
+              )}
             </div>
 
             <div className={style.contenedor_imagen2}>
@@ -95,8 +97,6 @@ const Nav = () => {
                   className={style.carrito1}
                   src={carrito}
                   alt=""
-                  onmouseover={mostrarTexto}
-                  onmouseout={ocultarTexto}
                 />
                 <div class={style.texto_imagen}>CARRITO DE COMPRAS</div>
               </Link>

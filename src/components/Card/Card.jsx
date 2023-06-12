@@ -4,7 +4,15 @@ import { useSelector } from "react-redux";
 import { admin } from "../../redux/actions/actions";
 
 const Card = ({ name, image, id, price }) => {
+
+  
   const admin = useSelector((state) => state.adminUser);
+
+  // if (admin.length === 0) {
+  //   // No hacer nada
+  // } else {
+  //   localStorage.setItem("admins", admins);
+  // }
 
   return (
     <div className={style.mainContainer}>

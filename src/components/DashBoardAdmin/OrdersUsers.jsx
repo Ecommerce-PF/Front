@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserAll, deleteUser } from '../../redux/actions/actions.js';
+import style from "../DashBoardAdmin/OrdersUsers.module.css"
 
 const OrdersUsers = () => {
   const users = useSelector(state => state.users);
@@ -15,15 +16,15 @@ const OrdersUsers = () => {
   };
 
   return (
-    <div>
+    <div className={style.container}>
       <h1>Usuarios registrados</h1>
       {users && users.length === 0 ? (
         <div className="alert alert-warning" role="alert">
           No hay usuarios registrados.
         </div>
       ) : (
-        <table className="table">
-          <thead>
+        <table className={style.table}>
+          <thead className={style.arriba}>
             <tr>
               <th>ID</th>
               <th>Nombre</th>

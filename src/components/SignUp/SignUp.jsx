@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { signUpUser } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("/users/signup", {
+        const response = await fetch("https://server-ecommerce.up.railway.app/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -87,89 +89,110 @@ const SignUp = () => {
   };
 
   return (
-    <div className={styles.container} style={{ backgroundImage: `url("../../assets/pika.gif")` }}>
+    <section className={styles.back}>
+    <div
+      className={styles.container}
+      style={{ backgroundImage: `url("../../assets/pika.gif")` }}
+    >
       <h2 className={styles.title}>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name" className={styles.label}>
             Name:
           </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+          <div className={styles.inputBlock}>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={user.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {errors.name && <p className={styles.error}>{errors.name}</p>}
         </div>
         <div>
           <label htmlFor="userName" className={styles.label}>
             Username:
           </label>
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            value={user.userName}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+          <div className={styles.inputBlock}>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              value={user.userName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {errors.userName && <p className={styles.error}>{errors.userName}</p>}
         </div>
         <div>
           <label htmlFor="phone" className={styles.label}>
             Phone:
           </label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            value={user.phone}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+          <div className={styles.inputBlock}>
+            {" "}
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={user.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {errors.phone && <p className={styles.error}>{errors.phone}</p>}
         </div>
         <div>
           <label htmlFor="email" className={styles.label}>
             Email:
           </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+          <div className={styles.inputBlock}>
+            {" "}
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={user.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {errors.email && <p className={styles.error}>{errors.email}</p>}
         </div>
         <div>
           <label htmlFor="password" className={styles.label}>
             Password:
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
+          <div className={styles.inputBlock}>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           {errors.password && <p className={styles.error}>{errors.password}</p>}
         </div>
         <button type="submit" className={styles.button}>
           Sign Up
         </button>
+
+        <Link to="/">
+          <button className={styles.button}>Back</button>
+        </Link>
       </form>
     </div>
+    </section>
   );
 };
 

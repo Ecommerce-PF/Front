@@ -4,6 +4,8 @@ import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { idUser, admin } from "../../redux/actions/actions";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,13 +34,15 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("/users/login", {
+      const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName, password }),
       });
+
+
 
       if (response.ok) {
         const data = await response.json();
@@ -66,8 +70,9 @@ const Login = () => {
   };
 
   return (
+    <section className={styles.back}>
     <div className={styles.body}>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.forms} onSubmit={handleSubmit}>
         <div className={styles.nav}>
           <h1>Login</h1>
         </div>
@@ -105,14 +110,25 @@ const Login = () => {
             {error && <p className={styles.error}>{error}</p>}
           </div>
 
-          <div className={styles.types}>
-            <button type="submit" className={styles.button}>
-              Login
-            </button>
+          <div className={styles.buttons}> 
+            <div className={styles.types}>
+              <button type="submit" className={styles.button}>
+                Login
+              </button>
+            </div>
+
+            <div className={styles.types}>
+              <Link to="/">
+              <button className={styles.button}>
+                Back
+              </button>
+              </Link>
+            </div>
           </div>
         </div>
       </form>
     </div>
+    </section>
   );
 };
 

@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
 
-  console.log(id);
+  console.log(id, "id");
 
   if (id.length === 0) {
     // No hacer nada
   } else {
-    localStorage.setItem("id", id);
+    localStorage.setItem("ids", id);
   }
 
-  const idUser = localStorage.getItem("id");
+  const idUser = localStorage.getItem("ids");
 
-  const [userOnline, setUserOnline] = useState(null);
+  console.log(idUser, "idUser");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,17 +30,7 @@ const Profile = () => {
     fetchData();
   }, [dispatch, idUser]);
 
-  useEffect(() => {
-    if (user && user.length > 0) {
-      setUserOnline(user[user.length - 1]);
-    }
-  }, [user]);
-
-  if (!userOnline) {
-    return null; // O redirige al usuario a la página de inicio de sesión u otra página apropiada
-  }
-
-  const { name, email, password, phone, address, purchaseHistory } = userId;
+  const { name, email, phone, address, purchaseHistory } = userId;
 
   return (
     <div>
@@ -47,7 +38,6 @@ const Profile = () => {
       <p className={styles.info}>Name: {name}</p>
       <p className={styles.info}>Username: {userId.userName}</p>
       <p className={styles.info}>Email: {email}</p>
-      <p className={styles.info}>Password: {password}</p>
       <p className={styles.info}>Phone: {phone}</p>
 
       <h3 className={styles.subtitle}>Address {address}</h3>
@@ -64,6 +54,12 @@ const Profile = () => {
             </li>
           ))}
       </ul>
+
+      <Link to="/home">
+        <button className={styles.button}>
+          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+        </button>
+      </Link>
     </div>
   );
 };

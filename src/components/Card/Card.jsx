@@ -1,6 +1,7 @@
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// eslint-disable-next-line
 import { admin } from "../../redux/actions/actions";
 import Edit from "../../assets/menu.png";
 
@@ -15,10 +16,7 @@ const Card = ({ name, image, id, price }) => {
 
   const userAdmin = localStorage.getItem("admins");
 
-  console.log(
-    userAdmin,
-    "userAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdmin"
-  );
+
 
   return (
     <div className={style.mainContainer}>

@@ -1,137 +1,196 @@
-/* estilos details*/
-/* 
-*{
-    box-sizing: border-box;
-    padding: 0%;
-    margin: 0%;
-    background-color: #252525;
-    font-family: Arial, Helvetica, sans-serif;
-    color: azure;
-  } */
-  button{
-    cursor: pointer;
-  }
-  h3{
-    padding: 15px;
-  }
-  
-  /* CONTENEDOR PRINCIPAL 1 */
-  .mainContainer{
-    width: 100vw;
+.details {
+  max-width: 70dvh;
+}
+
+/* CONTENEDOR PRINCIPAL 1 */
+.mainContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.551);
+  border-radius: 30px;
+  padding: 50px;
+  max-width: 50dvh;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.121);
+}
+
+
+
+.productImg {
+  background-color: rgba(255, 255, 255, 0.551);
+  height: 85%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  margin: 20px;
+  padding: 2%;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.121);
+}
+.img {
+  height: 70%;
+  width: 70%;
+  /* background-color: azure; */
+}
+
+.imgProducto {
+  height: 100%;
+}
+
+/* CONTENEDOR PRINCIPAL 2 */
+.details {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 15px;
+  margin: 20px;
+}
+.buyNow {
+  width: 20%;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colorSize {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: purple;
+}
+div,
+label,
+input,
+h3 {
+  background-color: transparent;
+  border: none;
+}
+.cart {
+  width: 70%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* INPUTS */
+.color,
+.size {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+}
+.size {
+  background-color: azure;
+  color: #252525;
+  font-weight: 700;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ICONOS */
+.icon {
+  background-color: transparent;
+  font-size: larger;
+  margin: 0px 10px;
+}
+
+.button {
+  width: 160px;
+  height: 60px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #1d1f24;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #434343;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(-1px);
+}
+
+.containerSA {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.buttonSelect {
+  width: 150px;
+  height: 50px;
+  margin: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #1d1f24;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.buttonSelect:hover {
+  background-color: #434343;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.buttonSelect:active {
+  transform: translateY(-1px);
+}
+
+
+.option{
+text-align: center;
+}
+
+  .back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    width: 100%;
     height: 100vh;
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    align-items: center;
-  }
-  .productImg{
-    background-color: purple;
-    height: 85%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    margin: 20px;
-  }
-  .img{
-    height: 70%;
-    width: 70%;
-    /* background-color: azure; */
-  }
+    background-image: linear-gradient(to top, rgb(252, 218, 255) 0%, #ffffff 100%);
 
-  .imgProducto{
-    height: 100%;
   }
-  
-  /* CONTENEDOR PRINCIPAL 2 */
-  .details{
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    border-radius: 15px;
-    margin: 20px;
-  }
-  .buyNow{
-    width: 70%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 20px;
-    border-radius: 15px;
-    background-color: purple;
-    flex-wrap: wrap;
-  }
-  .colorSize{
-    width: 80%;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 15px;
-    border-radius: 15px;
-    background-color: purple;
-  }
-  div, label, input, h3{
-    background-color: transparent;
-    border: none;
-  }
-  .cart{
-    width: 70%;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .cart > button{
-    padding: 5%;
-    border-radius: 18px;
-    background-color: purple;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: azure;
-    font-weight: 600;
-  }
-
-  .bttnBack{
-    width: 100px;
-    height: 65px;
-    padding: 5%;
-    border-radius: 18px;
-    background-color: purple;
-    color: azure;
-    font-weight: 600;
-  }
-  
-  /* INPUTS */
-  .color, .size{
-    border-radius: 100%;
-    width: 20px;
-    height: 20px;
-    margin: 10px;
-    cursor: pointer;
-  }
-  .size{
-    background-color: azure;
-    color: #252525;
-    font-weight: 700;
-    width: 25px;
-    height: 25px;
-  }
-  
-  /* ICONOS */
-  .icon{
-    background-color: transparent;
-    font-size: larger;
-    margin: 0px 10px;
-  }
-  

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+// eslint-disable-next-line
 import { validate } from "./validator.js";
+// eslint-disable-next-line
 import { createPost, getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
@@ -17,7 +19,7 @@ export default function CreatePost() {
   const uniqueCategories = Array.from(
     new Set(products.map((product) => product.category))
   );
-
+    // eslint-disable-next-line
   const [categories, setCategories] = useState(uniqueCategories);
   const [allCategories, setAllCategories] = useState("All categories");
 
@@ -40,18 +42,13 @@ export default function CreatePost() {
     parentCategory: "",
     description: "",
   });
-
+// eslint-disable-next-line
   const [colores, setColores] = useState({
     color: "",
   });
 
-  console.log(colores, "colores");
 
-  // const changeHandlerColors = (event) => {
-  //   const property = event.target.name;
-  //   const value = event.target.value;
-  //   setColores({ ...colores, [property]: value });
-  // };
+
 
 
   const handleChange = (e) => {
@@ -92,11 +89,9 @@ export default function CreatePost() {
     }
   }, [colors]);
 
-  console.log(input);
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
-    console.log(value, "esto es name");
     if (name === "category") {
       setAllCategories(value);
     }
@@ -113,20 +108,14 @@ export default function CreatePost() {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/products", input)
+      .post("/products", input)
       .then(() => alert("The recipe was created successfully"));
   };
 
   return (
     <div className={styles.body}>
-      <form onSubmit={submitHandler}>
-        <div className={styles.nav}>
-          <h1>Publicate</h1>
-          <button className={styles.button}>Create</button>
-          <Link to="/">
-            <button className={styles.button}>Back</button>
-          </Link>
-        </div>
+      <form className={styles.form} onSubmit={submitHandler}>
+
 
         <div className={styles.statsAndTypes}>
           <div className={styles.stats}>
@@ -135,6 +124,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="number"
                   name="id"
                   id="input-text"
@@ -151,6 +141,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="name"
                   id="input-text"
@@ -167,6 +158,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="parentCategory"
                   id="input-text"
@@ -183,15 +175,9 @@ export default function CreatePost() {
             <form onSubmit={addColors}>
               <div>
                 <label className="name">Colors: {count + 1} </label>
-                {/* <input
-                  type="text"
-                  value={colores.color}
-                  onChange={changeHandlerColors}
-                  name="color"
-                  className="input"
-                /> */}
                 <label htmlFor="color">Color</label>
                 <input
+                className={styles.input}
                   type="text"
                   name="color"
                   id="color"
@@ -209,6 +195,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="number"
                   name="price"
                   id="input-text"
@@ -224,6 +211,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="image"
                   id="input-text"
@@ -240,6 +228,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
+                className={styles.input}
                   type="text"
                   name="description"
                   id="input-text"
@@ -281,7 +270,13 @@ export default function CreatePost() {
         <button className="enviar" type="submit">
           ENVIAR
         </button>
+        <div className={styles.nav}>
+          <Link to="/home">
+            <button className={styles.button}>Back</button>
+          </Link>
+        </div>
       </form>
+
     </div>
   );
 }

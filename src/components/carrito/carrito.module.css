@@ -7,7 +7,7 @@
     margin: 20px;
 }
 .crtPrdct{
-    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.059);;
     width: 90vw;
     display: flex;
     justify-content: space-around;
@@ -52,13 +52,13 @@
     background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
     color: #af1cc2;
-    margin-bottom: 60px;
 }
 
 .productAmout{
     text-align: center;
     width: 100px;
     border: 1px solid black;
+    border-radius: 20px;
 }
 
 .containerCart{
@@ -74,18 +74,62 @@
     height: 150px;
 }
 
-.componentCart{
-    margin-bottom: 150px;
-}
+
 
 .carritoTotalPrecio{
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 90vw;
-    border: 1px solid black;
     border-radius: 20px;
     position: fixed;
     bottom: 50px;
-    background-color: lightcoral;
+    background-color: rgba(0, 0, 0, 0.059);;
 }
+
+
+.button {
+    width: 150px;
+    height: 50px;
+    font-size: 14px;
+    color: #383838;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #eeeeee;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
+    color: #000000;
+    transform: translateY(-1px);
+  }
+  
+  .button:active {
+    transform: translateY(-1px);
+  }
+
+  .buttonReload {
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
+    color: #383838;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .buttonReload:hover {
+    background-color: #eeeeee;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
+    color: #000000;
+    transform: translateY(-1px);
+  }
+  
+  .buttonReload:active {
+    transform: translateY(-1px);
+  }

@@ -1,4 +1,3 @@
-
 .container{
     justify-content: center;
     align-items: center;
@@ -9,9 +8,12 @@
     background: rgb(255,255,255);
   }
 
-  .link{
-    font-size: 30px;
-    margin: 40px;
-    text-decoration: underline;
+  .table{
+    border: 2px solid black;
+    padding: 20px;
+    margin: 10px;
+  }
 
+  .arriba{
+    margin: 2px;
   }

@@ -1,37 +1,58 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getOrdersUsers } from "../../redux/actions/actions.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserAll, deleteUser } from '../../redux/actions/actions.js';
+import style from "../DashBoardAdmin/OrdersUsers.module.css"
 
 const OrdersUsers = () => {
-  const orders = useSelector(state => state.orders);
+  const users = useSelector(state => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrdersUsers());
+    dispatch(getUserAll());
   }, [dispatch]);
 
+  const handleDeleteUser = (id) => {
+    dispatch(deleteUser(id));
+  };
+
   return (
-    <div>
-      {orders.length === 0 ? (
+    <div className={style.container}>
+      <h1>Usuarios registrados</h1>
+      {users && users.length === 0 ? (
         <div className="alert alert-warning" role="alert">
-          Los usuarios no realizaron órdenes.
+          No hay usuarios registrados.
         </div>
-      ) : null}
-      {orders && orders.map(o => (
-        <div className="card text-white bg-dark mb-3 mt-3" key={o.id}>
-          <div className="card-header">
-            User Id: {o.userId}
-          </div>
-          <div className="card-body">
-            <h5 className="card-title">Order Id: {o.id}</h5>
-            <p className="card-text">Total Gastado: {o.totalPrice}</p>
-            <Link to={`/admin/orders/${o.id}`}>
-              <button className="btn btn-outline-warning d-print-block btn-sm p-2">Ir a la Orden</button>
-            </Link>
-          </div>
-        </div>
-      ))}
+      ) : (
+        <table className={style.table}>
+          <thead className={style.arriba}>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteUser(user.id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

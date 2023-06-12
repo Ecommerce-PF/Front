@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import Swal from 'sweetalert2'
 
-import { getDetail } from "../../redux/actions/actions.js";
+import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
 import styles from "./detail.module.css";
@@ -13,6 +14,23 @@ export default function Detail() {
   const { id } = useParams();
   const state = useSelector((state) => state.productDetail);
 
+  const handleAddCart = () => {
+    dispatch(addCart(state));
+    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+    if (listaCart === null) {
+      listaCart = [];
+    } else {
+      listaCart.push(state);
+    }
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Su producto se a agregado al carrito!!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -60,12 +78,9 @@ export default function Detail() {
       <div className={styles.details}>
         <div>
           <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
-          {/* <button className={styles.color} style={{backgroundColor: 'SANDSHELL'}}></button>
-              <button className={styles.color} style={{backgroundColor: 'red'}}></button>
-              <button className={styles.color} style={{backgroundColor: 'blue'}}></button> */}
         </div>
         <div className={styles.cart}>
-          <button onClick={() => alert("En producción")}>
+          <button onClick={handleAddCart}>
             Add to Cart{" "}
             <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
           </button>

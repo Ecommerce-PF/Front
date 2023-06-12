@@ -8,6 +8,8 @@ import {
   GET_DETAIL,
   GET_USER,
   ORDER_BY_PRICE,
+  ADD_CART,
+  DELETE_CART,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
   GET_USER_BY_ID,
@@ -21,6 +23,7 @@ const initialState = {
   allProducts: [],
   productDetail: {},
   user: {},
+  cart: [],
   idUsuario: [],
   userId: [],
 };
@@ -135,6 +138,20 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case ADD_CART:
+      let cartPayload = [...state.cart, action.payload];
+      return{
+        ...state,
+        cart: cartPayload
+      }
+    case DELETE_CART:
+      let deleteCartPayload = state.cart.filter(e => {
+        return e.id !== action.payload;
+      });
+      return{
+        ...state,
+        cart: deleteCartPayload,
+      }
 
 
     case DELETE_PRODUCT_SUCCESS:

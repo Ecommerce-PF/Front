@@ -2,18 +2,35 @@ import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { admin } from "../../redux/actions/actions";
+import Edit from "../../assets/menu.png";
 
 const Card = ({ name, image, id, price }) => {
   const admin = useSelector((state) => state.adminUser);
 
+  if (admin.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("admins", admin);
+  }
+
+  const userAdmin = localStorage.getItem("admins");
+
+  console.log(
+    userAdmin,
+    "userAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdminuserAdmin"
+  );
+
   return (
     <div className={style.mainContainer}>
-      {admin ? (
+      {userAdmin === "true" ? (
         <Link to={`/edit/${id}`}>
-          <button>Editar </button>
+          <img src={Edit} className={style.edit} alt="" />
         </Link>
-      ) : null}
+      ) : (
+        null
+      )}
 
+      
 
       <Link className={style.link} to={`/detail/${id}`}>
         <h2 className={style.title}>{name}</h2>

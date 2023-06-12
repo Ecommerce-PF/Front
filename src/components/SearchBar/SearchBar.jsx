@@ -39,11 +39,11 @@ export default function SearchBar() {
             name="input-text"
             id="input-text"
             spellCheck="false"
+            placeholder="SEARCH"
             onChange={(e) => {
               hanldeInputChange(e);
             }}
           />
-          <span className={styles.placeholder}>Search</span>
         </div>
       </form>
     </div>

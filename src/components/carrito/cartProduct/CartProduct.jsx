@@ -18,7 +18,7 @@ export default function CartProduct({ product }) {
         window.location.reload();
     }
 
-    const [valueInp, setValueInp] = useState(1);
+    const [valueInp, setValueInp] = useState(product.quantity);
 
     const handleAddition = () => {
         setValueInp(valueInp + 1);

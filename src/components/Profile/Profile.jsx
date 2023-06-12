@@ -2,27 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
-
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
 
-  console.log(id, "id")
-
+  console.log(id, "id");
 
   if (id.length === 0) {
     // No hacer nada
   } else {
-
     localStorage.setItem("ids", id);
   }
-  
+
   const idUser = localStorage.getItem("ids");
 
-  console.log(idUser, "idUser")
-
+  console.log(idUser, "idUser");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +29,6 @@ const Profile = () => {
     };
     fetchData();
   }, [dispatch, idUser]);
-
 
   const { name, email, phone, address, purchaseHistory } = userId;
 
@@ -58,6 +55,11 @@ const Profile = () => {
           ))}
       </ul>
 
+      <Link to="/home">
+        <button className={styles.button}>
+          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+        </button>
+      </Link>
     </div>
   );
 };

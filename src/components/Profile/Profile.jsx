@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 
+
 const Profile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
@@ -10,15 +11,18 @@ const Profile = () => {
 
   console.log(id, "id")
 
+
   if (id.length === 0) {
     // No hacer nada
   } else {
+
     localStorage.setItem("ids", id);
   }
   
   const idUser = localStorage.getItem("ids");
 
   console.log(idUser, "idUser")
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +31,7 @@ const Profile = () => {
     };
     fetchData();
   }, [dispatch, idUser]);
+
 
   const { name, email, phone, address, purchaseHistory } = userId;
 
@@ -52,6 +57,7 @@ const Profile = () => {
             </li>
           ))}
       </ul>
+
     </div>
   );
 };

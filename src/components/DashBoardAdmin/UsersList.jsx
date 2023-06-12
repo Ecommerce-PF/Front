@@ -14,7 +14,7 @@ const Upgrade = () => {
     const dispatch = useDispatch()
 
     function previousValues(e) {
-        axios.get(`/users/${e}`)
+        axios.get(`http://localhost:3000/users/${e}`)
             .then(res => {
                 const c = res.data;
                 setUser(e)

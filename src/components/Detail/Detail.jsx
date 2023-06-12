@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -20,22 +20,7 @@ export default function Detail() {
     if (listaCart === null) {
       listaCart = [];
     } else {
-      for (var i = 0; i < listaCart.length; i++) {
-        // Comparar el valor buscado con el objeto actual
-        if (listaCart[i].id === state.id) {
-          return (Swal.fire({
-            icon: 'error',
-            title: 'To producto ya se encuentra en la lista de reproducción!',
-            showConfirmButton: false,
-            timer: 1500
-          }))
-        }
-      }
-
-      listaCart.push({
-        ...state,
-        quantity: 1
-      });
+      listaCart.push(state);
     }
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
 
@@ -46,6 +31,7 @@ export default function Detail() {
       timer: 1500,
     });
   };
+
 
   const [input, setInput] = useState(1);
 
@@ -85,10 +71,7 @@ export default function Detail() {
         timer: 1500
       })
     }
-
-
   }
-
 
   useEffect(() => {
     dispatch(getDetail(id));

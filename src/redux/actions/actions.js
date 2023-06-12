@@ -25,6 +25,7 @@ export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const GET_USER_ALL = "GET_USER_ALL";
 export const ID_USER = "ID_USER";
 export const GET_ORDERS_USERS = "GET_ORDERS_USERS"; // Agregada acción para obtener las órdenes de los usuarios
+export const ADMIN_USER = "ADMIN_USER";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -170,7 +171,7 @@ export const getUserById = (id) => {
 export const getOrdersUsers = () => {
   return async (dispatch) => {
     try {
-      const orders = await axios.get('/orders');
+      const orders = await axios.get("/orders");
       dispatch({ type: GET_ORDERS_USERS, payload: orders.data });
     } catch (error) {
       console.log(error);
@@ -194,6 +195,13 @@ export const idUser = (id) => {
   return {
     type: ID_USER,
     payload: id,
+  };
+};
+
+export const admin = (trueOrFalse) => {
+  return {
+    type: ADMIN_USER,
+    payload: trueOrFalse,
   };
 };
 
@@ -227,15 +235,15 @@ export const addCart = (producto) => {
   return {
     type: ADD_CART,
     payload: producto,
-  }
-}
+  };
+};
 
 export const deleteCart = (id) => {
   return {
     type: DELETE_CART,
     payload: id,
-  }
-}
+  };
+};
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {

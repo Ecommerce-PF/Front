@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -20,7 +20,22 @@ export default function Detail() {
     if (listaCart === null) {
       listaCart = [];
     } else {
-      listaCart.push(state);
+      for (var i = 0; i < listaCart.length; i++) {
+        // Comparar el valor buscado con el objeto actual
+        if (listaCart[i].id === state.id) {
+          return (Swal.fire({
+            icon: 'error',
+            title: 'To producto ya se encuentra en la lista de reproducción!',
+            showConfirmButton: false,
+            timer: 1500
+          }))
+        }
+      }
+
+      listaCart.push({
+        ...state,
+        quantity: 1
+      });
     }
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
 
@@ -31,6 +46,53 @@ export default function Detail() {
       timer: 1500
     })
   }
+
+  const [input, setInput] = useState(1);
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+
+    if (listaCart === null) {
+      listaCart = [];
+    } else {
+      // Recorrer el array de objetos
+      for (var i = 0; i < listaCart.length; i++) {
+        // Comparar el valor buscado con el objeto actual
+        if (listaCart[i].id === state.id) {
+          return (Swal.fire({
+            icon: 'error',
+            title: 'To producto ya se encuentra en la lista de reproducción!',
+            showConfirmButton: false,
+            timer: 1500
+          }))
+        }
+      }
+      listaCart.push({
+        ...state,
+        quantity: input,
+      });
+      localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Su producto se a agregado al carrito!!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+
+  }
+
+  // console.log({
+  //   ...state,
+  //   quantity: input,
+  // });
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -91,16 +153,14 @@ export default function Detail() {
           </NavLink>
 
           <h3>Quantity:</h3>
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <label htmlFor="quantity">Quantity:</label>
-            <input type="number" name="quantity" id="quantity" min="1" />
-            <button type="submit">
-                <FaCartArrowDown className={styles.icon} />
+            <input type="number" name="quantity" id="quantity" min="1" onChange={handleChange} />
+            <button type="submit" >
+              <FaCartArrowDown className={styles.icon} />
             </button>
 
-
-            
-        </form>
+          </form>
         </div>
       </div>
     </div>

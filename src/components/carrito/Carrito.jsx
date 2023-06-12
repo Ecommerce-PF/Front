@@ -11,7 +11,6 @@ import styles from "./carrito.module.css";
 export default function Carrito() {
 
     const cart = JSON.parse(localStorage.getItem("carritoLS"));
-    // console.log(cart);
 
     if (cart !== null && cart.length > 0) {
         var precioTotal = 0;
@@ -37,7 +36,6 @@ export default function Carrito() {
   }
 
     const productosUnicos = eliminarObjetosRepetidos(cart);
-    console.log(productosUnicos)
 
     return (
         <section>

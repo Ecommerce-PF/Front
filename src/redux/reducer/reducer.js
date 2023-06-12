@@ -41,7 +41,6 @@ const rootReducer = (state = initialState, action) => {
 
     case GET_BY_NAME:
       if (!action.payload.length) {
-        console.log("Prod not Found");
         alert("Prod not Found");
       }
       return {
@@ -105,8 +104,7 @@ const rootReducer = (state = initialState, action) => {
           if (product.color && product.color.length > 0) {
             return product.color.some(
               (c) =>
-                c.ColorName &&
-                c.ColorName.toLowerCase() === color.toLowerCase()
+                c.ColorName && c.ColorName.toLowerCase() === color.toLowerCase()
             );
           }
           return false;
@@ -116,7 +114,7 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByColorProducts,
         };
       }
-      
+
     case GET_USER_BY_ID:
       return { ...state, userId: action.payload };
 
@@ -125,7 +123,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: state.allProducts,
       };
-      
+
     case GET_DETAIL:
       return {
         ...state,
@@ -154,7 +152,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case DELETE_PRODUCT_FAILURE:
-      console.log(action.payload);
       alert("Ha ocurrido un error al eliminar la prenda");
 
       return state;
@@ -169,13 +166,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case DELETE_USER_FAILURE: // Nueva acción para el caso de fallo en la eliminación del usuario
-      console.log(action.payload);
       alert("Ha ocurrido un error al eliminar el usuario");
 
       return state;
 
     case ID_USER:
-      console.log("llegue aca");
       return {
         ...state,
         idUsuario: action.payload,

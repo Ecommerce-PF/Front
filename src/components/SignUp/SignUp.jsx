@@ -4,6 +4,7 @@ import { signUpUser } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const dispatch = useDispatch();

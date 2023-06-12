@@ -32,6 +32,47 @@ export default function Detail() {
     });
   };
 
+
+  const [input, setInput] = useState(1);
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+
+    if (listaCart === null) {
+      listaCart = [];
+    } else {
+      // Recorrer el array de objetos
+      for (var i = 0; i < listaCart.length; i++) {
+        // Comparar el valor buscado con el objeto actual
+        if (listaCart[i].id === state.id) {
+          return (Swal.fire({
+            icon: 'error',
+            title: 'To producto ya se encuentra en la lista de reproducción!',
+            showConfirmButton: false,
+            timer: 1500
+          }))
+        }
+      }
+      listaCart.push({
+        ...state,
+        quantity: input,
+      });
+      localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Su producto se a agregado al carrito!!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  }
+
   useEffect(() => {
     dispatch(getDetail(id));
   }, [dispatch, id]);

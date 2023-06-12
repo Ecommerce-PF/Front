@@ -16,7 +16,6 @@ const Upgrade = () => {
     function previousValues(e) {
         axios.get(`http://localhost:3000/users/${e}`)
             .then(res => {
-                console.log(res);
                 const c = res.data;
                 setUser(e)
                 setInput({

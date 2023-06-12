@@ -12,13 +12,14 @@ const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
 
-  if (admin === false) {
+  if (admin.length === 0) {
     // No hacer nada
   } else {
-    localStorage.setItem("admin", admin);
+    localStorage.setItem("admins", admin);
   }
 
-  const adminUsers = localStorage.getItem("admin");
+
+  const userAdmin = localStorage.getItem("admins");
 
   /**************************************** */
 
@@ -53,11 +54,7 @@ const Nav = () => {
           <React.Fragment>
             <div className={style.contenedor_imagen}>
               <Link className={style.link} to="/profile">
-                <img
-                  className={style.carrito}
-                  src={Usuario}
-                  alt=""
-                />
+                <img className={style.carrito} src={Usuario} alt="" />
                 <div class={style.texto_imagen}>PROFILE</div>
               </Link>
             </div>
@@ -67,37 +64,29 @@ const Nav = () => {
                 className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
                 onClick={handleLogout}
               >
-                <img
-                  className={style.carrito}
-                  src={Logout}
-                  alt=""
-                />
+                <img className={style.carrito} src={Logout} alt="" />
                 <div class={style.texto_imagen}>LogOut</div>
               </button>
             </div>
 
             <div className={style.contenedor_imagen}>
-              {adminUsers === "false" ? null : (
+
+{userAdmin === "true" ? (
                 <Link className={style.link} to="/DashBoardAdmin">
-                  <img
-                    className={style.carrito}
-                    src={Admin}
-                    alt=""
-                  />
-                  <div className={style.texto_imagen}>
-                    ADMINISTRACION DE ADMINISTRADOR
-                  </div>
-                </Link>
-              )}
+                <img className={style.carrito} src={Admin} alt="" />
+                <div className={style.texto_imagen}>
+                  ADMINISTRACION DE ADMINISTRADOR
+                </div>
+              </Link>
+      ) : (
+        null
+      )}
+
             </div>
 
             <div className={style.contenedor_imagen2}>
               <Link to="/carrito">
-                <img
-                  className={style.carrito1}
-                  src={carrito}
-                  alt=""
-                />
+                <img className={style.carrito1} src={carrito} alt="" />
                 <div class={style.texto_imagen}>CARRITO DE COMPRAS</div>
               </Link>
             </div>

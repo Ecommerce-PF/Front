@@ -75,7 +75,7 @@ const handleSubmit = (e) => {
 
 
     try{
-        axios.put(`http://localhost:3001/products/${id}`, form)
+        axios.put(`/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
      

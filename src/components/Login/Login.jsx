@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { idUser, admin } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -48,6 +47,8 @@ const Login = () => {
         const data = await response.json();
         const userId = data.user.id;
         const trueOrFalse = data.user.admin;
+
+        console.log(userId, "esto es userId")
 
         // Enviar acción de inicio de sesión a Redux
         await dispatch(login(data.user));

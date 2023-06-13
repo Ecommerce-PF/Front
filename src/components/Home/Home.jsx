@@ -4,6 +4,8 @@ import { getAllProducts } from "../../redux/actions/actions";
 import Buttons from "../ButonFilter/ButonFilter";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import Nav from "../Nav/Nav";
+import WhatsApp from "../WhatsApp/WhatsApp";
+import Footer from "../Footer/Footer"
 
 import style from "./Home.module.css";
 
@@ -19,6 +21,11 @@ const Home = () => {
       <Nav />
       <Buttons />
       <CardsContainer />
+      <div className={style.wppContainer}>
+        <WhatsApp />
+      </div>
+
+      <Footer/>
     </div>
   );
 };

@@ -8,16 +8,31 @@ import Admin from "../../assets/ajustes.png";
 import Usuario from "../../assets/usuario.png";
 import Logout from "../../assets/cerrar-sesion.png";
 
+
+
 const Nav = () => {
+
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
+  const idLogin = useSelector((state) => state.idUsuario);
+
+  console.log(idLogin, "esto idLogin en home");
+
+  if (idLogin.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("idLogins", idLogin);
+  }
+
+  const isLogin = localStorage.getItem("idLogins");
+
+  console.log(isLogin, "isLoginisLoginisLoginisLoginisLogin")
 
   if (admin.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("admins", admin);
   }
-
 
   const userAdmin = localStorage.getItem("admins");
 
@@ -58,30 +73,27 @@ const Nav = () => {
                 <div class={style.texto_imagen}>PROFILE</div>
               </Link>
             </div>
+            {isLogin.length === 0 ? <Link>SignUp</Link> : (
+              <div className={style.contenedor_imagen}>
+                <button
+                  className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
+                  onClick={handleLogout}
+                >
+                  <img className={style.carrito} src={Logout} alt="" />
+                  <div class={style.texto_imagen}>LogOut</div>
+                </button>
+              </div>
+            )}
 
             <div className={style.contenedor_imagen}>
-              <button
-                className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
-                onClick={handleLogout}
-              >
-                <img className={style.carrito} src={Logout} alt="" />
-                <div class={style.texto_imagen}>LogOut</div>
-              </button>
-            </div>
-
-            <div className={style.contenedor_imagen}>
-
-{userAdmin === "true" ? (
+              {userAdmin === "true" ? (
                 <Link className={style.link} to="/DashBoardAdmin">
-                <img className={style.carrito} src={Admin} alt="" />
-                <div className={style.texto_imagen}>
-                  ADMINISTRACION DE ADMINISTRADOR
-                </div>
-              </Link>
-      ) : (
-        null
-      )}
-
+                  <img className={style.carrito} src={Admin} alt="" />
+                  <div className={style.texto_imagen}>
+                    ADMINISTRACION DE ADMINISTRADOR
+                  </div>
+                </Link>
+              ) : null}
             </div>
 
             <div className={style.contenedor_imagen2}>

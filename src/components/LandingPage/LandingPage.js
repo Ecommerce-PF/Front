@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
+import Carousel from "./Carrusel/Carousel";
 
 export default function LandingPage() {
   return (
@@ -20,6 +21,7 @@ export default function LandingPage() {
               <button className={s.btn}>Sign Up</button>
             </Link>
           </div>
+          <Carousel />
         </div>
       </div>
     </section>

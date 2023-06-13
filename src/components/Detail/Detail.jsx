@@ -41,7 +41,7 @@ export default function Detail() {
 
     Swal.fire({
       icon: 'success',
-      title: 'Su producto se a agregado al carrito!!',
+      title: 'Su producto se ha agregado al carrito!!',
       showConfirmButton: false,
       timer: 1500
     })

@@ -17,7 +17,7 @@ export default function Carrito() {
   if (cart !== null && cart.length > 0) {
     var precioTotal = 0;
     for (let i = 0; i < cart.length; i++) {
-      precioTotal += cart[i].price;
+      precioTotal += (cart[i].price * cart[i].quantity);
     }
   }
 

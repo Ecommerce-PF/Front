@@ -28,6 +28,7 @@ const initialState = {
   idUsuario: [],
   userId: [],
   adminUser: [],
+  priceRange: [0, Infinity],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -50,14 +51,25 @@ const rootReducer = (state = initialState, action) => {
 
     case FILTER_BY_CATEGORY:
       const { payload: category } = action;
+      const { priceRange } = state;
+
       if (category === "") {
+        // No se aplica ningún filtro por categoría
+        const filteredByPriceProducts = state.allProducts.filter(
+          (product) =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+        );
         return {
           ...state,
-          products: state.allProducts,
+          products: filteredByPriceProducts,
         };
       } else {
+        // Se aplica el filtro por categoría seleccionada y filtro de precios
         const filteredByCategoryProducts = state.allProducts.filter(
-          (product) => product.category === category
+          (product) =>
+            product.category === category &&
+            product.price >= priceRange[0] &&
+            product.price <= priceRange[1]
         );
         return {
           ...state,
@@ -66,14 +78,14 @@ const rootReducer = (state = initialState, action) => {
       }
 
     case FILTER_BY_PRICE:
-      const { payload: priceRange } = action;
-      const [minPrice, maxPrice] = priceRange;
+      const { payload: price } = action;
       const filteredByPriceProducts = state.allProducts.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
+        (product) => product.price >= price[0] && product.price <= price[1]
       );
       return {
         ...state,
         products: filteredByPriceProducts,
+        priceRange: price,
       };
 
     case ORDER_BY_PRICE:

@@ -56,7 +56,7 @@ export default function Detail() {
 
   function handleChange(e) {
     console.log(e.target.value)
-    e.target.value === 'None'? setColoresPrt([]): setColorProductImg(e.target.value);
+    e.target.value === 'None'? setColoresPrt([]): (setColorProductImg(e.target.value));
     setColoresPrt(clrPrdct(e.target.value));
   }
 

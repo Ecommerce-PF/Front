@@ -1,55 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUserAll, deleteUser, banUser } from '../../redux/actions/actions.js';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getUserAll,
+  deleteUser,
+  getUserById,
+} from "../../redux/actions/actions.js";
 import style from "../DashBoardAdmin/OrdersUsers.module.css";
+import axios from "axios";
 
 const OrdersUsers = () => {
-  const users = useSelector(state => state.users);
-  const banUserError = useSelector(state => state.banUserError);
   const dispatch = useDispatch();
-  const [banUserMessage, setBanUserMessage] = useState(null);
+  const users = useSelector((state) => state.users);
   const id = useSelector((state) => state.idUsuario);
+  const [idBan, setIdBan] = useState({ active: false }); // Estado idBan y su función de actualización
 
-  if (id.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("ids", id);
-  }
-  const idUser = localStorage.getItem("ids");
-
-
-const [form, setForm] = useState({
-    id: idUser,
-    name: "",
-    userName: "",
-    phone: "",
-    email: "",
-    profileImage: "",
-    });
-
-
-    
   useEffect(() => {
     dispatch(getUserAll());
-    if (banUserError) {
-      setBanUserMessage(`Error al banear usuario: ${banUserError}`);
-    } else {
-      setBanUserMessage(null);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (id.length > 0) {
+      localStorage.setItem("ids", id);
     }
-  }, [dispatch, banUserError]);
+  }, [id]);
+
+  const idUser = localStorage.getItem("ids");
+
+  console.log(idUser, "esto es el id user");
+
+  const handleBanUser = (id) => {
+    dispatch(getUserById(id));
+    const updatedIdBan = { ...idBan };
+    updatedIdBan.active = !updatedIdBan.active;
+    console.log(updatedIdBan, "updatedIdBan");
+
+    try {
+      axios.put(`/users/${id}`, updatedIdBan).then((res) => {
+        if (updatedIdBan.active === true) {
+          alert("Usuario desbaneado correctamente");
+        } else {
+          alert("Usuario baneado correctamente");
+        }
+      });
+    } catch (error) {
+      alert("No se pudo editar el usuario");
+    }
+
+    // Actualizar el estado idBan con el nuevo valor
+    setIdBan(updatedIdBan);
+  };
 
   const handleDeleteUser = (id) => {
     dispatch(deleteUser(id));
   };
 
-  const handleBanUser = (id) => {
-    dispatch(banUser(id));
-  };
-
   return (
     <div className={style.container}>
       <h1>Usuarios registrados</h1>
-      {banUserMessage && <div className="alert alert-danger">{banUserMessage}</div>}
       {users && users.length === 0 ? (
         <div className="alert alert-warning" role="alert">
           No hay usuarios registrados.
@@ -65,7 +72,7 @@ const [form, setForm] = useState({
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
@@ -77,7 +84,7 @@ const [form, setForm] = useState({
                   >
                     Eliminar
                   </button>
-                  {user.isActive ? ( // Mostrar el estado de baneo y permitir desbanear
+                  {user.isActive ? (
                     <button
                       className="btn btn-warning"
                       onClick={() => handleBanUser(user.id)}

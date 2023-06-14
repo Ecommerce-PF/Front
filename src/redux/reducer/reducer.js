@@ -18,6 +18,8 @@ import {
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
 } from "../actions/actions";
 
 const initialState = {
@@ -33,6 +35,7 @@ const initialState = {
   priceRange: [0, Infinity],
   inicio: [],
   iniciado: [],
+  myFavorites: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -80,6 +83,18 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByCategoryProducts,
         };
       }
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        myFavorites: [...state.myFavorites, action.payload],
+      };
+    case DELETE_FAVORITE:
+      return {
+        ...state,
+        myFavorites: state.myFavorites.filter(
+          (item) => item.id !== action.payload
+        ),
+      };
 
     case FILTER_BY_PRICE:
       const { payload: price } = action;

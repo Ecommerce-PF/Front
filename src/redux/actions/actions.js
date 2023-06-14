@@ -29,6 +29,13 @@ export const ID_USER = "ID_USER";
 export const ADMIN_USER = "ADMIN_USER";
 export const SIN_INICIAR = "SIN_INICIAR";
 export const INICIADO = "INICIADO";
+export const ADD_FAVORITE = "ADD_FAVORITE";
+export const DELETE_FAVORITE = "DELETE_FAVORITE";
+
+
+
+
+    
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -55,6 +62,19 @@ export const getCategories = () => {
       dispatch({ type: GET_CATEGORIES, payload: response.data });
     } catch (error) {}
   };
+};
+export const addFavorite = (character) => {
+    return {
+        type: ADD_FAVORITE,
+        payload: character
+    }
+};
+
+export const deleteFavorite = (id) => {
+    return {
+        type: DELETE_FAVORITE,
+        payload: id
+    }
 };
 
 export const orderByName = (payload) => {
@@ -258,3 +278,4 @@ export const iniciado = (e) => {
     payload: e,
   };
 };
+

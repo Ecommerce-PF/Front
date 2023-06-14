@@ -16,6 +16,7 @@ import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente"
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
+import FavoritesView from "./components/FavoritesView/FavoritesView";
 
 function App() {
   return (
@@ -26,10 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/detail/:id" element={<Detail />} />
-        {/* <Route path="/post" element={<CreatePost />} /> */}
         <Route path="/carrito" element={<Carrito />} />
-        {/* <Route path="/dash" element={<DashBoard />} /> */}
-
         <Route path="/edit/:id" element={<EditProduct />} />
         <Route path="/DashBoardAdmin/*" element={<DashBoardAdmin />} />
         <Route path="/CreatePost" element={<CreatePost />} />
@@ -39,6 +37,7 @@ function App() {
         <Route path="/pending" element={<MercadoPagoPendiente />} />
         <Route path="/success" element={<MercadoPagoAceptado />} />
         <Route path="/failure" element={<MercadoPagoRechazado />} />
+        <Route path="/favorites" element={<FavoritesView />} />
       </Routes>
     </div>
   );

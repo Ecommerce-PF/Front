@@ -8,10 +8,27 @@ const OrdersUsers = () => {
   const banUserError = useSelector(state => state.banUserError);
   const dispatch = useDispatch();
   const [banUserMessage, setBanUserMessage] = useState(null);
-  const [userBan, setUserBan] = useState({
-    isActive: false,
-  });
+  const id = useSelector((state) => state.idUsuario);
 
+  if (id.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("ids", id);
+  }
+  const idUser = localStorage.getItem("ids");
+
+
+const [form, setForm] = useState({
+    id: idUser,
+    name: "",
+    userName: "",
+    phone: "",
+    email: "",
+    profileImage: "",
+    });
+
+
+    
   useEffect(() => {
     dispatch(getUserAll());
     if (banUserError) {
@@ -26,14 +43,7 @@ const OrdersUsers = () => {
   };
 
   const handleBanUser = (id) => {
-    dispatch(banUser(id, true));
-    setUserBan({ isActive: true });
-  };
-
-  const handleUserBanChange = () => {
-    setUserBan(prevState => ({
-      isActive: !prevState.isActive,
-    }));
+    dispatch(banUser(id));
   };
 
   return (
@@ -51,8 +61,6 @@ const OrdersUsers = () => {
               <th>ID</th>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Rol</th>
-              <th>Baneado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -62,15 +70,6 @@ const OrdersUsers = () => {
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={userBan.isActive}
-                    onChange={handleUserBanChange}
-                    disabled={!user.isAdmin}
-                  />
-                </td>
                 <td>
                   <button
                     className="btn btn-danger"
@@ -78,6 +77,21 @@ const OrdersUsers = () => {
                   >
                     Eliminar
                   </button>
+                  {user.isActive ? ( // Mostrar el estado de baneo y permitir desbanear
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleBanUser(user.id)}
+                    >
+                      Desbanear
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-success"
+                      onClick={() => handleBanUser(user.id)}
+                    >
+                      Banear
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

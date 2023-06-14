@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserAll, deleteUser } from "../../redux/actions/actions.js";
+import {
+  getUserAll,
+  deleteUser,
+  getUserById,
+} from "../../redux/actions/actions.js";
 import style from "../DashBoardAdmin/OrdersUsers.module.css";
 import axios from "axios";
 
@@ -8,55 +12,51 @@ const OrdersUsers = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const id = useSelector((state) => state.idUsuario);
-  const idBan = useSelector((state) => state.userId);
-
-  console.log(idBan, "el primero");
-
-  if (id.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("ids", id);
-  }
-  const idUser = localStorage.getItem("ids");
+  const [idBan, setIdBan] = useState({ active: false }); // Estado idBan y su función de actualización
 
   useEffect(() => {
     dispatch(getUserAll());
   }, [dispatch]);
 
-  const [form, setForm] = useState({
-    active: false,
-    admin: true,
-    email: "dasda",
-    id: 99,
-    name: "dasdasd",
-    password: "dasdasd",
-    phone: "dasdasdas",
-    profileImage: "dasdasd",
-    userName: "dasdasd",
-    Orders: [],
-    Clothes: [],
-    profileImage: "",
-  });
+  useEffect(() => {
+    if (id.length > 0) {
+      localStorage.setItem("ids", id);
+    }
+  }, [id]);
+
+  const idUser = localStorage.getItem("ids");
+
+  console.log(idUser, "esto es el id user");
 
   const handleBanUser = (id) => {
+    dispatch(getUserById(id));
+    const updatedIdBan = { ...idBan };
+    updatedIdBan.active = !updatedIdBan.active;
+    console.log(updatedIdBan, "updatedIdBan");
+
     try {
-      axios.put(`/users/${id}`, form).then((res) => {
-        alert("Producto editado con exito");
+      axios.put(`/users/${id}`, updatedIdBan).then((res) => {
+        if (updatedIdBan.active === true) {
+          alert("Usuario desbaneado correctamente");
+        } else {
+          alert("Usuario baneado correctamente");
+        }
       });
     } catch (error) {
-      alert("No se pudo editar el producto");
+      alert("No se pudo editar el usuario");
     }
+
+    // Actualizar el estado idBan con el nuevo valor
+    setIdBan(updatedIdBan);
   };
 
   const handleDeleteUser = (id) => {
-
     dispatch(deleteUser(id));
   };
 
   return (
     <div className={style.container}>
       <h1>Usuarios registrados</h1>
-      {/* {banUserMessage && <div className="alert alert-danger">{banUserMessage}</div>} */}
       {users && users.length === 0 ? (
         <div className="alert alert-warning" role="alert">
           No hay usuarios registrados.
@@ -84,7 +84,7 @@ const OrdersUsers = () => {
                   >
                     Eliminar
                   </button>
-                  {user.isActive ? ( // Mostrar el estado de baneo y permitir desbanear
+                  {user.isActive ? (
                     <button
                       className="btn btn-warning"
                       onClick={() => handleBanUser(user.id)}

@@ -16,6 +16,9 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE, // Nueva acción para el caso de fallo en la eliminación del usuario
   ADMIN_USER,
+  SIN_INICIAR,
+  INICIADO,
+  iniciado,
 } from "../actions/actions";
 
 const initialState = {
@@ -28,6 +31,8 @@ const initialState = {
   idUsuario: [],
   userId: [],
   adminUser: [],
+  inicio: [],
+  iniciado: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -180,6 +185,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUser: action.payload,
+      };
+
+    case SIN_INICIAR:
+      return {
+        ...state,
+        inicio: action.payload,
+      };
+
+    case INICIADO:
+      return {
+        ...state,
+        iniciado: action.payload,
       };
 
     default:

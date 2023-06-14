@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUserAll, deleteUser, banUser } from '../../redux/actions/actions.js';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserAll, deleteUser } from "../../redux/actions/actions.js";
 import style from "../DashBoardAdmin/OrdersUsers.module.css";
+import axios from "axios";
 
 const OrdersUsers = () => {
-  const users = useSelector(state => state.users);
-  const banUserError = useSelector(state => state.banUserError);
   const dispatch = useDispatch();
-  const [banUserMessage, setBanUserMessage] = useState(null);
+  const users = useSelector((state) => state.users);
   const id = useSelector((state) => state.idUsuario);
+  const idBan = useSelector((state) => state.userId);
+
+  console.log(idBan, "el primero");
 
   if (id.length === 0) {
     // No hacer nada
@@ -17,39 +19,44 @@ const OrdersUsers = () => {
   }
   const idUser = localStorage.getItem("ids");
 
-
-const [form, setForm] = useState({
-    id: idUser,
-    name: "",
-    userName: "",
-    phone: "",
-    email: "",
-    profileImage: "",
-    });
-
-
-    
   useEffect(() => {
     dispatch(getUserAll());
-    if (banUserError) {
-      setBanUserMessage(`Error al banear usuario: ${banUserError}`);
-    } else {
-      setBanUserMessage(null);
-    }
-  }, [dispatch, banUserError]);
+  }, [dispatch]);
 
-  const handleDeleteUser = (id) => {
-    dispatch(deleteUser(id));
-  };
+  const [form, setForm] = useState({
+    active: false,
+    admin: true,
+    email: "dasda",
+    id: 99,
+    name: "dasdasd",
+    password: "dasdasd",
+    phone: "dasdasdas",
+    profileImage: "dasdasd",
+    userName: "dasdasd",
+    Orders: [],
+    Clothes: [],
+    profileImage: "",
+  });
 
   const handleBanUser = (id) => {
-    dispatch(banUser(id));
+    try {
+      axios.put(`/users/${id}`, form).then((res) => {
+        alert("Producto editado con exito");
+      });
+    } catch (error) {
+      alert("No se pudo editar el producto");
+    }
+  };
+
+  const handleDeleteUser = (id) => {
+
+    dispatch(deleteUser(id));
   };
 
   return (
     <div className={style.container}>
       <h1>Usuarios registrados</h1>
-      {banUserMessage && <div className="alert alert-danger">{banUserMessage}</div>}
+      {/* {banUserMessage && <div className="alert alert-danger">{banUserMessage}</div>} */}
       {users && users.length === 0 ? (
         <div className="alert alert-warning" role="alert">
           No hay usuarios registrados.
@@ -65,7 +72,7 @@ const [form, setForm] = useState({
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>

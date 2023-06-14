@@ -117,3 +117,18 @@
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
   color: #af1cc2;
 }
+
+.svg{
+  width: 50px;
+
+}
+
+.loginGoogle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:  #c8c8c8;
+  border-radius: 5px;
+  width: 400px;
+  height: 80px;
+}

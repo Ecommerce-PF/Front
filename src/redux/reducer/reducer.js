@@ -15,11 +15,11 @@ import {
   ID_USER,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
-  BAN_USER_SUCCESS, // Nueva acción para el caso de éxito en el baneo del usuario
-  BAN_USER_FAILURE, // Nueva acción para el caso de fallo en el baneo del usuario
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
+  ACTIVE,
+  BAN_OR_DESBAN,
 } from "../actions/actions";
 
 const initialState = {
@@ -32,7 +32,6 @@ const initialState = {
   idUsuario: [],
   userId: [],
   adminUser: [],
-  banUserError: null, // Nuevo estado para manejar errores de baneo de usuario
   inicio: [],
   iniciado: [],
 };
@@ -175,18 +174,6 @@ const rootReducer = (state = initialState, action) => {
       alert("Ha ocurrido un error al eliminar el usuario");
       return state;
 
-    case BAN_USER_SUCCESS: // Nueva acción para el caso de éxito en el baneo del usuario
-      return {
-        ...state,
-        banUserError: null,
-      };
-
-    case BAN_USER_FAILURE: // Nueva acción para el caso de fallo en el baneo del usuario
-      return {
-        ...state,
-        banUserError: action.payload,
-      };
-
     case ID_USER:
       return {
         ...state,
@@ -210,6 +197,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         iniciado: action.payload,
       };
+
+    // case ACTIVE:
+    //   return {
+    //     ...state,
+    //     ban: action.payload,
+    //   };
+
+    // case BAN_OR_DESBAN:
+    //   if (initialState.users.active === true) {
+    //     return { ...state, users: false };
+    //   }
+    //   return { ...state, users: true };
 
     default:
       return state;

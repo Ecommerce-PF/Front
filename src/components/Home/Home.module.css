@@ -5,3 +5,14 @@
 .container {
   background-color: rgb(186, 186, 186);
 }
+
+
+
+.wppContainer {
+  position: fixed;
+  bottom: 13%;
+  left: 94.5% ;
+  z-index: 9999;
+}
+
+

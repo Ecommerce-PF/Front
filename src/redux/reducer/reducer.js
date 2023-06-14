@@ -18,6 +18,8 @@ import {
   BAN_USER_SUCCESS, // Nueva acción para el caso de éxito en el baneo del usuario
   BAN_USER_FAILURE, // Nueva acción para el caso de fallo en el baneo del usuario
   ADMIN_USER,
+  SIN_INICIAR,
+  INICIADO,
 } from "../actions/actions";
 
 const initialState = {
@@ -31,6 +33,8 @@ const initialState = {
   userId: [],
   adminUser: [],
   banUserError: null, // Nuevo estado para manejar errores de baneo de usuario
+  inicio: [],
+  iniciado: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -193,6 +197,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         adminUser: action.payload,
+      };
+
+    case SIN_INICIAR:
+      return {
+        ...state,
+        inicio: action.payload,
+      };
+
+    case INICIADO:
+      return {
+        ...state,
+        iniciado: action.payload,
       };
 
     default:

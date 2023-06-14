@@ -83,8 +83,8 @@ const Nav = () => {
               <Link to="/profile">
                 <svg
                   className={style.svg}
-                  width="800px"
-                  height="800px"
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,6 @@ const Nav = () => {
                     stroke-width="1.2"
                   />
                 </svg>
-                <div class={style.texto_imagen}>PROFILE</div>
               </Link>
             </div>
           )}
@@ -112,8 +111,8 @@ const Nav = () => {
               >
                 <svg
                   className={style.svg}
-                  width="800px"
-                  height="800px"
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +128,6 @@ const Nav = () => {
                     stroke-width="1.2"
                   />
                 </svg>
-                <div class={style.texto_imagen}>LogOut</div>
               </button>
             </div>
           )}
@@ -139,8 +137,8 @@ const Nav = () => {
               <Link to="/DashBoardAdmin">
                 <svg
                 className={style.svg}
-                  width="800px"
-                  height="800px"
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -156,9 +154,7 @@ const Nav = () => {
                     stroke-width="1.2"
                   />
                 </svg>
-                <div className={style.texto_imagen}>
-                  ADMINISTRACION DE ADMINISTRADOR
-                </div>
+
               </Link>
             ) : null}
           </div>
@@ -167,8 +163,8 @@ const Nav = () => {
             <Link to="/carrito">
               <svg
                 className={style.svg}
-                width="800px"
-                height="800px"
+                width="80px"
+                height="80px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +175,7 @@ const Nav = () => {
                   stroke-width="1.2"
                 />
               </svg>
-              <div class={style.texto_imagen}>CARRITO DE COMPRAS</div>
+
             </Link>
           </div>
         </React.Fragment>

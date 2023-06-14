@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
-import Carousel from 'react-bootstrap/Carousel';
+import { NoTransitionExample } from "./Carrousel/Carrusel.jsx"
 
 import styles from "./detail.module.css";
 
@@ -56,8 +56,12 @@ export default function Detail() {
 
   function handleChange(e) {
     console.log(e.target.value)
-    e.target.value === 'None'? setColoresPrt([]): (setColorProductImg(e.target.value));
+    if(e.target.value === 'None'){
+      setColoresPrt([])
+    }else{
+      (setColorProductImg(e.target.value));
     setColoresPrt(clrPrdct(e.target.value));
+    }
   }
 
   // console.log(coloresPrt);
@@ -86,24 +90,7 @@ export default function Detail() {
           <div className={styles.img}>
             {/* Render de imagen  si hay imagenes en e array renderizamos el array si no, mandamos la imagen que tenemos.*/}
             {!!coloresPrt.length ?
-               <Carousel fade>
-               {coloresPrt.map((e) => {
-                console.log(e)
-                 return (
-                  <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src={e}
-                    alt="First slide"
-                  />
-                  <Carousel.Caption>
-                    {/* <h3>First slide label</h3> */}
-                    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-                  </Carousel.Caption>
-                </Carousel.Item>
-                 )
-               })}
-             </Carousel> :
+               <NoTransitionExample coloresPrt={coloresPrt} /> :
               <img
               src={state?.image}
               alt={state?.name}

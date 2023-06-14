@@ -14,7 +14,9 @@ import {
   GET_USER_ALL,
   ID_USER,
   DELETE_USER_SUCCESS,
-  DELETE_USER_FAILURE, // Nueva acción para el caso de fallo en la eliminación del usuario
+  DELETE_USER_FAILURE,
+  BAN_USER_SUCCESS, // Nueva acción para el caso de éxito en el baneo del usuario
+  BAN_USER_FAILURE, // Nueva acción para el caso de fallo en el baneo del usuario
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
@@ -30,6 +32,7 @@ const initialState = {
   idUsuario: [],
   userId: [],
   adminUser: [],
+  banUserError: null, // Nuevo estado para manejar errores de baneo de usuario
   inicio: [],
   iniciado: [],
 };
@@ -157,10 +160,9 @@ const rootReducer = (state = initialState, action) => {
 
     case DELETE_PRODUCT_FAILURE:
       alert("Ha ocurrido un error al eliminar la prenda");
-
       return state;
 
-    case DELETE_USER_SUCCESS: // Nueva acción para el caso de éxito en la eliminación del usuario
+    case DELETE_USER_SUCCESS:
       const updatedUsers = state.users.filter(
         (user) => user.id !== action.payload
       );
@@ -169,10 +171,21 @@ const rootReducer = (state = initialState, action) => {
         users: updatedUsers,
       };
 
-    case DELETE_USER_FAILURE: // Nueva acción para el caso de fallo en la eliminación del usuario
+    case DELETE_USER_FAILURE:
       alert("Ha ocurrido un error al eliminar el usuario");
-
       return state;
+
+    case BAN_USER_SUCCESS: // Nueva acción para el caso de éxito en el baneo del usuario
+      return {
+        ...state,
+        banUserError: null,
+      };
+
+    case BAN_USER_FAILURE: // Nueva acción para el caso de fallo en el baneo del usuario
+      return {
+        ...state,
+        banUserError: action.payload,
+      };
 
     case ID_USER:
       return {

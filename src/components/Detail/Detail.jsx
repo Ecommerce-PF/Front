@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+import Carousel from 'react-bootstrap/Carousel';
 
 import styles from "./detail.module.css";
 
@@ -49,17 +50,68 @@ export default function Detail() {
     dispatch(getDetail(id));
   }, [dispatch, id]);
 
+  //Logica de galeria img
+  const [colorProductImg, setColorProductImg] = useState('');
+  const [coloresPrt, setColoresPrt] = useState([]);
+
+  function handleChange(e) {
+    console.log(e.target.value)
+    e.target.value === 'None'? setColoresPrt([]): setColorProductImg(e.target.value);
+    setColoresPrt(clrPrdct(e.target.value));
+  }
+
+  // console.log(coloresPrt);
+
+  const clrPrdct = (valorBuscado) => {
+    var arrayColorEncontrado = null;
+
+    for (var i = 0; i < state.color.length; i++) {
+      if (state.color[i].ColorName === valorBuscado) {
+        arrayColorEncontrado = state.color[i].ProductImages;
+        // console.log(arrayColorEncontrado);
+        return arrayColorEncontrado;
+      }
+    }
+  }
+
+  useEffect(() => {
+    // setColorProductImg()
+  }, [])
+
   return (
     <div className={styles.back}>
       <div className={styles.mainContainer}>
         <div className={styles.productImg}>
           <h3>{state?.name}</h3>
           <div className={styles.img}>
-            <img
+            {/* Render de imagen  si hay imagenes en e array renderizamos el array si no, mandamos la imagen que tenemos.*/}
+            {!!coloresPrt.length ?
+               <Carousel fade>
+               {coloresPrt.map((e) => {
+                console.log(e)
+                 return (
+                  <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={e}
+                    alt="First slide"
+                  />
+                  <Carousel.Caption>
+                    {/* <h3>First slide label</h3> */}
+                    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+                  </Carousel.Caption>
+                </Carousel.Item>
+                 )
+               })}
+             </Carousel> :
+              <img
               src={state?.image}
               alt={state?.name}
               className={styles.imgProducto}
             />
+            }
+
+
           </div>
           <div className={styles.buyNow}>
             <h1>${state?.price}</h1>
@@ -67,7 +119,7 @@ export default function Detail() {
 
           <div className={styles.containerSA}>
             <label htmlFor="color">Color:</label>
-            <select className={styles.buttonSelect} type="select" name="color">
+            <select className={styles.buttonSelect} type="select" name="color" onChange={handleChange}>
               <option className={styles.option}>None</option>
               {state?.color &&
                 state.color.map((e) => (

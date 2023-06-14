@@ -30,27 +30,38 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:3001/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
-
-        if (response.ok) {
+        const response= await axios.post("/users/signup", user)
+        .then((res) => {
           alert("Registro exitoso");
+          console.log(res);
           navigate("/login");
-          dispatch(signUpUser(user));
-        } else {
-          alert("Error al registrarse");
-        }
+        });
       } catch (error) {
         alert("Error al procesar la solicitud");
       }
-    } else {
-      setErrors(validationErrors);
     }
+
+        // const response = await fetch("http://localhost:3001/users/signup", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(user),
+        // });
+
+    //     if (response.ok) {
+    //       alert("Registro exitoso");
+    //       navigate("/login");
+    //       dispatch(signUpUser(user));
+    //     } else {
+    //       alert("Error al registrarse");
+    //     }
+    //   } catch (error) {
+    //     alert("Error al procesar la solicitud");
+    //   }
+    // } else {
+    //   setErrors(validationErrors);
+    // }
   };
 
   const validateUser = (user) => {

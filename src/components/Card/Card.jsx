@@ -15,19 +15,26 @@ const Card = ({ name, image, id, price }) => {
 
   const userAdmin = localStorage.getItem("admins");
 
-
-
   return (
     <div className={style.mainContainer}>
       {userAdmin === "true" ? (
         <Link to={`/edit/${id}`}>
-          <img src={Edit} className={style.edit} alt="" />
+          <svg
+          className={style.svg}
+            width="50px"
+            height="50px"
+            viewBox="0 0 25 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 7L18 10M6 19L7 15L17 5L20 8L10 18L6 19Z"
+              stroke="#121923"
+              stroke-width="1.2"
+            />
+          </svg>
         </Link>
-      ) : (
-        null
-      )}
-
-      
+      ) : null}
 
       <Link className={style.link} to={`/detail/${id}`}>
         <h2 className={style.title}>{name}</h2>

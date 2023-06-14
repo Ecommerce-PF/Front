@@ -1,8 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
+import { useDispatch } from "react-redux";
+import { sinIniciar } from "../../redux/actions/actions";
 
 export default function LandingPage() {
+  const dispatch = useDispatch();
+
+  const handleSinIniciar = () => {
+    const e = "no";
+    dispatch(sinIniciar(e));
+  };
+
   return (
     <section className={s.back}>
       <div className={s.body}>
@@ -14,10 +23,15 @@ export default function LandingPage() {
         <div className={s.divTextBtn}>
           <div className={s.btnContainer}>
             <Link className={s.btnS} to="/login">
-              <button className={s.btn}>Log In</button>
+              <button className={s.btn}>Iniciar sesión</button>
             </Link>
             <Link className={s.btnS} to="/signup">
-              <button className={s.btn}>Sign Up</button>
+              <button className={s.btn}>Registrarse</button>
+            </Link>
+            <Link className={s.btnS} to="/home">
+              <button onClick={handleSinIniciar} className={s.btn}>
+                Inicio
+              </button>
             </Link>
           </div>
         </div>

@@ -13,14 +13,17 @@
 }
 
 .mainContainer:hover {
-  box-shadow: 0 16px 25px rgba(0, 0, 0, 0.348);
-  transition: 0.3s;
+  box-shadow: 0 16px 25px rgba(0, 0, 0, 0.123);
+  transition: 0.4s;
+transform: scale(1.01);
 }
 
 .card {
 width: 80%;
 border-radius: 3%;
+
 }
+
 
 .title {
   text-align: center;
@@ -48,4 +51,17 @@ border-radius: 3%;
 
 .edit:hover{
   box-shadow: 0 16px 25px rgba(0, 0, 0, 0.827);
+  
+}
+
+.svg{
+  margin-left: 50px;
+  margin-top: 640px;
+  position: absolute;
+  width: 40px;
+}
+
+.svg:hover{
+  transition: 0.4s;
+  transform: scale(1.5);
 }

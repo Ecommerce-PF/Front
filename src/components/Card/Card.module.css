@@ -53,3 +53,15 @@ border-radius: 3%;
   box-shadow: 0 16px 25px rgba(0, 0, 0, 0.827);
   
 }
+
+.svg{
+  margin-left: 50px;
+  margin-top: 640px;
+  position: absolute;
+  width: 40px;
+}
+
+.svg:hover{
+  transition: 0.4s;
+  transform: scale(1.5);
+}

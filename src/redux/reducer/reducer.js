@@ -18,7 +18,6 @@ import {
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
-  iniciado,
 } from "../actions/actions";
 
 const initialState = {

@@ -27,6 +27,9 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
 export const ADMIN_USER = "ADMIN_USER";
+export const SIN_INICIAR = "SIN_INICIAR";
+export const INICIADO = "INICIADO";
+
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
@@ -231,6 +234,13 @@ export const deleteProduct = (id) => {
   };
 };
 
+export const sinIniciar = (e) => {
+  return {
+    type: SIN_INICIAR,
+    payload: e,
+  };
+};
+
 export const deleteUser = (id) => {
   return async (dispatch) => {
     try {
@@ -239,5 +249,12 @@ export const deleteUser = (id) => {
     } catch (error) {
       dispatch({ type: DELETE_USER_FAILURE, payload: error.message });
     }
+  };
+};
+
+export const iniciado = (e) => {
+  return {
+    type: INICIADO,
+    payload: e,
   };
 };

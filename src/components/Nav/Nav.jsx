@@ -73,7 +73,7 @@ const Nav = () => {
                 <div class={style.texto_imagen}>PROFILE</div>
               </Link>
             </div>
-            {isLogin.length === 0 ? <Link>SignUp</Link> : (
+            {/* {isLogin.length === 0 ? <Link>SignUp</Link> : (
               <div className={style.contenedor_imagen}>
                 <button
                   className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
@@ -83,7 +83,7 @@ const Nav = () => {
                   <div class={style.texto_imagen}>LogOut</div>
                 </button>
               </div>
-            )}
+            )} */}
 
             <div className={style.contenedor_imagen}>
               {userAdmin === "true" ? (

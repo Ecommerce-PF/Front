@@ -5,10 +5,11 @@ import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
-import { NoTransitionExample } from "./Carrousel/Carrusel.jsx"
+// import { NoTransitionExample } from "./Carrousel/Carrusel.jsx"
 
 import styles from "./detail.module.css";
 
+// Carousel
 export default function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -89,14 +90,14 @@ export default function Detail() {
           <h3>{state?.name}</h3>
           <div className={styles.img}>
             {/* Render de imagen  si hay imagenes en e array renderizamos el array si no, mandamos la imagen que tenemos.*/}
-            {!!coloresPrt.length ?
-               <NoTransitionExample coloresPrt={coloresPrt} /> :
+            {/* {!!coloresPrt.length ? */}
+               {/* <NoTransitionExample coloresPrt={coloresPrt} /> : */}
               <img
               src={state?.image}
               alt={state?.name}
               className={styles.imgProducto}
             />
-            }
+            {/* } */}
 
 
           </div>

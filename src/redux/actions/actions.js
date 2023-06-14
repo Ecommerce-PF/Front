@@ -27,6 +27,8 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
 export const ADMIN_USER = "ADMIN_USER";
+export const BAN_USER_SUCCESS = "BAN_USER_SUCCESS";
+export const BAN_USER_FAILURE = "BAN_USER_FAILURE";
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
@@ -241,3 +243,27 @@ export const deleteUser = (id) => {
     }
   };
 };
+
+export const banUser = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/users/${id}`, { banned: true });
+      dispatch(banUserSuccess());
+      // Aquí puedes agregar cualquier lógica adicional, como mostrar una notificación de éxito
+      alert("El usuario ha sido baneado correctamente.");
+    } catch (error) {
+      dispatch(banUserFailure(error.message));
+      // Aquí puedes agregar cualquier lógica adicional, como mostrar una notificación de error
+      alert("Ocurrió un error al banear al usuario.");
+    }
+  };
+};
+
+const banUserSuccess = () => ({
+  type: BAN_USER_SUCCESS
+});
+
+const banUserFailure = (error) => ({
+  type: BAN_USER_FAILURE,
+  payload: error
+});

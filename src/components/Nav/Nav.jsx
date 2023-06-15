@@ -13,11 +13,40 @@ const Nav = () => {
   const admin = useSelector((state) => state.adminUser);
   const sesionSinIniciar = useSelector((state) => state.inicio);
   const sesionIniciada = useSelector((state) => state.iniciado);
-  console.log(
-    sesionSinIniciar,
-    "sesionSinIniciarsesionSinIniciarsesionSinIniciar"
-  );
-  console.log(sesionIniciada, "sesionIniciadasesionIniciadasesionIniciada");
+  const userGoogle = useSelector((state) => state.google);
+  const inicioConGoogle = useSelector((state) => state.inicioConGoogle)
+
+
+
+  if (inicioConGoogle.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("inicioConGoogles", inicioConGoogle);
+  }
+
+  const inicio = localStorage.getItem("inicioConGoogles");
+
+
+
+
+if (userGoogle.user === undefined) {
+   //nada 
+} else {
+  localStorage.setItem("userGoogles", userGoogle.user.uid);
+}
+
+const google = localStorage.getItem("userGoogles");
+
+console.log(google)
+
+if (google.length === 0 ||  inicio === "no") {
+  //nada
+} else {
+  const si = "si"
+  localStorage.setItem("sesions", si);
+}
+
+
 
   if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
     // No hacer nada
@@ -33,7 +62,8 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesions");
+
+  console.log(sesions, "sesionssesionssesions")
 
   if (admin.length === 0) {
     // No hacer nada

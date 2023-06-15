@@ -11,9 +11,7 @@ import style from "./Home.module.css";
 const Home = () => {
   const id = useSelector((state) => state.idUsuario);
   const idBan = useSelector((state) => state.userId);
-  const user = useSelector((state)=> state.google)
-  
-console.log()
+
 
   if (id.length === 0) {
     // No hacer nada

@@ -36,7 +36,7 @@ const google = localStorage.getItem("userGoogles");
 
 console.log(google)
 
-if (google.length === 0 ||  inicio === "no") {
+if (/* google.length === 0 || */  inicio === "no") {
   //nada
 } else {
   const si = "si"

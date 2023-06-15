@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
-import { useState } from "react";
+// import { useState } from "react";
 
 import styles from "./detail.module.css";
 

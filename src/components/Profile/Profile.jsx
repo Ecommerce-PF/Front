@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import UploadFile from "../UploadFile/UploadFile";
 import axios from "axios";
+import { useState } from "react";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -13,21 +14,19 @@ const Profile = () => {
   const id = useSelector((state) => state.idUsuario);
   const [url, setUrl] = useState("");
 
+  console.log(userId, "userIduserIduserId")
+
 
   const handleUpload = async (error, result) => {
     if (result && result.event === "success") {
       setUrl(result.info.secure_url);
       await axios.put(`/users/1`, { profileImage: result.info.secure_url });
-      console.log({ profileImage: url });
     }
   };
 
   {
     /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
   }
-
-  console.log(userId, "id");
-
 
   if (id.length === 0) {
     // No hacer nada
@@ -36,9 +35,6 @@ const Profile = () => {
   }
 
   const idUser = localStorage.getItem("ids");
-
-
-  console.log(url, "idUser");
 
   useEffect(() => {
     setUrl(userId.profileImage);
@@ -53,10 +49,11 @@ const Profile = () => {
     fetchData();
   }, [dispatch, idUser, url]);
 
-  const { name, email, phone, address, purchaseHistory } = userId;
+  const { name, email, phone, address, purchaseHistory, profileImage } = userId;
 
   return (
     <div>
+
       <div>
         <h2 className={styles.title}>Profile</h2>
         <div>
@@ -87,11 +84,19 @@ const Profile = () => {
         </ul>
       </div>
 
+      
+
       <Link to="/home">
         <button className={styles.button}>
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
       </Link>
+
+            <Link to={`/editProfile`}>
+            <button className={styles.button}>
+              Edit Profile</button>
+            </Link>
+
     </div>
   );
 };

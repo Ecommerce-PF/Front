@@ -105,3 +105,10 @@
  
     color: #af1cc2;
   }
+
+  .img_profile{
+    width: 350px;
+    height: 300px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }

@@ -17,7 +17,6 @@ export default function LandingPage() {
     dispatch(google("no"));
     dispatch(admin(false));
     navigate("/home");
-    window.location.reload();
   };
 
   return (

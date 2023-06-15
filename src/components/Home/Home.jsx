@@ -7,15 +7,13 @@ import Nav from "../Nav/Nav";
 import WhatsApp from "../WhatsApp/WhatsApp";
 import Footer from "../Footer/Footer";
 import style from "./Home.module.css";
-import UserProfile from "../Login/Profile";
 
 const Home = () => {
   const id = useSelector((state) => state.idUsuario);
   const idBan = useSelector((state) => state.userId);
-
-  console.log(idBan, "idBanidBan");
-
-  console.log(id, "id");
+  const user = useSelector((state)=> state.google)
+  
+console.log()
 
   if (id.length === 0) {
     // No hacer nada
@@ -25,7 +23,6 @@ const Home = () => {
 
   const idUser = localStorage.getItem("ids");
 
-  console.log(idUser, "idUser");
 
   const dispatch = useDispatch();
 
@@ -41,7 +38,6 @@ const Home = () => {
           <Nav />
           <Buttons />
           <CardsContainer />
-          <UserProfile/>
           <div className={style.wppContainer}>
             <WhatsApp />
           </div>

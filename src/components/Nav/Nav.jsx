@@ -13,11 +13,7 @@ const Nav = () => {
   const admin = useSelector((state) => state.adminUser);
   const sesionSinIniciar = useSelector((state) => state.inicio);
   const sesionIniciada = useSelector((state) => state.iniciado);
-  console.log(
-    sesionSinIniciar,
-    "sesionSinIniciarsesionSinIniciarsesionSinIniciar"
-  );
-  console.log(sesionIniciada, "sesionIniciadasesionIniciadasesionIniciada");
+
 
   if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
     // No hacer nada
@@ -33,7 +29,7 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesions");
+
 
   if (admin.length === 0) {
     // No hacer nada

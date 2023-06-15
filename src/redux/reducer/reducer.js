@@ -18,8 +18,7 @@ import {
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
-  ACTIVE,
-  BAN_OR_DESBAN,
+  LOGIN_WITH_GOOGLE,
 } from "../actions/actions";
 
 const initialState = {
@@ -34,6 +33,7 @@ const initialState = {
   adminUser: [],
   inicio: [],
   iniciado: [],
+  google: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -198,17 +198,11 @@ const rootReducer = (state = initialState, action) => {
         iniciado: action.payload,
       };
 
-    // case ACTIVE:
-    //   return {
-    //     ...state,
-    //     ban: action.payload,
-    //   };
-
-    // case BAN_OR_DESBAN:
-    //   if (initialState.users.active === true) {
-    //     return { ...state, users: false };
-    //   }
-    //   return { ...state, users: true };
+    case LOGIN_WITH_GOOGLE:
+      return {
+        ...state,
+        google: action.payload,
+      };
 
     default:
       return state;

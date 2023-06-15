@@ -53,7 +53,7 @@ export default function Carrito() {
     }
     const newOrder = await axios.post('http://localhost:3001/payment/create-order', body);
 
-    console.log(newOrder.data);
+
     window.location.replace(newOrder.data);
   }
 

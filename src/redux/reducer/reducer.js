@@ -14,10 +14,12 @@ import {
   GET_USER_ALL,
   ID_USER,
   DELETE_USER_SUCCESS,
-  DELETE_USER_FAILURE, // Nueva acción para el caso de fallo en la eliminación del usuario
+  DELETE_USER_FAILURE,
   ADMIN_USER,
   SIN_INICIAR,
   INICIADO,
+  LOGIN_WITH_GOOGLE,
+  GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
 } from "../actions/actions";
@@ -35,6 +37,8 @@ const initialState = {
   priceRange: [0, Infinity],
   inicio: [],
   iniciado: [],
+  google: {},
+  inicioConGoogle: [],
   myFavorites: [],
 };
 
@@ -192,10 +196,9 @@ const rootReducer = (state = initialState, action) => {
 
     case DELETE_PRODUCT_FAILURE:
       alert("Ha ocurrido un error al eliminar la prenda");
-
       return state;
 
-    case DELETE_USER_SUCCESS: // Nueva acción para el caso de éxito en la eliminación del usuario
+    case DELETE_USER_SUCCESS:
       const updatedUsers = state.users.filter(
         (user) => user.id !== action.payload
       );
@@ -204,9 +207,8 @@ const rootReducer = (state = initialState, action) => {
         users: updatedUsers,
       };
 
-    case DELETE_USER_FAILURE: // Nueva acción para el caso de fallo en la eliminación del usuario
+    case DELETE_USER_FAILURE:
       alert("Ha ocurrido un error al eliminar el usuario");
-
       return state;
 
     case ID_USER:
@@ -231,6 +233,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         iniciado: action.payload,
+      };
+
+    case LOGIN_WITH_GOOGLE:
+      return {
+        ...state,
+        google: action.payload,
+      };
+
+    case GOOGLE:
+      return {
+        ...state,
+        inicioConGoogle: action.payload,
       };
 
     default:

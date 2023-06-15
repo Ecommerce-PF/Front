@@ -1,17 +1,5 @@
 import { useEffect, useRef } from "react";
 
-// const [url, setUrl] = useState("");
-// const handleUpload = (error, result) => {
-//   if (result && result.event === "success") {
-//     setUrl(result.info.secure_url);
-//     console.log(result.info.secure_url);
-//   }
-// };
-
-{
-  /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
-}
-
 const UploadFile = ({ handleUpload, folder }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();

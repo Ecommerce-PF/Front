@@ -13,6 +13,42 @@ const Nav = () => {
   const admin = useSelector((state) => state.adminUser);
   const sesionSinIniciar = useSelector((state) => state.inicio);
   const sesionIniciada = useSelector((state) => state.iniciado);
+<<<<<<< HEAD
+=======
+  const userGoogle = useSelector((state) => state.google);
+  const inicioConGoogle = useSelector((state) => state.inicioConGoogle)
+
+
+
+  if (inicioConGoogle.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("inicioConGoogles", inicioConGoogle);
+  }
+
+  const inicio = localStorage.getItem("inicioConGoogles");
+
+
+
+
+if (userGoogle.user === undefined) {
+   //nada 
+} else {
+  localStorage.setItem("userGoogles", userGoogle.user.uid);
+}
+
+const google = localStorage.getItem("userGoogles");
+
+console.log(google)
+
+if (google.length === 0 ||  inicio === "no") {
+  //nada
+} else {
+  const si = "si"
+  localStorage.setItem("sesions", si);
+}
+
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863
 
 
   if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
@@ -30,6 +66,10 @@ const Nav = () => {
   const sesions = localStorage.getItem("sesions");
 
 
+<<<<<<< HEAD
+=======
+  console.log(sesions, "sesionssesionssesions")
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863
 
   if (admin.length === 0) {
     // No hacer nada

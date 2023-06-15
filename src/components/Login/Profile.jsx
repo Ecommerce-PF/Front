@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -36,3 +37,5 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+=======
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863

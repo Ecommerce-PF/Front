@@ -19,6 +19,10 @@ import {
   SIN_INICIAR,
   INICIADO,
   LOGIN_WITH_GOOGLE,
+<<<<<<< HEAD
+=======
+  GOOGLE,
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863
 } from "../actions/actions";
 
 const initialState = {
@@ -34,6 +38,10 @@ const initialState = {
   inicio: [],
   iniciado: [],
   google: {},
+<<<<<<< HEAD
+=======
+  inicioConGoogle: [],
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -198,10 +206,23 @@ const rootReducer = (state = initialState, action) => {
         iniciado: action.payload,
       };
 
+<<<<<<< HEAD
     case LOGIN_WITH_GOOGLE:
       return {
         ...state,
         google: action.payload,
+=======
+    // case ACTIVE:
+    //   return {
+    //     ...state,
+    //     ban: action.payload,
+    //   };
+
+    case GOOGLE:
+      return {
+        ...state,
+        inicioConGoogle: action.payload,
+>>>>>>> b7ce3a4b58a50fab102ab14032d010e5acabc863
       };
 
     default:

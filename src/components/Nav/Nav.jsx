@@ -15,6 +15,7 @@ const Nav = () => {
   const userGoogle = useSelector((state) => state.google);
   const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
 
+
   if (inicioConGoogle?.length === 0) {
     // No hacer nada
   } else {

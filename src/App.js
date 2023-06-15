@@ -16,6 +16,7 @@ import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente"
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
+import EditProfile from "./components/Profile/EditProfile";
 
 function App() {
   return (
@@ -25,16 +26,21 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        
         <Route path="/detail/:id" element={<Detail />} />
-        {/* <Route path="/post" element={<CreatePost />} /> */}
-        <Route path="/carrito" element={<Carrito />} />
-        {/* <Route path="/dash" element={<DashBoard />} /> */}
-
         <Route path="/edit/:id" element={<EditProduct />} />
+
+      
+        <Route path="/carrito" element={<Carrito />} />
+        
+
         <Route path="/DashBoardAdmin/*" element={<DashBoardAdmin />} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path="/Delete" element={<Delete />} />
+
         <Route path="/profile" element={<Profile />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+
         <Route path="/order" element={<Order />} />
         <Route path="/pending" element={<MercadoPagoPendiente />} />
         <Route path="/success" element={<MercadoPagoAceptado />} />

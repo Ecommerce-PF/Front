@@ -15,7 +15,7 @@ import MercadoPagoAceptado from "./components/MercadoPago/MercadoPagoAceptado";
 import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente";
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
-import FavoritesView from "./components/FavoritesView/favoritesView";
+import FavoritesView from "./components/FavoritesView/FavoritesView";
 import EditProfile from "./components/Profile/EditProfile";
 
 function App() {

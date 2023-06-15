@@ -40,26 +40,26 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationErrors = validateUser(user);
-    if (Object.keys(validationErrors).length === 0) {
-      try {
-        const response = await fetch("https://server-ecommerce.up.railway.app/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
+    // const validationErrors = validateUser(user);
+    // if (Object.keys(validationErrors).length === 0) {
+    //   try {
+    //     const response = await fetch("https://server-ecommerce.up.railway.app/users/signup", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(user),
+    //     });
 
-        if (response.ok) {
-          alert("Registro exitoso");
-          console.log(res);
-          navigate("/login");
-        });
-      } catch (error) {
-        alert("Error al procesar la solicitud");
-      }
-    }
+    //     if (response.ok) {
+    //       alert("Registro exitoso");
+    //       console.log(res);
+    //       navigate("/login");
+    //     });
+    //   } catch (error) {
+    //     alert("Error al procesar la solicitud");
+    //   }
+    // }
 
         // const response = await fetch("http://localhost:3001/users/signup", {
         //   method: "POST",

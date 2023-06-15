@@ -15,7 +15,7 @@ const Nav = () => {
 
 
 
-  if (inicioConGoogle.length === 0) {
+  if (inicioConGoogle?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("inicioConGoogles", inicioConGoogle);
@@ -36,7 +36,7 @@ const google = localStorage.getItem("userGoogles");
 
 console.log(google)
 
-if (google.length === 0 ||  inicio === "no") {
+if (google?.length === 0 ||  inicio === "no") {
   //nada
 } else {
   const si = "si"
@@ -45,13 +45,13 @@ if (google.length === 0 ||  inicio === "no") {
 
 
 
-  if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
+  if (sesionSinIniciar?.length === 0 || sesionSinIniciar === undefined) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionSinIniciar);
   }
 
-  if (sesionIniciada === undefined || sesionIniciada.length === 0) {
+  if (sesionIniciada === undefined || sesionIniciada?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionIniciada);
@@ -62,7 +62,7 @@ if (google.length === 0 ||  inicio === "no") {
 
   console.log(sesions, "sesionssesionssesions")
 
-  if (admin.length === 0) {
+  if (admin?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("admins", admin);

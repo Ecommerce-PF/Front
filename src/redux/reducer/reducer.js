@@ -83,6 +83,13 @@ const rootReducer = (state = initialState, action) => {
           products: filteredByCategoryProducts,
         };
       }
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    /* -------------------------------------------------------------------------- */
     case ADD_FAVORITE:
       return {
         ...state,
@@ -92,10 +99,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         myFavorites: state.myFavorites.filter(
-          (item) => item.id !== action.payload
+          (favorite) => favorite.id !== action.payload
         ),
       };
 
+    /* -------------------------------------------------------------------------- */
     case FILTER_BY_PRICE:
       const { payload: price } = action;
       const filteredByPriceProducts = state.allProducts.filter(

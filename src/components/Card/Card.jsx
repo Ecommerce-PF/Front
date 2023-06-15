@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 
+
 const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
@@ -56,9 +57,9 @@ const Card = ({ name, image, id, price }) => {
         <p className={style.price}>${price}</p>
       </Link>
       {isFavorite ? (
-        <button onClick={handleDeleteFavorite}>Remove from Favorites</button>
+        <button onClick={handleDeleteFavorite}> 💜 </button>
       ) : (
-        <button onClick={handleAddFavorite}>Add to Favorites</button>
+        <button onClick={handleAddFavorite}> 🤍</button>
       )}
     </div>
   );

@@ -32,10 +32,14 @@ export const INICIADO = "INICIADO";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
 
-
-
-
-    
+export const getUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`/users/${userId}`);
+      dispatch({ type: GET_USER, payload: user.data });
+    } catch (error) {}
+  };
+};
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -63,19 +67,22 @@ export const getCategories = () => {
     } catch (error) {}
   };
 };
+
+/* Add favorite */
 export const addFavorite = (character) => {
-    return {
-        type: ADD_FAVORITE,
-        payload: character
-    }
+  return {
+    type: ADD_FAVORITE,
+    payload: character,
+  };
 };
 
-export const deleteFavorite = (id) => {
-    return {
-        type: DELETE_FAVORITE,
-        payload: id
-    }
+export const deleteFavorite = (productId) => {
+  return {
+    type: DELETE_FAVORITE,
+    payload: productId,
+  };
 };
+/* ------------------ */
 
 export const orderByName = (payload) => {
   return {
@@ -278,4 +285,3 @@ export const iniciado = (e) => {
     payload: e,
   };
 };
-

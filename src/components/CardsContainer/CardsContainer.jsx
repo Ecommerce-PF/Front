@@ -9,6 +9,7 @@ const CardsContainer = () => {
   const products = useSelector((state) => state.products);
 
   const [pagina, setPagina] = useState(1);
+  // eslint-disable-next-line
   const [porPagina, setPorPagina] = useState(6);
   const maximo = products.length / porPagina;
 

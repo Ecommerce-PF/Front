@@ -71,11 +71,11 @@ if (google.length === 0 ||  inicio === "no") {
   const userAdmin = localStorage.getItem("admins");
 
   /**************************************** */
-
+// eslint-disable-next-line
   function mostrarTexto(elemento) {
     elemento.nextSibling.style.display = "block";
   }
-
+// eslint-disable-next-line
   function ocultarTexto(elemento) {
     elemento.nextSibling.style.display = "none";
   }

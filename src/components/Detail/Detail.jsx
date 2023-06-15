@@ -19,6 +19,35 @@ export default function Detail() {
     if (listaCart === null) {
       listaCart = [];
     } else {
+
+      listaCart.push(state);
+    }
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
+    Swal.fire({
+      icon: "success",
+      title: "Su producto se a agregado al carrito!!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
+
+  const [input, setInput] = useState(1);
+// eslint-disable-next-line
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  }
+// eslint-disable-next-line
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+
+    if (listaCart === null) {
+      listaCart = [];
+    } else {
+      // Recorrer el array de objetos
+
       for (var i = 0; i < listaCart.length; i++) {
         if (listaCart[i].id === state.id) {
           return (Swal.fire({

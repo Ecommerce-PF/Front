@@ -104,6 +104,7 @@ const Login = () => {
 
         dispatch(loginWithGoogle(result))
         dispatch(google("yes"))
+        dispatch(admin(false));
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         navigate("/home");

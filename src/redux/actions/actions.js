@@ -31,6 +31,8 @@ export const SIN_INICIAR = "SIN_INICIAR";
 export const INICIADO = "INICIADO";
 export const ACTIVE = "ACTIVE";
 export const BAN_OR_DESBAN = "BAN_OR_DESBAN";
+export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
+export const GOOGLE = "GOOGLE";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -256,6 +258,21 @@ export const deleteUser = (id) => {
 export const iniciado = (e) => {
   return {
     type: INICIADO,
+    payload: e,
+  };
+};
+
+export const loginWithGoogle = (e) => {
+  return {
+    type: LOGIN_WITH_GOOGLE,
+    payload: e,
+  };
+};
+
+export const google = (e) => {
+  console.log(e, "actions");
+  return {
+    type: GOOGLE,
     payload: e,
   };
 };

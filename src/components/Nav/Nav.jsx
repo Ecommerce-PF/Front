@@ -3,29 +3,48 @@ import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
-import carrito from "../../assets/carrito-de-compras.png";
-import Admin from "../../assets/ajustes.png";
-import Usuario from "../../assets/usuario.png";
-import Logout from "../../assets/cerrar-sesion.png";
+import { useEffect } from "react";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
   const sesionSinIniciar = useSelector((state) => state.inicio);
   const sesionIniciada = useSelector((state) => state.iniciado);
-  console.log(
-    sesionSinIniciar,
-    "sesionSinIniciarsesionSinIniciarsesionSinIniciar"
-  );
-  console.log(sesionIniciada, "sesionIniciadasesionIniciadasesionIniciada");
+  const userGoogle = useSelector((state) => state.google);
+  const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
 
-  if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
+  if (inicioConGoogle?.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("inicioConGoogles", inicioConGoogle);
+  }
+
+  const inicio = localStorage.getItem("inicioConGoogles");
+
+  if (userGoogle.user === undefined) {
+    //nada
+  } else {
+    localStorage.setItem("userGoogles", userGoogle.user.uid);
+  }
+
+  const google = localStorage.getItem("userGoogles");
+
+  console.log(google);
+
+  if (google?.length === 0 || inicio === "no") {
+    //nada
+  } else {
+    const si = "si";
+    localStorage.setItem("sesions", si);
+  }
+
+  if (sesionSinIniciar?.length === 0 || sesionSinIniciar === undefined) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionSinIniciar);
   }
 
-  if (sesionIniciada === undefined || sesionIniciada.length === 0) {
+  if (sesionIniciada === undefined || sesionIniciada?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionIniciada);
@@ -33,15 +52,17 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesions");
+  console.log(sesions, "sesionssesionssesions");
 
-  if (admin.length === 0) {
+  if (admin?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("admins", admin);
   }
 
   const userAdmin = localStorage.getItem("admins");
+
+  console.log(userAdmin, "userAdminuserAdminuserAdminuserAdminuserAdminuserAdmin")
 
   /**************************************** */
 
@@ -136,7 +157,7 @@ const Nav = () => {
             {userAdmin === "true" ? (
               <Link to="/DashBoardAdmin">
                 <svg
-                className={style.svg}
+                  className={style.svg}
                   width="80px"
                   height="80px"
                   viewBox="0 0 25 25"
@@ -154,7 +175,6 @@ const Nav = () => {
                     stroke-width="1.2"
                   />
                 </svg>
-
               </Link>
             ) : null}
           </div>
@@ -175,7 +195,6 @@ const Nav = () => {
                   stroke-width="1.2"
                 />
               </svg>
-
             </Link>
           </div>
         </React.Fragment>

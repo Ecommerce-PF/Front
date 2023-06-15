@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
 import { useDispatch } from "react-redux";
 import { sinIniciar } from "../../redux/actions/actions";
+import { google } from "../../redux/actions/actions";
+import { admin } from "../../redux/actions/actions";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -10,6 +12,8 @@ export default function LandingPage() {
   const handleSinIniciar = () => {
     const e = "no";
     dispatch(sinIniciar(e));
+    dispatch(google("no"));
+    dispatch(admin(false));
   };
 
   return (

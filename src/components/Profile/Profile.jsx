@@ -13,6 +13,7 @@ const Profile = () => {
   const id = useSelector((state) => state.idUsuario);
   const [url, setUrl] = useState("");
 
+
   const handleUpload = async (error, result) => {
     if (result && result.event === "success") {
       setUrl(result.info.secure_url);
@@ -27,6 +28,7 @@ const Profile = () => {
 
   console.log(userId, "id");
 
+
   if (id.length === 0) {
     // No hacer nada
   } else {
@@ -35,11 +37,13 @@ const Profile = () => {
 
   const idUser = localStorage.getItem("ids");
 
+
   console.log(url, "idUser");
 
   useEffect(() => {
     setUrl(userId.profileImage);
   }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {

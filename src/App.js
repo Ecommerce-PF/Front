@@ -16,7 +16,7 @@ import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente"
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
-
+//salve el mundoa
 function App() {
   return (
     <div className="App">

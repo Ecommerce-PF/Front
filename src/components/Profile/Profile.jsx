@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
@@ -30,15 +30,21 @@ const Profile = () => {
     fetchData();
   }, [dispatch, idUser]);
 
-  const { name, email, phone, address, purchaseHistory } = userId;
+  const { name, email, phone, address, purchaseHistory, profileImage } = userId;
 
   return (
     <div>
       <h2 className={styles.title}>Profile</h2>
-      <p className={styles.info}>Name: {name}</p>
-      <p className={styles.info}>Username: {userId.userName}</p>
-      <p className={styles.info}>Email: {email}</p>
-      <p className={styles.info}>Phone: {phone}</p>
+      <p className={styles.info}>Name: </p>
+      <h1>{name}</h1>
+      <p className={styles.info}>Username: </p>
+      <h1>{userId.userName}</h1>
+      <p className={styles.info}>Email: </p>
+      <h2>{email}</h2>
+      <p className={styles.info}>Phone: </p>
+      <h2>{phone}</h2>
+
+      <img className={styles.img_profile} src={profileImage} alt={name} />
 
       <h3 className={styles.subtitle}>Address {address}</h3>
       <p className={styles.address}></p>
@@ -60,6 +66,12 @@ const Profile = () => {
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
       </Link>
+
+            <Link to={`/editProfile`}>
+            <button className={styles.button}>
+              Edit Profile</button>
+            </Link>
+
     </div>
   );
 };

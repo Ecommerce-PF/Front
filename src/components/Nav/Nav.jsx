@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import FavoritesView from "../FavoritesView/favoritesView";
+import FavoritesView from "../FavoritesView/FavoritesView";
 import carrito from "../../assets/carrito-de-compras.png";
 import Admin from "../../assets/ajustes.png";
 import Usuario from "../../assets/usuario.png";

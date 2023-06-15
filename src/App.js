@@ -16,7 +16,7 @@ import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente"
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
-import FavoritesView from "./components/FavoritesView/favoritesView"; // <-- change to correct capitalization
+import FavoritesView from "./components/FavoritesView/FavoritesView.js"; // <-- change to correct capitalization
 
 function App() {
   return (

@@ -3,10 +3,7 @@ import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
-import carrito from "../../assets/carrito-de-compras.png";
-import Admin from "../../assets/ajustes.png";
-import Usuario from "../../assets/usuario.png";
-import Logout from "../../assets/cerrar-sesion.png";
+import { useEffect } from "react";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -74,11 +71,11 @@ if (google.length === 0 ||  inicio === "no") {
   const userAdmin = localStorage.getItem("admins");
 
   /**************************************** */
-// eslint-disable-next-line
+
   function mostrarTexto(elemento) {
     elemento.nextSibling.style.display = "block";
   }
-// eslint-disable-next-line
+
   function ocultarTexto(elemento) {
     elemento.nextSibling.style.display = "none";
   }
@@ -166,7 +163,7 @@ if (google.length === 0 ||  inicio === "no") {
             {userAdmin === "true" ? (
               <Link to="/DashBoardAdmin">
                 <svg
-                className={style.svg}
+                  className={style.svg}
                   width="80px"
                   height="80px"
                   viewBox="0 0 25 25"
@@ -184,7 +181,6 @@ if (google.length === 0 ||  inicio === "no") {
                     stroke-width="1.2"
                   />
                 </svg>
-
               </Link>
             ) : null}
           </div>
@@ -205,7 +201,6 @@ if (google.length === 0 ||  inicio === "no") {
                   stroke-width="1.2"
                 />
               </svg>
-
             </Link>
           </div>
         </React.Fragment>

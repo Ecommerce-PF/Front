@@ -1,10 +1,8 @@
 import React, { useEffect, useState} from "react";
-// eslint-disable-next-line
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getDetail } from "../../redux/actions/actions.js";
-// eslint-disable-next-line
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
 
@@ -77,7 +75,7 @@ const handleSubmit = (e) => {
 
 
     try{
-        axios.put(`/products/${id}`, form) // eslint-disable-next-line
+        axios.put(`http://localhost:3001/products/${id}`, form)
         .then((res) => {
             alert("Producto editado con exito");
      

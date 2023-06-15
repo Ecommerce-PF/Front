@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useState } from "react";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
@@ -20,6 +19,7 @@ export default function Detail() {
     if (listaCart === null) {
       listaCart = [];
     } else {
+
       listaCart.push(state);
     }
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
@@ -47,31 +47,32 @@ export default function Detail() {
       listaCart = [];
     } else {
       // Recorrer el array de objetos
+
       for (var i = 0; i < listaCart.length; i++) {
-        // Comparar el valor buscado con el objeto actual
         if (listaCart[i].id === state.id) {
           return (Swal.fire({
             icon: 'error',
-            title: 'To producto ya se encuentra en la lista de reproducción!',
+            title: 'To producto ya se encuentra en Carrito!',
             showConfirmButton: false,
             timer: 1500
           }))
         }
       }
+
       listaCart.push({
         ...state,
-        quantity: input,
+        quantity: 1
       });
-      localStorage.setItem("carritoLS", JSON.stringify(listaCart));
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Su producto se a agregado al carrito!!',
-        showConfirmButton: false,
-        timer: 1500
-      })
     }
-  }
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+
+    Swal.fire({
+      icon: "success",
+      title: "Su producto se ha agregado al carrito!!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
 
   useEffect(() => {
     dispatch(getDetail(id));

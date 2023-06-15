@@ -13,11 +13,9 @@ import styles from "./carrito.module.css";
 export default function Carrito() {
 
   const id = useSelector((state) => state.idUsuario);
-
   console.log(id, "id");
 
   if (id.length === 0) {
-    // No hacer nada
   } else {
     localStorage.setItem("ids", id);
   }
@@ -27,7 +25,6 @@ export default function Carrito() {
 
 
   const cart = JSON.parse(localStorage.getItem("carritoLS"));
-  // const idUser = localStorage.getItem("id");
 
   if (cart !== null && cart.length > 0) {
     var precioTotal = 0;
@@ -65,13 +62,13 @@ export default function Carrito() {
     }
     const body = {
       "products": arrProducts,
-      "userId": idUser
+      "userId": parseInt(idUser)
     }
     console.log(body);
     const newOrder = await axios.post('/payment/create-order', body);
 
     console.log(newOrder.data);
-    window.location.replace(newOrder.data);
+    window.location.href = newOrder.data;
   }
 
   return (
@@ -85,7 +82,7 @@ export default function Carrito() {
             })}
 
             <div className={styles.carritoTotalPrecio} >
-              <h3>Total del carrito: {precioTotal}</h3> <button onClick={funcionPago} >Proceder al pago</button>
+              <h3>Total del carrito: {precioTotal.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
             </div>
           </div> :
           <section className={styles.emptyCart}>

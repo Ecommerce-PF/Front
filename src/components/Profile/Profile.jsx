@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
@@ -53,7 +53,7 @@ const Profile = () => {
     fetchData();
   }, [dispatch, idUser, url]);
 
-  const { name, email, phone, address, purchaseHistory } = userId;
+  const { name, email, phone, address, purchaseHistory, profileImage } = userId;
 
   return (
     <div>
@@ -92,6 +92,12 @@ const Profile = () => {
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
       </Link>
+
+            <Link to={`/editProfile`}>
+            <button className={styles.button}>
+              Edit Profile</button>
+            </Link>
+
     </div>
   );
 };

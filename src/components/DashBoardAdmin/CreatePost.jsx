@@ -1,7 +1,10 @@
+// eslint-disable-next-line
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+// eslint-disable-next-line
 import { validate } from "./validator.js";
+// eslint-disable-next-line
 import { createPost, getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
@@ -17,7 +20,7 @@ export default function CreatePost() {
   const uniqueCategories = Array.from(
     new Set(products.map((product) => product.category))
   );
-
+    // eslint-disable-next-line
   const [categories, setCategories] = useState(uniqueCategories);
   const [allCategories, setAllCategories] = useState("All categories");
 
@@ -40,7 +43,7 @@ export default function CreatePost() {
     parentCategory: "",
     description: "",
   });
-
+// eslint-disable-next-line
   const [colores, setColores] = useState({
     color: "",
   });
@@ -106,7 +109,7 @@ export default function CreatePost() {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/products", input)
+      .post("/products", input)
       .then(() => alert("The recipe was created successfully"));
   };
 

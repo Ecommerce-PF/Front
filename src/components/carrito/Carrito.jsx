@@ -89,7 +89,7 @@ export default function Carrito() {
             })}
 
             <div className={styles.carritoTotalPrecio} >
-              <h3>Total del carrito: {precioTotal}</h3> <button onClick={funcionPago} >Proceder al pago</button>
+              <h3>Total del carrito: {precioTotal.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
             </div>
           </div> :
           <section className={styles.emptyCart}>

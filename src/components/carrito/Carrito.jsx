@@ -56,22 +56,26 @@ export default function Carrito() {
 
 
   const funcionPago = async () => {
-    var arrProducts = [];
-    for (let i = 0; i < cart.length; i++) {
-      arrProducts.push({
-        id: cart[i].id,
-        quantity: cart[i].quantity,
-      });
-    }
-    const body = {
-      "products": arrProducts,
-      "userId": idUser
-    }
-    console.log(body);
-    const newOrder = await axios.post('/payment/create-order', body);
+    if (!!idUser) {
+      var arrProducts = [];
+      for (let i = 0; i < cart.length; i++) {
+        arrProducts.push({
+          id: cart[i].id,
+          quantity: cart[i].quantity,
+        });
+      }
+      const body = {
+        "products": arrProducts,
+        "userId": parseInt(idUser)
+      }
+      console.log(body);
+      const newOrder = await axios.post('/payment/create-order', body);
 
-    console.log(newOrder.data);
-    window.location.replace(newOrder.data);
+      console.log(newOrder.data.redirect);
+      window.location.replace(newOrder.data.redirect);
+    } else {
+      alert('No hay usuario');
+    }
   }
 
   return (

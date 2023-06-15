@@ -47,7 +47,6 @@ const SignUp = () => {
       try {
         const response = await axios.post("/users/signup", user).then((res) => {
           alert("Registro exitoso");
-          console.log(res);
           navigate("/login");
         });
       } catch (error) {
@@ -107,13 +106,12 @@ const SignUp = () => {
       const users = result.user;
       // IdP data available using getAdditionalUserInfo(result)
       // ...
-      console.log(users);
       setUser({
         name: users.displayName,
         userName: users.displayName,
         phone: "12212",
         email: users.email,
-        password: users.name + users.email,
+        password: users.accessToken,
         profileImage: users.photoURL,
       });
       setGoogle(true);

@@ -15,6 +15,7 @@ const Nav = () => {
   const userGoogle = useSelector((state) => state.google);
   const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
 
+
   if (inicioConGoogle?.length === 0) {
     // No hacer nada
   } else {
@@ -31,7 +32,6 @@ const Nav = () => {
 
   const google = localStorage.getItem("userGoogles");
 
-  console.log(google);
 
   if (google?.length === 0 || inicio === "no") {
     //nada
@@ -54,7 +54,6 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesionssesionssesions");
 
   if (admin?.length === 0) {
     // No hacer nada
@@ -64,7 +63,6 @@ const Nav = () => {
 
   const userAdmin = localStorage.getItem("admins");
 
-  console.log(userAdmin, "userAdminuserAdminuserAdminuserAdminuserAdminuserAdmin")
 
   /**************************************** */
 

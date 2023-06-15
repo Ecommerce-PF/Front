@@ -35,7 +35,6 @@ const Login = () => {
   const [isBanned, setIsBanned] = useState(false); // Estado para controlar si el usuario está baneado
   const [isActions, setIsActions] = useState(true); // Estado para controlar si el usuario tiene permisos de acciones
 
-
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
     setError("");
@@ -78,6 +77,8 @@ const Login = () => {
         const userId = data.user.id;
         const trueOrFalse = data.user.admin;
 
+        console.log(data.user, "datadatadata");
+
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
         await dispatch(admin(trueOrFalse));
@@ -98,39 +99,43 @@ const Login = () => {
 
   const auth = getAuth();
 
- function callLoginGoogle() {
+  function callLoginGoogle() {
     signInWithPopup(auth, provider)
-      .then(result => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        const password = user.name + user.email
-
-        console.log(user);
   
         dispatch(loginWithGoogle(result));
         dispatch(google("yes"));
         dispatch(admin(false));
-
+  
         try {
-          const response = fetch("http://localhost:3001/users/login", {
+          const response = await fetch("http://localhost:3001/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: [password],
+            body: JSON.stringify({
+              userName: user.displayName,
+              password: user.accessToken,
+            }),
           });
+  
+          if (response.status === 200) {
+            const data = await response.json()
+            dispatch(idUser(data.user.id))
+          }
+
+          navigate("/home");
+          window.location.reload();
+  
+          console.log(response);
         } catch (error) {
           setError("Error occurred while logging in");
         }
-        
-      
-  
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        navigate("/home");
       })
       .catch((error) => {
         // Handle Errors here.

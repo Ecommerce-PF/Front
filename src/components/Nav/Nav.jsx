@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import FavoritesView from "../FavoritesView/favoritesView";
+import carrito from "../../assets/carrito-de-compras.png";
+import Admin from "../../assets/ajustes.png";
+import Usuario from "../../assets/usuario.png";
+import Logout from "../../assets/cerrar-sesion.png";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -11,11 +17,9 @@ const Nav = () => {
   const sesionSinIniciar = useSelector((state) => state.inicio);
   const sesionIniciada = useSelector((state) => state.iniciado);
   const userGoogle = useSelector((state) => state.google);
-  const inicioConGoogle = useSelector((state) => state.inicioConGoogle)
+  const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
 
-
-
-  if (inicioConGoogle.length === 0) {
+  if (inicioConGoogle?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("inicioConGoogles", inicioConGoogle);
@@ -23,35 +27,30 @@ const Nav = () => {
 
   const inicio = localStorage.getItem("inicioConGoogles");
 
+  if (userGoogle.user === undefined) {
+    //nada
+  } else {
+    localStorage.setItem("userGoogles", userGoogle.user.uid);
+  }
 
+  const google = localStorage.getItem("userGoogles");
 
+  console.log(google);
 
-if (userGoogle.user === undefined) {
-   //nada 
-} else {
-  localStorage.setItem("userGoogles", userGoogle.user.uid);
-}
+  if (google?.length === 0 || inicio === "no") {
+    //nada
+  } else {
+    const si = "si";
+    localStorage.setItem("sesions", si);
+  }
 
-const google = localStorage.getItem("userGoogles");
-
-console.log(google)
-
-if (google.length === 0 ||  inicio === "no") {
-  //nada
-} else {
-  const si = "si"
-  localStorage.setItem("sesions", si);
-}
-
-
-
-  if (sesionSinIniciar.length === 0 || sesionSinIniciar === undefined) {
+  if (sesionSinIniciar?.length === 0 || sesionSinIniciar === undefined) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionSinIniciar);
   }
 
-  if (sesionIniciada === undefined || sesionIniciada.length === 0) {
+  if (sesionIniciada === undefined || sesionIniciada?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("sesions", sesionIniciada);
@@ -59,16 +58,17 @@ if (google.length === 0 ||  inicio === "no") {
 
   const sesions = localStorage.getItem("sesions");
 
+  console.log(sesions, "sesionssesionssesions");
 
-  console.log(sesions, "sesionssesionssesions")
-
-  if (admin.length === 0) {
+  if (admin?.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("admins", admin);
   }
 
   const userAdmin = localStorage.getItem("admins");
+
+  console.log(userAdmin, "userAdminuserAdminuserAdminuserAdminuserAdminuserAdmin")
 
   /**************************************** */
 
@@ -205,6 +205,11 @@ if (google.length === 0 ||  inicio === "no") {
           </div>
         </React.Fragment>
       </div>
+      <NavLink to="/favorites">
+        <div className={style.nav_fav}>
+          🤍
+        </div>
+      </NavLink>
     </div>
   );
 };

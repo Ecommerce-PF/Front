@@ -1,0 +1,32 @@
+/* hacer un grid con 3 columnas y 3 filas */
+/* cada elemento del grid debe tener un tamaño de 300px */
+/* cada elemento del grid debe tener un margen de 10px */
+/* cada elemento del grid debe tener un padding de 10px */
+
+.container_fav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
+    color: #af1cc2;
+}
+.title_fav {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+.button_fav {
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    border: none;
+    background-color: #af1cc2;
+    color: white;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    cursor: pointer;
+}

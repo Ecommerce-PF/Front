@@ -81,6 +81,7 @@ const Login = () => {
         setPassword("");
         setError("");
         navigate("/home");
+        window.location.reload();
       } else {
         setError("Invalid username or password");
       }
@@ -104,9 +105,11 @@ const Login = () => {
 
         dispatch(loginWithGoogle(result))
         dispatch(google("yes"))
+        dispatch(admin(false));
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         navigate("/home");
+        window.location.reload();
       })
       .catch((error) => {
         // Handle Errors here.

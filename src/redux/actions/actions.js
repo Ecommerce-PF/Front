@@ -27,6 +27,13 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
 export const ADMIN_USER = "ADMIN_USER";
+export const SIN_INICIAR = "SIN_INICIAR";
+export const INICIADO = "INICIADO";
+export const ACTIVE = "ACTIVE";
+export const BAN_OR_DESBAN = "BAN_OR_DESBAN";
+export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
+export const GOOGLE = "GOOGLE";
+
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
@@ -189,7 +196,6 @@ export const signUpUser = (userData) => {
       const { token } = response.data;
       dispatch({ type: SIGN_UP_SUCCESS, payload: token });
     } catch (error) {
-      console.log(error.response.data);
       dispatch({ type: SIGN_UP_FAILURE, payload: error.response.data.msg });
     }
   };
@@ -231,6 +237,13 @@ export const deleteProduct = (id) => {
   };
 };
 
+export const sinIniciar = (e) => {
+  return {
+    type: SIN_INICIAR,
+    payload: e,
+  };
+};
+
 export const deleteUser = (id) => {
   return async (dispatch) => {
     try {
@@ -241,3 +254,32 @@ export const deleteUser = (id) => {
     }
   };
 };
+
+export const iniciado = (e) => {
+  return {
+    type: INICIADO,
+    payload: e,
+  };
+};
+
+export const loginWithGoogle = (e) => {
+  return {
+    type: LOGIN_WITH_GOOGLE,
+    payload: e,
+  };
+};
+
+export const google = (e) => {
+  console.log(e, "actions");
+  return {
+    type: GOOGLE,
+    payload: e,
+  };
+};
+
+// export const activeAccount = (e) => {
+//   return {
+//     type: ACTIVE,
+//     payload: e,
+//   };
+// };

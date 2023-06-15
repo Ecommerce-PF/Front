@@ -8,7 +8,6 @@ import WhatsApp from "../WhatsApp/WhatsApp";
 import Footer from "../Footer/Footer";
 import style from "./Home.module.css";
 
-
 const Home = () => {
   const id = useSelector((state) => state.idUsuario);
   const idBan = useSelector((state) => state.userId);

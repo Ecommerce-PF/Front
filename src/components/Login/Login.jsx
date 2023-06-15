@@ -35,7 +35,6 @@ const Login = () => {
   const [isBanned, setIsBanned] = useState(false); // Estado para controlar si el usuario está baneado
   const [isActions, setIsActions] = useState(true); // Estado para controlar si el usuario tiene permisos de acciones
 
-
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
     setError("");
@@ -98,18 +97,15 @@ const Login = () => {
 
   const auth = getAuth();
 
- function callLoginGoogle() {
+  function callLoginGoogle() {
     signInWithPopup(auth, provider)
-      .then(result => {
+      .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        const password = user.name + user.email
 
-        console.log(user);
-  
         dispatch(loginWithGoogle(result));
         dispatch(google("yes"));
         dispatch(admin(false));
@@ -120,14 +116,15 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: [password],
+            body: JSON.stringify({
+              userName: user.displayName,
+              password: user.accessToken,
+            }),
           });
         } catch (error) {
           setError("Error occurred while logging in");
         }
-        
-      
-  
+
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         navigate("/home");
@@ -143,7 +140,6 @@ const Login = () => {
         // ...
       });
   }
-  
 
   return (
     <section className={styles.back}>

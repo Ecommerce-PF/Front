@@ -166,9 +166,7 @@ export const getUserByEmail = (email) => {
     try {
       const user = await axios.get(`/user?email=${email}`);
       dispatch({ type: GET_USER, payload: user.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -297,7 +295,6 @@ export const loginWithGoogle = (e) => {
 };
 
 export const google = (e) => {
-  console.log(e, "actions");
   return {
     type: GOOGLE,
     payload: e,

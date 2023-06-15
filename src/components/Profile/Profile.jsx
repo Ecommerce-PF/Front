@@ -19,16 +19,12 @@ const Profile = () => {
     if (result && result.event === "success") {
       setUrl(result.info.secure_url);
       await axios.put(`/users/1`, { profileImage: result.info.secure_url });
-      console.log({ profileImage: url });
     }
   };
 
   {
     /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
   }
-
-  console.log(userId, "id");
-
 
   if (id.length === 0) {
     // No hacer nada
@@ -37,9 +33,6 @@ const Profile = () => {
   }
 
   const idUser = localStorage.getItem("ids");
-
-
-  console.log(url, "idUser");
 
   useEffect(() => {
     setUrl(userId.profileImage);

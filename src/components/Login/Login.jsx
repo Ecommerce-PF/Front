@@ -77,6 +77,8 @@ const Login = () => {
         const userId = data.user.id;
         const trueOrFalse = data.user.admin;
 
+        console.log(data.user, "datadatadata");
+
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
         await dispatch(admin(trueOrFalse));
@@ -99,19 +101,19 @@ const Login = () => {
 
   function callLoginGoogle() {
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-
+  
         dispatch(loginWithGoogle(result));
         dispatch(google("yes"));
         dispatch(admin(false));
-
+  
         try {
-          const response = fetch("http://localhost:3001/users/login", {
+          const response = await fetch("http://localhost:3001/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -121,13 +123,19 @@ const Login = () => {
               password: user.accessToken,
             }),
           });
+  
+          if (response.status === 200) {
+            const data = await response.json()
+            dispatch(idUser(data.user.id))
+          }
+
+          navigate("/home");
+          window.location.reload();
+  
+          console.log(response);
         } catch (error) {
           setError("Error occurred while logging in");
         }
-
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        navigate("/home");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -140,6 +148,7 @@ const Login = () => {
         // ...
       });
   }
+  
 
   return (
     <section className={styles.back}>

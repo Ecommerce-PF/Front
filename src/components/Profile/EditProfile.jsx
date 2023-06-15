@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 
-// import  Title  from "../UploadingImages/Title"
-
-import UploadFile from "../UploadFile/UploadFile"
+// import UploadFile from "../UploadFile/UploadFile";
 
 import styles from './EditProfile.module.css';
 
@@ -159,8 +157,8 @@ useEffect(() => {
             <div className={styles.form__group}>
                 <label htmlFor="profileImage" className={styles.form__label}>Imagen de Perfil</label>
                 {/* <input type="file" name="profileImage" id="profileImage" onChange={handleChange} value={form.profileImage} className={styles.form__input} />  */}
-                <UploadFile name="profileImage" id="profileImage" onChange={handleChange} value={form.profileImage} className={styles.form__input} />
-                
+                {/* <UploadFile name="profileImage" id="profileImage" onChange={handleChange} value={form.profileImage} className={styles.form__input} /> */}
+                {/* <UploadFile handleUpload={handleUpload} folder={"user"}></UploadFile>  */}
                 <span className={styles.form__line}></span>
               
             </div>

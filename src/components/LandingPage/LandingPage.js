@@ -5,15 +5,19 @@ import { useDispatch } from "react-redux";
 import { sinIniciar } from "../../redux/actions/actions";
 import { google } from "../../redux/actions/actions";
 import { admin } from "../../redux/actions/actions";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSinIniciar = () => {
     const e = "no";
     dispatch(sinIniciar(e));
     dispatch(google("no"));
     dispatch(admin(false));
+    navigate("/home");
+    window.location.reload();
   };
 
   return (
@@ -32,11 +36,9 @@ export default function LandingPage() {
             <Link className={s.btnS} to="/signup">
               <button className={s.btn}>Registrarse</button>
             </Link>
-            <Link className={s.btnS} to="/home">
-              <button onClick={handleSinIniciar} className={s.btn}>
-                Inicio
-              </button>
-            </Link>
+            <button onClick={handleSinIniciar} className={s.btn}>
+              Inicio
+            </button>
           </div>
         </div>
       </div>

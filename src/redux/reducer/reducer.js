@@ -19,6 +19,7 @@ import {
   SIN_INICIAR,
   INICIADO,
   LOGIN_WITH_GOOGLE,
+  GOOGLE,
 } from "../actions/actions";
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   inicio: [],
   iniciado: [],
   google: {},
+  inicioConGoogle: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -202,6 +204,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         google: action.payload,
+      };
+
+    case GOOGLE:
+      return {
+        ...state,
+        inicioConGoogle: action.payload,
       };
 
     default:

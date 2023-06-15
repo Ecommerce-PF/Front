@@ -200,11 +200,11 @@ const rootReducer = (state = initialState, action) => {
         iniciado: action.payload,
       };
 
-    // case ACTIVE:
-    //   return {
-    //     ...state,
-    //     ban: action.payload,
-    //   };
+    case LOGIN_WITH_GOOGLE:
+      return {
+        ...state,
+        google: action.payload,
+      };
 
     case GOOGLE:
       return {

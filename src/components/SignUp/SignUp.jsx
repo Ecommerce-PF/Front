@@ -4,7 +4,6 @@ import { signUpUser } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
-// eslint-disable-next-line
 import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -43,15 +42,8 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("https://server-ecommerce.up.railway.app/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        });
-
-        if (response.ok) {
+        const response= await axios.post("/users/signup", user)
+        .then((res) => {
           alert("Registro exitoso");
           console.log(res);
           navigate("/login");

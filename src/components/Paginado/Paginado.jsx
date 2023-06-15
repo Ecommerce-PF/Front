@@ -36,7 +36,6 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
       setPagina(1);
       setInput(1);
     }
-    // eslint-disable-next-line
   }, [maximo]);
 
   return (

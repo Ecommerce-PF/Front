@@ -1,22 +1,38 @@
-import React from 'react'
-import { useAuth0  } from '@auth0/auth0-react'
+import React, { useEffect, useState } from "react";
+import firebase from "firebase/app";
+import "firebase/auth";
 
-export default function Profile() {
-    const {user, isAuthenticated, isLoading} = useAuth0()
+const UserProfile = () => {
+  const [user, setUser] = useState(null);
 
-    if (isLoading){
-        return ( <div>Loading...</div>)
-    }
+  useEffect(() => {
+    // Suscribirse a los cambios en el estado de autenticación
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // El usuario ha iniciado sesión
+        setUser(user);
+      } else {
+        // El usuario ha cerrado sesión
+        setUser(null);
+      }
+    });
 
+    // Limpiar la suscripción al desmontar el componente
+    return () => unsubscribe();
+  }, []);
 
-    return(
-        isAuthenticated && (
-            <div>
-                <img src={user.picture} alt={user.name} />
-                <h2>{user.name}</h2>
-                <p>{user.mail}</p>
-            </div>
-        )
-    )
+  if (user) {
+    return (
+      <div>
+        <h1>Información del usuario</h1>
+        <p>Nombre: {user.displayName}</p>
+        <p>Email: {user.email}</p>
+        <p>ID: {user.uid}</p>
+      </div>
+    );
+  } else {
+    return <p>No has iniciado sesión.</p>;
+  }
+};
 
-}
+export default UserProfile;

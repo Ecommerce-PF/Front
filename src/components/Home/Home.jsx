@@ -7,6 +7,7 @@ import Nav from "../Nav/Nav";
 import WhatsApp from "../WhatsApp/WhatsApp";
 import Footer from "../Footer/Footer";
 import style from "./Home.module.css";
+import UserProfile from "../Login/Profile";
 
 const Home = () => {
   const id = useSelector((state) => state.idUsuario);
@@ -40,6 +41,7 @@ const Home = () => {
           <Nav />
           <Buttons />
           <CardsContainer />
+          <UserProfile/>
           <div className={style.wppContainer}>
             <WhatsApp />
           </div>

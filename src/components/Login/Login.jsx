@@ -75,7 +75,6 @@ const Login = () => {
         const banned = data.user.active; // Obtener el estado de baneo del usuario
 
 console.log(data)
-
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
         await dispatch(admin(trueOrFalse));
@@ -103,6 +102,7 @@ console.log(data)
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        
         // IdP data available using getAdditionalUserInfo(result)
         // ...
         window.location.href = "/home";

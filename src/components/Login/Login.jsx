@@ -1,18 +1,35 @@
 import React, { useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import { idUser, admin } from "../../redux/actions/actions";
+import { idUser, admin, loginWithGoogle, google } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
-import { iniciado} from "../../redux/actions/actions"
+import { iniciado } from "../../redux/actions/actions";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 
 const Login = () => {
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5fkHI-K8lcyC8U8TSDfnjkqFjMZ6mmTQ",
+    authDomain: "clothestore-8ead6.firebaseapp.com",
+    projectId: "clothestore-8ead6",
+    storageBucket: "clothestore-8ead6.appspot.com",
+    messagingSenderId: "86387538325",
+    appId: "1:86387538325:web:9e422e0928cf885f689e9c",
+    measurementId: "G-JSSCSKPYD9",
+  };
+  const app = initializeApp(firebaseConfig);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isBanned, setIsBanned] = useState(false); // Estado para controlar si el usuario está baneado
+  const [isActions, setIsActions] = useState(true); // Estado para controlar si el usuario tiene permisos de acciones
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -25,16 +42,20 @@ const Login = () => {
   };
 
   const inicio = () => {
-    const e = "si";
+    const e = "si";                       
     dispatch(iniciado(e));
-  };
+  };                
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar campos obligatorios
     if (!userName || !password) {
       setError("Please enter your username and password");
+      return;
+    }
+
+    if (!isActions) {
+      setError("You are not allowed to login.");
       return;
     }
 
@@ -45,96 +66,149 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName, password }),
-      });
-
-
+      } );
 
       if (response.ok) {
         const data = await response.json();
         const userId = data.user.id;
         const trueOrFalse = data.user.admin;
 
-        console.log(userId, "esto es userId")
 
-        // Enviar acción de inicio de sesión a Redux
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
         await dispatch(admin(trueOrFalse));
-        // Limpiar campos y mostrar éxito
         setUserName("");
         setPassword("");
         setError("");
-        // Redireccionar al usuario a la página de inicio
         navigate("/home");
       } else {
-        // Manejar error de inicio de sesión
         setError("Invalid username or password");
       }
     } catch (error) {
-      // Manejar error de red o del servidor
       setError("Error occurred while logging in");
     }
   };
 
+  const provider = new GoogleAuthProvider();
+
+  const auth = getAuth();
+
+  function callLoginGoogle() {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+
+        dispatch(loginWithGoogle(result))
+        dispatch(google("yes"))
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        navigate("/home");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+
   return (
     <section className={styles.back}>
-    <div className={styles.body}>
-      <form className={styles.forms} onSubmit={handleSubmit}>
-        <div className={styles.nav}>
-          <h1>Login</h1>
-        </div>
-
-        <div className={styles.statsAndTypes}>
-          <div className={styles.stats}>
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
-                <input
-                  type="text"
-                  name="username"
-                  id="input-username"
-                  required
-                  value={userName}
-                  onChange={handleUserNameChange}
-                />
-                <span className={styles.placeholder}>Username</span>
-              </div>
-            </div>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
-                <input
-                  type="password"
-                  name="password"
-                  id="input-password"
-                  required
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-                <span className={styles.placeholder}>Password</span>
-              </div>
-            </div>
-
-            {error && <p className={styles.error}>{error}</p>}
+      <div className={styles.body}>
+        <form className={styles.forms} onSubmit={handleSubmit}>
+          <div className={styles.nav}>
+            <h1>Login</h1>
           </div>
 
-          <div className={styles.buttons}> 
-            <div className={styles.types}>
-              <button onClick={inicio} type="submit" className={styles.button}>
-                Login
-              </button>
+          <div className={styles.statsAndTypes}>
+            <div className={styles.stats}>
+              <div className={styles.centralize}>
+                <div className={styles.inputBlock}>
+                  <input
+                    type="text"
+                    name="username"
+                    id="input-username"
+                    required
+                    value={userName}
+                    onChange={handleUserNameChange}
+                  />
+                  <span className={styles.placeholder}>Username</span>
+                </div>
+              </div>
+
+              <div className={styles.centralize}>
+                <div className={styles.inputBlock}>
+                  <input
+                    type="password"
+                    name="password"
+                    id="input-password"
+                    required
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <span className={styles.placeholder}>Password</span>
+                </div>
+              </div>
+
+              {error && <p className={styles.error}>{error}</p>}
             </div>
 
-            <div className={styles.types}>
-              <Link to="/">
-              <button className={styles.button}>
-                Back
-              </button>
-              </Link>
+            <div className={styles.buttons}>
+              <div className={styles.types}>
+                <button
+                  onClick={inicio}
+                  type="submit"
+                  className={styles.button}
+                >
+                  Login
+                </button>
+              </div>
+
+              <div className={styles.types}>
+                <Link to="/">
+                  <button className={styles.button}>Back</button>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+
+      <div className={styles.loginGoogle}>
+        <Link onClick={callLoginGoogle}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            width="80px"
+            height="80px"
+          >
+            <path
+              fill="#fbc02d"
+              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+            />
+            <path
+              fill="#e53935"
+              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+            />
+            <path
+              fill="#4caf50"
+              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+            />
+            <path
+              fill="#1565c0"
+              d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+            />
+          </svg>
+        </Link>
+      </div>
     </section>
   );
 };

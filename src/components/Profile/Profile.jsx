@@ -10,7 +10,7 @@ const Profile = () => {
   const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
 
-  console.log(id, "id");
+
 
   if (id.length === 0) {
     // No hacer nada
@@ -20,7 +20,7 @@ const Profile = () => {
 
   const idUser = localStorage.getItem("ids");
 
-  console.log(idUser, "idUser");
+
 
   useEffect(() => {
     const fetchData = async () => {

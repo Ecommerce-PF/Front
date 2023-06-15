@@ -16,7 +16,9 @@ import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente"
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
 
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
+
 import EditProfile from "./components/Profile/EditProfile";
+
 
 function App() {
   return (

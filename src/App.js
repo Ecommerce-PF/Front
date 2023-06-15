@@ -14,10 +14,8 @@ import Order from "./components/DashBoardAdmin/OrdersUsers";
 import MercadoPagoAceptado from "./components/MercadoPago/MercadoPagoAceptado";
 import MercadoPagoPendiente from "./components/MercadoPago/MercadoPagoPendiente";
 import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado";
-
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
-
-import FavoritesView from "./components/FavoritesView/favoritesView"; // <-- change to correct capitalization
+import FavoritesView from "./components/FavoritesView/favoritesView";
 import EditProfile from "./components/Profile/EditProfile";
 
 function App() {

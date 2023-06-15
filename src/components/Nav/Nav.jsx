@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import FavoritesView from "../FavoritesView/favoritesView";
+import carrito from "../../assets/carrito-de-compras.png";
+import Admin from "../../assets/ajustes.png";
+import Usuario from "../../assets/usuario.png";
+import Logout from "../../assets/cerrar-sesion.png";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -199,6 +205,11 @@ const Nav = () => {
           </div>
         </React.Fragment>
       </div>
+      <NavLink to="/favorites">
+        <div className={style.nav_fav}>
+          🤍
+        </div>
+      </NavLink>
     </div>
   );
 };

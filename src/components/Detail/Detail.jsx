@@ -12,6 +12,7 @@ import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import styles from "./detail.module.css";
 
+
 export default function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();

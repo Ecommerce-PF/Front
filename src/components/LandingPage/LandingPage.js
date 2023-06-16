@@ -2,9 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
 import { useDispatch } from "react-redux";
-import { sinIniciar } from "../../redux/actions/actions";
-import { google } from "../../redux/actions/actions";
-import { admin } from "../../redux/actions/actions";
+import { consultaSiIniciado } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
@@ -12,10 +10,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   const handleSinIniciar = () => {
-    const e = "no";
-    dispatch(sinIniciar(e));
-    dispatch(google("no"));
-    dispatch(admin(false));
+    dispatch(consultaSiIniciado("no"));
     navigate("/home");
   };
 

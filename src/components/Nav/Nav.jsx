@@ -7,46 +7,16 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Nav = () => {
-  const user = useSelector((state) => state.user);
+  const users = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
-  const sesionSinIniciar = useSelector((state) => state.inicio);
-  const sesionIniciada = useSelector((state) => state.iniciado);
-  const userGoogle = useSelector((state) => state.google);
-  const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
+  const iniciado = useSelector((state) => state.iniciado);
 
-  if (inicioConGoogle?.length === 0) {
+  console.log(users, "esto es user")
+  
+  if (iniciado?.length === 0) {
     // No hacer nada
   } else {
-    localStorage.setItem("inicioConGoogles", inicioConGoogle);
-  }
-
-  const inicio = localStorage.getItem("inicioConGoogles");
-
-  if (userGoogle.user === undefined) {
-    //nada
-  } else {
-    localStorage.setItem("userGoogles", userGoogle.user.uid);
-  }
-
-  const google = localStorage.getItem("userGoogles");
-
-  if (google?.length === 0 || inicio === "no") {
-    //nada
-  } else {
-    const si = "si";
-    localStorage.setItem("sesions", si);
-  }
-
-  if (sesionSinIniciar?.length === 0 || sesionSinIniciar === undefined) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("sesions", sesionSinIniciar);
-  }
-
-  if (sesionIniciada === undefined || sesionIniciada?.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("sesions", sesionIniciada);
+    localStorage.setItem("sesions", iniciado);
   }
 
   const sesions = localStorage.getItem("sesions");
@@ -203,7 +173,7 @@ const Nav = () => {
           <NavLink to="/favorites">
             <div className={style.nav_fav}>
               <svg
-              className={style.svg} 
+                className={style.svg}
                 width="47px"
                 height="47px"
                 viewBox="0 0 25 25"

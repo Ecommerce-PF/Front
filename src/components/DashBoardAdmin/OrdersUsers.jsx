@@ -26,13 +26,13 @@ const OrdersUsers = () => {
 
   const idUser = localStorage.getItem("ids");
 
-  console.log(idUser, "esto es el id user");
+
 
   const handleBanUser = (id) => {
     dispatch(getUserById(id));
     const updatedIdBan = { ...idBan };
     updatedIdBan.active = !updatedIdBan.active;
-    console.log(updatedIdBan, "updatedIdBan");
+
 
     try {
       axios.put(`/users/${id}`, updatedIdBan).then((res) => {

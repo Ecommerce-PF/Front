@@ -1,13 +1,11 @@
-// eslint-disable-next-line
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// eslint-disable-next-line
 import { validate } from "./validator.js";
-// eslint-disable-next-line
 import { createPost, getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
+import UploadFile from "../UploadFile/UploadFile";
 
 export default function CreatePost() {
   const dispatch = useDispatch();
@@ -20,7 +18,7 @@ export default function CreatePost() {
   const uniqueCategories = Array.from(
     new Set(products.map((product) => product.category))
   );
-    // eslint-disable-next-line
+
   const [categories, setCategories] = useState(uniqueCategories);
   const [allCategories, setAllCategories] = useState("All categories");
 
@@ -38,19 +36,16 @@ export default function CreatePost() {
     name: "",
     color: [],
     price: 0,
-    image: "",
+    image:
+      "https://res.cloudinary.com/finalproject123/image/upload/v1686800930/Dummy-Default_paxnhf.jpg",
     category: "",
     parentCategory: "",
     description: "",
   });
-// eslint-disable-next-line
+
   const [colores, setColores] = useState({
     color: "",
   });
-
-
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,15 +56,15 @@ export default function CreatePost() {
         // otros atributos que necesites para el color
       }));
 
-      setInput((prevForm) => ({
-        ...prevForm,
+      setInput({
+        ...input,
         [name]: colorsArray,
-      }));
+      });
     } else {
-      setInput((prevForm) => ({
-        ...prevForm,
+      setInput({
+        ...input,
         [name]: value,
-      }));
+      });
     }
   };
 
@@ -90,7 +85,6 @@ export default function CreatePost() {
     }
   }, [colors]);
 
-
   const changeHandler = (event) => {
     const { name, value } = event.target;
     if (name === "category") {
@@ -110,14 +104,18 @@ export default function CreatePost() {
     e.preventDefault();
     axios
       .post("/products", input)
-      .then(() => alert("The recipe was created successfully"));
+      .then(() => alert("The clothe was created successfully"));
+  };
+
+  const handleUpload = async (error, result) => {
+    if (result && result.event === "success") {
+      setInput({ ...input, image: result.info.secure_url });
+    }
   };
 
   return (
     <div className={styles.body}>
       <form className={styles.form} onSubmit={submitHandler}>
-
-
         <div className={styles.statsAndTypes}>
           <div className={styles.stats}>
             <h3>Characteristics</h3>
@@ -125,7 +123,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="number"
                   name="id"
                   id="input-text"
@@ -142,7 +140,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="text"
                   name="name"
                   id="input-text"
@@ -159,7 +157,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="text"
                   name="parentCategory"
                   id="input-text"
@@ -178,7 +176,7 @@ export default function CreatePost() {
                 <label className="name">Colors: {count + 1} </label>
                 <label htmlFor="color">Color</label>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="text"
                   name="color"
                   id="color"
@@ -196,7 +194,7 @@ export default function CreatePost() {
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="number"
                   name="price"
                   id="input-text"
@@ -208,28 +206,24 @@ export default function CreatePost() {
                 <span className={styles.placeholder}>Price</span>
               </div>
             </div>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
-                <input
-                className={styles.input}
-                  type="text"
-                  name="image"
-                  id="input-text"
-                  required
-                  spellCheck="false"
-                  value={input.image}
-                  onChange={changeHandler}
-                />
-                {error.image && <p>{error.image}</p>}
-                <span className={styles.placeholder}>Image Link: </span>
-              </div>
+            <div>
+              <img
+                src={input.image}
+                alt="productImage"
+                width="90"
+                height="110"
+              ></img>
+              <p></p>
+              <UploadFile
+                handleUpload={handleUpload}
+                folder={"product"}
+              ></UploadFile>
             </div>
 
             <div className={styles.centralize}>
               <div className={styles.inputBlock}>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type="text"
                   name="description"
                   id="input-text"
@@ -277,7 +271,6 @@ export default function CreatePost() {
           </Link>
         </div>
       </form>
-
     </div>
   );
 }

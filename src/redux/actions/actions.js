@@ -31,6 +31,19 @@ export const SIN_INICIAR = "SIN_INICIAR";
 export const INICIADO = "INICIADO";
 export const ACTIVE = "ACTIVE";
 export const BAN_OR_DESBAN = "BAN_OR_DESBAN";
+export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
+export const GOOGLE = "GOOGLE";
+export const ADD_FAVORITE = "ADD_FAVORITE";
+export const DELETE_FAVORITE = "DELETE_FAVORITE";
+
+export const getUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const user = await axios.get(`/users/${userId}`);
+      dispatch({ type: GET_USER, payload: user.data });
+    } catch (error) {}
+  };
+};
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -58,6 +71,22 @@ export const getCategories = () => {
     } catch (error) {}
   };
 };
+
+/* Add favorite */
+export const addFavorite = (character) => {
+  return {
+    type: ADD_FAVORITE,
+    payload: character,
+  };
+};
+
+export const deleteFavorite = (productId) => {
+  return {
+    type: DELETE_FAVORITE,
+    payload: productId,
+  };
+};
+/* ------------------ */
 
 export const orderByName = (payload) => {
   return {
@@ -137,9 +166,7 @@ export const getUserByEmail = (email) => {
     try {
       const user = await axios.get(`/user?email=${email}`);
       dispatch({ type: GET_USER, payload: user.data });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 };
 
@@ -256,6 +283,20 @@ export const deleteUser = (id) => {
 export const iniciado = (e) => {
   return {
     type: INICIADO,
+    payload: e,
+  };
+};
+
+export const loginWithGoogle = (e) => {
+  return {
+    type: LOGIN_WITH_GOOGLE,
+    payload: e,
+  };
+};
+
+export const google = (e) => {
+  return {
+    type: GOOGLE,
     payload: e,
   };
 };

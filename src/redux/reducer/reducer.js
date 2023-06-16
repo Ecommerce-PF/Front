@@ -20,6 +20,8 @@ import {
   INICIADO,
   LOGIN_WITH_GOOGLE,
   GOOGLE,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
 } from "../actions/actions";
 
 const initialState = {
@@ -32,10 +34,12 @@ const initialState = {
   idUsuario: [],
   userId: [],
   adminUser: [],
+  priceRange: [0, Infinity],
   inicio: [],
   iniciado: [],
   google: {},
   inicioConGoogle: [],
+  myFavorites: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -58,30 +62,61 @@ const rootReducer = (state = initialState, action) => {
 
     case FILTER_BY_CATEGORY:
       const { payload: category } = action;
+      const { priceRange } = state;
+
       if (category === "") {
+        // No se aplica ningún filtro por categoría
+        const filteredByPriceProducts = state.allProducts.filter(
+          (product) =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+        );
         return {
           ...state,
-          products: state.allProducts,
+          products: filteredByPriceProducts,
         };
       } else {
+        // Se aplica el filtro por categoría seleccionada y filtro de precios
         const filteredByCategoryProducts = state.allProducts.filter(
-          (product) => product.category === category
+          (product) =>
+            product.category === category &&
+            product.price >= priceRange[0] &&
+            product.price <= priceRange[1]
         );
         return {
           ...state,
           products: filteredByCategoryProducts,
         };
       }
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
+    /* -------------------------------------------------------------------------- */
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        myFavorites: [...state.myFavorites, action.payload],
+      };
+    case DELETE_FAVORITE:
+      return {
+        ...state,
+        myFavorites: state.myFavorites.filter(
+          (favorite) => favorite.id !== action.payload
+        ),
+      };
+
+    /* -------------------------------------------------------------------------- */
     case FILTER_BY_PRICE:
-      const { payload: priceRange } = action;
-      const [minPrice, maxPrice] = priceRange;
+      const { payload: price } = action;
       const filteredByPriceProducts = state.allProducts.filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
+        (product) => product.price >= price[0] && product.price <= price[1]
       );
       return {
         ...state,
         products: filteredByPriceProducts,
+        priceRange: price,
       };
 
     case ORDER_BY_PRICE:
@@ -200,11 +235,11 @@ const rootReducer = (state = initialState, action) => {
         iniciado: action.payload,
       };
 
-    // case ACTIVE:
-    //   return {
-    //     ...state,
-    //     ban: action.payload,
-    //   };
+    case LOGIN_WITH_GOOGLE:
+      return {
+        ...state,
+        google: action.payload,
+      };
 
     case GOOGLE:
       return {

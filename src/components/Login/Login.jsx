@@ -4,17 +4,16 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import { idUser, admin } from "../../redux/actions/actions";
+import {
+  idUser,
+  admin,
+  loginWithGoogle,
+  google,
+} from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
-
 import { iniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { activeAccount } from "../../redux/actions/actions"
-
-// eslint-disable-next-line
-import axios from "axios";
-
 
 const Login = () => {
   const firebaseConfig = {
@@ -71,15 +70,14 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userName, password }),
-      } );
+      });
 
       if (response.ok) {
         const data = await response.json();
         const userId = data.user.id;
         const trueOrFalse = data.user.admin;
-        const banned = data.user.active; // Obtener el estado de baneo del usuario
 
-console.log(data)
+        console.log(data.user, "datadatadata");
 
         await dispatch(login(data.user));
         await dispatch(idUser(userId));
@@ -88,6 +86,7 @@ console.log(data)
         setPassword("");
         setError("");
         navigate("/home");
+        window.location.reload();
       } else {
         setError("Invalid username or password");
       }
@@ -102,15 +101,42 @@ console.log(data)
 
   function callLoginGoogle() {
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        window.location.href = "/home";
+
+        dispatch(loginWithGoogle(result));
+        dispatch(google("yes"));
+        dispatch(admin(false));
+
+        try {
+          const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userName: user.displayName,
+              password: user.accessToken,
+            }),
+          });
+
+          if (response.status === 200) {
+            const data = await response.json();
+            dispatch(idUser(data.user.id));
+            navigate("/home");
+            window.location.reload();
+          } else {
+            alert("No se encuentra registrado");
+          }
+
+          console.log(response);
+        } catch (error) {
+          setError("Error occurred while logging in");
+        }
       })
       .catch((error) => {
         // Handle Errors here.

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Nav from '../Nav/Nav.jsx';
 import axios from "axios";
 import { FaSadTear } from 'react-icons/fa';
@@ -6,14 +7,21 @@ import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
 import { Link } from "react-router-dom";
-
+import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
 export default function Carrito() {
 
+  const id = useSelector((state) => state.idUsuario);
+  
+  if (id.length === 0) {
+  } else {
+    localStorage.setItem("ids", id);
+  }
+  
+  const idUser = localStorage.getItem("ids");
   const cart = JSON.parse(localStorage.getItem("carritoLS"));
-  const idUser = localStorage.getItem("id");
-
+  
   if (cart !== null && cart.length > 0) {
     var precioTotal = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -33,28 +41,35 @@ export default function Carrito() {
         objetosUnicos.push(objeto);
       }
     });
-
     return objetosUnicos;
   }
 
   const productosUnicos = eliminarObjetosRepetidos(cart);
 
   const funcionPago = async () => {
-    var arrProducts = [];
-    for (let i = 0; i < cart.length; i++) {
-      arrProducts.push({
-        id: cart[i].id,
-        quantity: cart[i].quantity,
-      });
+    if (!!idUser) {
+      var arrProducts = [];
+      for (let i = 0; i < cart.length; i++) {
+        arrProducts.push({
+          id: cart[i].id,
+          quantity: cart[i].quantity,
+        });
+      }
+      const body = {
+        "products": arrProducts,
+        "userId": parseInt(idUser)
+      }
+      const newOrder = await axios.post('/payment/create-order', body);
+      window.location.replace(newOrder.data.redirect);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Tienes que iniciar sesion para poder realizar esta compra!',
+        footer: '<a href="./login">Inicia sesion aquí</a>'
+      })
     }
-    const body = {
-      "products": arrProducts,
-      "userId": idUser
-    }
-    const newOrder = await axios.post('http://localhost:3001/payment/create-order', body);
 
-    console.log(newOrder.data);
-    window.location.replace(newOrder.data);
   }
 
   return (
@@ -68,7 +83,7 @@ export default function Carrito() {
             })}
 
             <div className={styles.carritoTotalPrecio} >
-              <h3>Total del carrito: {precioTotal}</h3> <button onClick={funcionPago} >Proceder al pago</button>
+              <h3>Total del carrito: {precioTotal.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
             </div>
           </div> :
           <section className={styles.emptyCart}>

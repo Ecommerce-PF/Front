@@ -10,9 +10,22 @@ import { useState } from "react";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
   const id = useSelector((state) => state.idUsuario);
-  const [url, setUrl] = useState("");
+
+  console.log(userId, "id");
+
+
+  if (id.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("ids", id);
+  }
+
+  const idUser = localStorage.getItem("ids");
+
+
 
 
   const handleUpload = async (error, result) => {
@@ -27,17 +40,7 @@ const Profile = () => {
     /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
   }
 
-  console.log(userId, "id");
-
-
-  if (id.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("ids", id);
-  }
-
-  const idUser = localStorage.getItem("ids");
-
+ 
 
   console.log(url, "idUser");
 

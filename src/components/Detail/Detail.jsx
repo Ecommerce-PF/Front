@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getDetail, addCart } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
+import axios from "axios";
 
 import styles from "./detail.module.css";
 
@@ -13,6 +14,49 @@ export default function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const state = useSelector((state) => state.productDetail);
+  const idUser = useSelector((state) => state.idUsuario);
+
+  if (idUser.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("idUsers", idUser);
+  }
+  const idUsers = localStorage.getItem("ids");
+
+  const fecha = {
+    fecha: new Date(),
+  };
+
+  const [form, setForm] = useState({
+    review: "",
+    rating: 5,
+    date: fecha.fecha,
+    UserId: idUsers,
+    ClotheId: id,
+  });
+
+  const hanleChange = (event) => {
+    const value = event.target.value; // Corregir 'targer' a 'target'
+    const name = event.target.name; // Corregir 'targer' a 'target'
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  const submitHandler = async () => {
+    try {
+      await axios.post(`/products/${id}/reviews`, JSON.stringify(form), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      alert("Formulario enviado correctamente");
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   const handleAddCart = () => {
     dispatch(addCart(state));
@@ -22,18 +66,18 @@ export default function Detail() {
     } else {
       for (var i = 0; i < listaCart.length; i++) {
         if (listaCart[i].id === state.id) {
-          return (Swal.fire({
-            icon: 'error',
-            title: 'To producto ya se encuentra en Carrito!',
+          return Swal.fire({
+            icon: "error",
+            title: "To producto ya se encuentra en Carrito!",
             showConfirmButton: false,
-            timer: 1500
-          }))
+            timer: 1500,
+          });
         }
       }
 
       listaCart.push({
         ...state,
-        quantity: 1
+        quantity: 1,
       });
     }
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
@@ -51,63 +95,109 @@ export default function Detail() {
   }, [dispatch, id]);
 
   return (
-    <div className={styles.back}>
-      <div className={styles.mainContainer}>
-        <div className={styles.productImg}>
-          <h3>{state?.name}</h3>
-          <div className={styles.img}>
-            <img
-              src={state?.image}
-              alt={state?.name}
-              className={styles.imgProducto}
-            />
-          </div>
-          <div className={styles.buyNow}>
-            <h1>${state?.price}</h1>
+    <div>
+      <div className={styles.back}>
+        <div className={styles.mainContainer}>
+          <div className={styles.productImg}>
+            <h3>{state?.name}</h3>
+            <div className={styles.img}>
+              <img
+                src={state?.image}
+                alt={state?.name}
+                className={styles.imgProducto}
+              />
+            </div>
+            <div className={styles.buyNow}>
+              <h1>${state?.price}</h1>
+            </div>
+
+            <div className={styles.containerSA}>
+              <label htmlFor="color">Color:</label>
+              <select
+                className={styles.buttonSelect}
+                type="select"
+                name="color"
+              >
+                <option className={styles.option}>None</option>
+                {state?.color &&
+                  state.color.map((e) => (
+                    <option
+                      className={styles.option}
+                      name={e.ColorName}
+                      key={e.ColorName}
+                    >
+                      {e.ColorName}
+                    </option>
+                  ))}
+              </select>
+              <div>
+                <label htmlFor="color">Size:</label>
+                <button className={styles.size}>S</button>
+                <button className={styles.size}>M</button>
+                <button className={styles.size}>L</button>
+              </div>
+            </div>
           </div>
 
-          <div className={styles.containerSA}>
-            <label htmlFor="color">Color:</label>
-            <select className={styles.buttonSelect} type="select" name="color">
-              <option className={styles.option}>None</option>
-              {state?.color &&
-                state.color.map((e) => (
-                  <option
-                    className={styles.option}
-                    name={e.ColorName}
-                    key={e.ColorName}
-                  >
-                    {e.ColorName}
-                  </option>
-                ))}
-            </select>
-            <div>
-              <label htmlFor="color">Size:</label>
-              <button className={styles.size}>S</button>
-              <button className={styles.size}>M</button>
-              <button className={styles.size}>L</button>
+          <div className={styles.details}>
+            <div className={styles.description}>
+              <div
+                className={styles.textss}
+                dangerouslySetInnerHTML={{ __html: state?.description }}
+              ></div>
+            </div>
+            <div className={styles.cart}>
+              <button className={styles.button} onClick={handleAddCart}>
+                Add to Cart{" "}
+                <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
+              </button>
+              <NavLink to="/home">
+                <button className={styles.button}>
+                  Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className={styles.details}>
-          <div className={styles.description}>
-            <div className={styles.textss}
-              dangerouslySetInnerHTML={{ __html: state?.description }}
-            ></div>
-          </div>
-          <div className={styles.cart}>
-            <button className={styles.button} onClick={handleAddCart}>
-              Add to Cart{" "}
-              <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
-            </button>
-            <NavLink to="/home">
-              <button className={styles.button}>
-                Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-              </button>
-            </NavLink>
-          </div>
+      <div className={styles.back2}>
+        <div className={styles.containerComentarios}>
+          <h2>Comentario de NOMBRE</h2>
+          <p>Me gusto mucho...</p>
         </div>
+
+        <h1>Agregue su comentario</h1>
+        <form action="" onSubmit={submitHandler}>
+          <div className={styles.enviarBut}>
+            <label htmlFor="">Review</label>
+
+            <input
+              name="review"
+              value={form.review}
+              onChange={hanleChange}
+              className={styles.inputC}
+              type="text"
+            ></input>
+
+            <label htmlFor="">Rating</label>
+
+            <input
+              name="rating"
+              value={form.rating}
+              onChange={hanleChange}
+              className={styles.inputC}
+              type="range"
+              min="1"
+              max="5"
+              step="1"
+            />
+
+            <span>{form.rating}</span>
+
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
       </div>
     </div>
   );

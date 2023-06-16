@@ -23,12 +23,13 @@ const EditProduct = () => {
 
   useEffect(() => {
     dispatch(getDetail(id));
-  }, [id]);
+  }, [dispatch,id]);
 
   /*****************************ESTO ES DEL FORMULARIO************************************************ */
   const [url, setUrl] = useState('');
   useEffect(() => {
     setUrl(state?.image);
+    // eslint-disable-next-line
   }, []);
   const [form, setForm] = useState({
     id: id,
@@ -67,7 +68,7 @@ const EditProduct = () => {
     e.preventDefault();
     try {
       await axios
-        .put(`http://localhost:3001/products/${id}`, form)
+        .put(`/products/${id}`, form)
         .then((res) => {
           alert("Producto editado con exito");
         });

@@ -13,7 +13,7 @@ export default function CreatePost() {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, []);
+  }, [dispatch]);
 
   const uniqueCategories = Array.from(
     new Set(products.map((product) => product.category))

@@ -4,6 +4,9 @@ import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { useState } from "react";
+import axios from "axios";
+
 
 const Profile = () => {
   const dispatch = useDispatch();

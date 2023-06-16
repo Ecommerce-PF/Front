@@ -9,8 +9,7 @@ import {
   getUserById,
 } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
-import { useState } from "react";
-
+import axios from "axios";
 import styles from "./detail.module.css";
 
 export default function Detail() {
@@ -165,42 +164,21 @@ export default function Detail() {
         <div className={styles.productImg}>
           <h3>{state?.name}</h3>
           <div className={styles.img}>
+
+            {/* Render de imagen  si hay imagenes en e array renderizamos el array si no, mandamos la imagen que tenemos.*/}
+            {/* {!!coloresPrt.length ? */}
+            {/* <NoTransitionExample coloresPrt={coloresPrt} /> : */}
             <img
               src={state?.image}
               alt={state?.name}
               className={styles.imgProducto}
             />
+            {/* } */}
+
+
           </div>
           <div className={styles.buyNow}>
             <h1>${state?.price}</h1>
-          </div>
-
-            <div className={styles.containerSA}>
-              <label htmlFor="color">Color:</label>
-              <select
-                className={styles.buttonSelect}
-                type="select"
-                name="color"
-              >
-                <option className={styles.option}>None</option>
-                {state?.color &&
-                  state.color.map((e) => (
-                    <option
-                      className={styles.option}
-                      name={e.ColorName}
-                      key={e.ColorName}
-                    >
-                      {e.ColorName}
-                    </option>
-                  ))}
-              </select>
-              <div>
-                <label htmlFor="color">Size:</label>
-                <button className={styles.size}>S</button>
-                <button className={styles.size}>M</button>
-                <button className={styles.size}>L</button>
-              </div>
-            </div>
           </div>
 
           <div className={styles.details}>

@@ -43,14 +43,15 @@
   margin-top: 15%;
 }
 
-.divGaleryImg, .bttnArrow{
+.divGaleryImg,
+.bttnArrow {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
 
-.bttnArrow{
+.bttnArrow {
   background-color: transparent;
   border: none;
   width: 30px;
@@ -80,7 +81,6 @@
   align-items: center;
   justify-content: center;
 }
-
 
 .cart {
   width: 70%;
@@ -212,7 +212,6 @@
   );
 }
 
-
 .containerComentarios {
   border: 1px solid black;
   width: 60%;
@@ -231,6 +230,8 @@
 
 .reviewss {
   display: flex;
+  flex-direction: column;
+  width: 80%;
   justify-content: center;
   border: 1px solid black;
 }
@@ -243,5 +244,17 @@
 
 .stars {
   width: 20px;
-} 
+}
 
+.reviewss2 {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.sinPro {
+  display: flex;
+  align-items: center;
+}

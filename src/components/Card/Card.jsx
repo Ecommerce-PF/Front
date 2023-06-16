@@ -10,18 +10,14 @@ const Card = ({ name, image, id, price }) => {
   const isFavorite = favorites.some((product) => product.id === id);
   const admin = useSelector((state) => state.adminUser);
 
-  if (admin.length === 0) {
-    // No hacer nada
-  } else {
+  if (admin.length !== 0) {
     localStorage.setItem("adminUser", JSON.stringify(admin));
   }
-
   if (loading) {
     return <h1>Loading...</h1>;
   }
 
   const userAdmin = JSON.parse(localStorage.getItem("adminUser"));
-
   const handleAddFavorite = () => {
     dispatch(addFavorite({ id, name, image, price }));
   };

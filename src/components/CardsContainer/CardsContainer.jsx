@@ -2,16 +2,13 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Paginado } from "../Paginado/Paginado";
 import Card from "../Card/Card";
-//import { Link } from "react-router-dom";
 import style from "./CardsContainer.module.css";
 
 const CardsContainer = () => {
   const products = useSelector((state) => state.products);
-
   const [pagina, setPagina] = useState(1);
-  const [porPagina, setPorPagina] = useState(6);
+  const porPagina = 6;
   const maximo = products.length / porPagina;
-
 
   return (
     <div>
@@ -35,7 +32,6 @@ const CardsContainer = () => {
           );
         })}
       </div>
-
       <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />
     </div>
   );

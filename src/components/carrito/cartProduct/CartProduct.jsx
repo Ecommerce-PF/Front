@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-// import { useDispatch } from 'react-redux';
-
 import styles from "../carrito.module.css";
 
 export default function CartProduct({ product }) {
@@ -24,13 +22,11 @@ export default function CartProduct({ product }) {
         } else {
             console.log('No se encontró el objeto con el ID especificado.');
         }
-
     }
 
     const handleAddition = () => {
         setValueInp(parseInt(valueInp + 1));
         const cart = JSON.parse(localStorage.getItem("carritoLS"));
-
         modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp + 1, })
         localStorage.setItem("carritoLS", JSON.stringify(cart));
         window.location.reload();
@@ -40,7 +36,6 @@ export default function CartProduct({ product }) {
         if (valueInp > 1) {
             setValueInp(parseInt(valueInp - 1));
             const cart = JSON.parse(localStorage.getItem("carritoLS"));
-
             modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp - 1, })
             localStorage.setItem("carritoLS", JSON.stringify(cart));
             window.location.reload();
@@ -48,7 +43,6 @@ export default function CartProduct({ product }) {
     }
 
     return (
-
         <div className={styles.crtPrdct} >
             <img src={product.image} alt={product.name} className={styles.imgCarrito} />
             <div>

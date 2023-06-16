@@ -5,11 +5,6 @@ import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import FavoritesView from "../FavoritesView/FavoritesView";
-import carrito from "../../assets/carrito-de-compras.png";
-import Admin from "../../assets/ajustes.png";
-import Usuario from "../../assets/usuario.png";
-import Logout from "../../assets/cerrar-sesion.png";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -35,7 +30,6 @@ const Nav = () => {
 
   const google = localStorage.getItem("userGoogles");
 
-  console.log(google);
 
   if (google?.length === 0 || inicio === "no") {
     //nada
@@ -58,7 +52,6 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesionssesionssesions");
 
   if (admin?.length === 0) {
     // No hacer nada
@@ -68,7 +61,6 @@ const Nav = () => {
 
   const userAdmin = localStorage.getItem("admins");
 
-  console.log(userAdmin, "userAdminuserAdminuserAdminuserAdminuserAdminuserAdmin")
 
   /**************************************** */
 

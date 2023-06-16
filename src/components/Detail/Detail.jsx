@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -10,7 +10,6 @@ import {
 } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
 
 import styles from "./detail.module.css";
 
@@ -128,22 +127,53 @@ export default function Detail() {
     dispatch(getUserById(idUsers));
   }, [dispatch, id]);
 
+  //Logica de galeria img
+  const [colorProductImg, setColorProductImg] = useState('');
+  const [coloresPrt, setColoresPrt] = useState([]);
+
+  function handleChange(e) {
+    console.log(e.target.value)
+    if (e.target.value === 'None') {
+      setColoresPrt([])
+    } else {
+      (setColorProductImg(e.target.value));
+      setColoresPrt(clrPrdct(e.target.value));
+    }
+  }
+
+  // console.log(coloresPrt);
+
+  const clrPrdct = (valorBuscado) => {
+    var arrayColorEncontrado = null;
+
+    for (var i = 0; i < state.color.length; i++) {
+      if (state.color[i].ColorName === valorBuscado) {
+        arrayColorEncontrado = state.color[i].ProductImages;
+        // console.log(arrayColorEncontrado);
+        return arrayColorEncontrado;
+      }
+    }
+  }
+
+  useEffect(() => {
+    // setColorProductImg()
+  }, [])
+
   return (
-    <div>
-      <div className={styles.back}>
-        <div className={styles.mainContainer}>
-          <div className={styles.productImg}>
-            <h3>{state?.name}</h3>
-            <div className={styles.img}>
-              <img
-                src={state?.image}
-                alt={state?.name}
-                className={styles.imgProducto}
-              />
-            </div>
-            <div className={styles.buyNow}>
-              <h1>${state?.price}</h1>
-            </div>
+    <div className={styles.back}>
+      <div className={styles.mainContainer}>
+        <div className={styles.productImg}>
+          <h3>{state?.name}</h3>
+          <div className={styles.img}>
+            <img
+              src={state?.image}
+              alt={state?.name}
+              className={styles.imgProducto}
+            />
+          </div>
+          <div className={styles.buyNow}>
+            <h1>${state?.price}</h1>
+          </div>
 
             <div className={styles.containerSA}>
               <label htmlFor="color">Color:</label>

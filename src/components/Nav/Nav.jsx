@@ -6,7 +6,6 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-
 const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
@@ -14,7 +13,6 @@ const Nav = () => {
   const sesionIniciada = useSelector((state) => state.iniciado);
   const userGoogle = useSelector((state) => state.google);
   const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
-
 
   if (inicioConGoogle?.length === 0) {
     // No hacer nada

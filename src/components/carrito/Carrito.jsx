@@ -7,13 +7,12 @@ import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
 import { Link } from "react-router-dom";
-
+import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
 export default function Carrito() {
 
   const id = useSelector((state) => state.idUsuario);
-  console.log(id, "id");
   
   if (id.length === 0) {
   } else {
@@ -21,8 +20,6 @@ export default function Carrito() {
   }
   
   const idUser = localStorage.getItem("ids");
-  console.log(idUser);
-
   const cart = JSON.parse(localStorage.getItem("carritoLS"));
   
   if (cart !== null && cart.length > 0) {
@@ -44,7 +41,6 @@ export default function Carrito() {
         objetosUnicos.push(objeto);
       }
     });
-
     return objetosUnicos;
   }
 
@@ -63,14 +59,17 @@ export default function Carrito() {
         "products": arrProducts,
         "userId": parseInt(idUser)
       }
-      console.log(body);
       const newOrder = await axios.post('/payment/create-order', body);
-
-      console.log(newOrder.data.redirect);
       window.location.replace(newOrder.data.redirect);
     } else {
-      alert('No hay usuario');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Tienes que iniciar sesion para poder realizar esta compra!',
+        footer: '<a href="./login">Inicia sesion aquí</a>'
+      })
     }
+
   }
 
   return (

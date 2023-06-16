@@ -6,11 +6,11 @@
 
 .main_container {
   display: flex;
-  background: #000;
+
  
 }
 /*****************************************************/
-.info_container {
+/* .info_container {
   width: 30%;
   display: block;
   background-color: aliceblue;
@@ -19,7 +19,7 @@
   width: 30%;
   background-color: aliceblue
 
-  }
+  } */
 
  /*******************************************************/
 .image{
@@ -36,7 +36,7 @@
 
 /***********************************************************/
 
-
+/* 
 .form{
   background-color: aliceblue;
   width: 90%;
@@ -97,7 +97,7 @@
 
 .form__input:not(:placeholder-shown) + .form__label,
 .form__input:focus + .form__label{
-  /* background-color: rgb(219, 238, 236); */
+
 
   transform: translateY(-1.5em) scale(0.8);
   transform-origin: top left;
@@ -157,11 +157,11 @@
 
 .form__input:not(:placeholder-shown) ~ .form__line,
 .form__input:focus ~ .form__line{
-  /* background-color: rgb(219, 238, 236); */
+ 
 
 
   transform: scale(1);
 
 
 }
-
+ */

@@ -15,6 +15,7 @@ function Detail() {
   const [coloresPrt, setColoresPrt] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
   const [colorProductImg, setColorProductImg] = useState('');
+  const [sizesArr, setSizeArr] = useState([]);
 
   const handleAddCart = () => {
     dispatch(addCart(state));
@@ -53,6 +54,7 @@ function Detail() {
     } else {
       setColorProductImg(e.target.value);
       setColoresPrt(clrPrdct(e.target.value));
+      setSizeArr(findArrSize(e.target.value));
     }
   };
 
@@ -64,6 +66,15 @@ function Detail() {
     }
     return null;
   };
+
+  const findArrSize = (valorBuscado) =>{
+    for (let i = 0; i < state.color.length; i++) {
+      if (state.color[i].ColorName === valorBuscado) {
+        return state.color[i].Sizes;
+      }
+    }
+    return null;
+  }
 
   const changeLeft = () => {
     if (numberImg > 0) {
@@ -81,6 +92,8 @@ function Detail() {
     }
   };
 
+  console.log(sizesArr);
+
   useEffect(() => {
     dispatch(getDetail(id));
   }, [dispatch, id]);
@@ -92,14 +105,14 @@ function Detail() {
           <h3>{state?.name}</h3>
           <div className={styles.img}>
             {!!coloresPrt.length ? (
-              <div>
-                <button onClick={changeLeft}><MdOutlineArrowBackIos /></button>
+              <div className={styles.divGaleryImg}>
+                <button onClick={changeLeft} className={styles.bttnArrow} ><MdOutlineArrowBackIos /></button>
                 <img
                   src={coloresPrt[numberImg]}
                   alt={state?.name}
                   className={styles.imgProducto}
                 />
-                <button onClick={changeRigth}><MdOutlineArrowForwardIos /></button>
+                <button onClick={changeRigth} className={styles.bttnArrow} ><MdOutlineArrowForwardIos /></button>
               </div>
             ) : (
               <img
@@ -125,9 +138,14 @@ function Detail() {
             </select>
             <div>
               <label htmlFor="color">Size:</label>
-              <button className={styles.size}>S</button>
-              <button className={styles.size}>M</button>
-              <button className={styles.size}>L</button>
+              <select className={styles.buttonSelect} type="select" name="size" /* onChange={handleChange} */>
+              <option className={styles.option}>None</option>
+              {sizesArr && sizesArr.map((e) => (
+                <option className={styles.option} name={e.SizeName} key={e.SizeName}>
+                  {e.SizeName}
+                </option>
+              ))}
+            </select>
             </div>
           </div>
         </div>

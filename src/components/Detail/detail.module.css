@@ -41,6 +41,21 @@
   /* background-color: azure; */
 }
 
+.divGaleryImg, .bttnArrow{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.bttnArrow{
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 100%;
+  cursor: pointer;
+}
+
 .imgProducto {
   height: 100%;
 }

@@ -127,10 +127,13 @@ const Login = () => {
           if (response.status === 200) {
             const data = await response.json()
             dispatch(idUser(data.user.id))
+            navigate("/home");
+            window.location.reload();
+          } else {
+            alert("No se encuentra registrado")
           }
 
-          navigate("/home");
-          window.location.reload();
+
   
           console.log(response);
         } catch (error) {

@@ -4,12 +4,36 @@ import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { useState } from "react";
+import axios from "axios";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
+
+  const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
-  const id = useSelector((state) => state.idUsuario);
   
+
+
+
+
+  const handleUpload = async (error, result) => {
+    if (result && result.event === "success") {
+      setUrl(result.info.secure_url);
+      await axios.put(`/users/1`, { profileImage: result.info.secure_url });
+      console.log({ profileImage: url });
+    }
+  };
+
+  {
+    /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
+  }
+
+  const id = useSelector((state) => state.idUsuario);
+
+  console.log(userId, "id");
+
 
   if (id.length === 0) {
     // No hacer nada
@@ -18,6 +42,14 @@ const Profile = () => {
   }
 
   const idUser = localStorage.getItem("ids");
+ 
+
+  console.log(url, "idUser");
+
+  useEffect(() => {
+    setUrl(userId.profileImage);
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {

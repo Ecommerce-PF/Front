@@ -107,11 +107,11 @@ const Login = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-  
+
         dispatch(loginWithGoogle(result));
         dispatch(google("yes"));
         dispatch(admin(false));
-  
+
         try {
           const response = await fetch("http://localhost:3001/users/login", {
             method: "POST",
@@ -123,15 +123,16 @@ const Login = () => {
               password: user.accessToken,
             }),
           });
-  
+
           if (response.status === 200) {
-            const data = await response.json()
-            dispatch(idUser(data.user.id))
+            const data = await response.json();
+            dispatch(idUser(data.user.id));
+            navigate("/home");
+            window.location.reload();
+          } else {
+            alert("No se encuentra registrado");
           }
 
-          navigate("/home");
-          window.location.reload();
-  
           console.log(response);
         } catch (error) {
           setError("Error occurred while logging in");
@@ -148,7 +149,6 @@ const Login = () => {
         // ...
       });
   }
-  
 
   return (
     <section className={styles.back}>

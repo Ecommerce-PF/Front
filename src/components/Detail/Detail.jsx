@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   getDetail,
@@ -9,6 +8,7 @@ import {
   getUserById,
 } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md"
 import axios from "axios";
 import styles from "./detail.module.css";
 
@@ -24,9 +24,8 @@ export default function Detail() {
   } else {
     localStorage.setItem("users", user.name);
   }
-  const userOnline = localStorage.getItem("users");
+  // const userOnline = localStorage.getItem("users");
 
-  console.log(userOnline, "userOnline");
 
   const [comments, setComments] = useState([]);
 
@@ -63,7 +62,6 @@ export default function Detail() {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/products/${id}/reviews`);
-        console.log(response.data, "response");
         setComments(response.data); // Asignar los comentarios a la variable 'comments'
       } catch (error) {
         console.error(error);
@@ -87,30 +85,25 @@ export default function Detail() {
     }
   };
 
-  console.log(form);
 
   const handleAddCart = () => {
     dispatch(addCart(state));
-    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
-    if (listaCart === null) {
-      listaCart = [];
-    } else {
-      for (var i = 0; i < listaCart.length; i++) {
-        if (listaCart[i].id === state.id) {
-          return Swal.fire({
-            icon: "error",
-            title: "To producto ya se encuentra en Carrito!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+    const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
+    for (var i = 0; i < listaCart.length; i++) {
+      if (listaCart[i].id === state.id) {
+        return Swal.fire({
+          icon: "error",
+          title: "To producto ya se encuentra en Carrito!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-
-      listaCart.push({
-        ...state,
-        quantity: 1,
-      });
     }
+
+    listaCart.push({
+      ...state,
+      quantity: 1,
+    });
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
 
     Swal.fire({
@@ -124,35 +117,58 @@ export default function Detail() {
   useEffect(() => {
     dispatch(getDetail(id));
     dispatch(getUserById(idUsers));
-  }, [dispatch, id]);
+  }, [dispatch, id, idUsers]);
 
   //Logica de galeria img
   const [colorProductImg, setColorProductImg] = useState('');
   const [coloresPrt, setColoresPrt] = useState([]);
+  const [sizesArr, setSizeArr] = useState([]);
+  const [numberImg, setNumberImg] = useState(0);
 
   function handleChange(e) {
-    console.log(e.target.value)
     if (e.target.value === 'None') {
       setColoresPrt([])
     } else {
       (setColorProductImg(e.target.value));
       setColoresPrt(clrPrdct(e.target.value));
+      setSizeArr(findArrSize(e.target.value));
     }
   }
 
-  // console.log(coloresPrt);
-
-  const clrPrdct = (valorBuscado) => {
-    var arrayColorEncontrado = null;
-
-    for (var i = 0; i < state.color.length; i++) {
+  const findArrSize = (valorBuscado) => {
+    for (let i = 0; i < state.color.length; i++) {
       if (state.color[i].ColorName === valorBuscado) {
-        arrayColorEncontrado = state.color[i].ProductImages;
-        // console.log(arrayColorEncontrado);
-        return arrayColorEncontrado;
+        return state.color[i].Sizes;
       }
     }
+    return null;
   }
+
+
+  const clrPrdct = (valorBuscado) => {
+    for (let i = 0; i < state.color.length; i++) {
+      if (state.color[i].ColorName === valorBuscado) {
+        return state.color[i].ProductImages;
+      }
+    }
+    return null;
+  };
+
+  const changeLeft = () => {
+    if (numberImg > 0) {
+      setNumberImg(numberImg - 1);
+    } else {
+      setNumberImg(coloresPrt.length - 1);
+    }
+  };
+
+  const changeRigth = () => {
+    if (numberImg < coloresPrt.length - 1) {
+      setNumberImg(numberImg + 1);
+    } else {
+      setNumberImg(0);
+    }
+  };
 
   useEffect(() => {
     // setColorProductImg()
@@ -165,20 +181,51 @@ export default function Detail() {
           <h3>{state?.name}</h3>
           <div className={styles.img}>
 
-            {/* Render de imagen  si hay imagenes en e array renderizamos el array si no, mandamos la imagen que tenemos.*/}
-            {/* {!!coloresPrt.length ? */}
-            {/* <NoTransitionExample coloresPrt={coloresPrt} /> : */}
-            <img
-              src={state?.image}
-              alt={state?.name}
-              className={styles.imgProducto}
-            />
-            {/* } */}
+            {!!coloresPrt.length ? (
+              <div className={styles.divGaleryImg}>
+                <button onClick={changeLeft} className={styles.bttnArrow} ><MdOutlineArrowBackIos /></button>
+                <img
+                  src={coloresPrt[numberImg]}
+                  alt={state?.name}
+                  className={styles.imgProducto}
+                />
+                <button onClick={changeRigth} className={styles.bttnArrow} ><MdOutlineArrowForwardIos /></button>
+              </div>
+            ) : (
+              <img
+                src={state?.image}
+                alt={state?.name}
+                className={styles.imgProducto}
+              />
+            )}
 
 
           </div>
           <div className={styles.buyNow}>
             <h1>${state?.price}</h1>
+          </div>
+          
+          <div className={styles.containerSA}>
+            <label htmlFor="color">Color:</label>
+            <select className={styles.buttonSelect} type="select" name="color" onChange={handleChange}>
+              <option className={styles.option}>None</option>
+              {state?.color && state.color.map((e) => (
+                <option className={styles.option} name={e.ColorName} key={e.ColorName}>
+                  {e.ColorName}
+                </option>
+              ))}
+            </select>
+            <div>
+              <label htmlFor="color">Size:</label>
+              <select className={styles.buttonSelect} type="select" name="size" /* onChange={handleChange} */>
+              <option className={styles.option}>None</option>
+              {sizesArr && sizesArr.map((e) => (
+                <option className={styles.option} name={e.SizeName} key={e.SizeName}>
+                  {e.SizeName}
+                </option>
+              ))}
+            </select>
+            </div>
           </div>
 
           <div className={styles.details}>

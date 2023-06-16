@@ -11,7 +11,8 @@ export default function Delete() {
 
   const handleInputChange = function (e) {
     const productId = e.target.value;
-    const productName = getProductById(productId)?.name;
+    const product = getProductById(productId);
+    const productName = product?.name;
     setErrors(validate({ ...input, id: productId }));
     setInputs({ id: productId });
     setSelectedProductName(productName);
@@ -54,6 +55,12 @@ export default function Delete() {
     fontSize: '13px'
   };
 
+  var imgStyle = {
+    width: '200px', // Ajusta el tamaño según lo necesario
+    height: 'auto',
+    margin: '10px',
+  };
+
   return (
     <div className="container text-center d-flex justify-content-center align-items-center">
       <form className="m-5">
@@ -82,16 +89,23 @@ export default function Delete() {
           <div className="row">
             <div className="col align-self-center">
               <div className="card-body">
-                <p className="card-text">¿Está seguro de borrar el producto: {selectedProductName}?</p>
+                <img
+                  src={getProductById(input.id)?.image}
+                  alt="Product"
+                  className="card-img-top"
+                  style={imgStyle}
+                />
+                <p className="card-text">Usted va a eliminar definitivamente esta prenda. ¿Seguro que desea hacerlo?</p>
                 <button className="btn btn-danger" onClick={toggle}>
                   No
                 </button>
-                <input
-                  className="btn btn-success"
+                <button
+                  className="btn btn-danger"
                   onClick={(e) => deletee(e, input)}
                   type="submit"
-                  value="Si"
-                />
+                >
+                  Sí
+                </button>
               </div>
             </div>
           </div>

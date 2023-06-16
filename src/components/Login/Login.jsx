@@ -11,7 +11,7 @@ import {
   google,
 } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
-import { iniciado } from "../../redux/actions/actions";
+import { consultaSiIniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -32,8 +32,6 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isBanned, setIsBanned] = useState(false); // Estado para controlar si el usuario está baneado
-  const [isActions, setIsActions] = useState(true); // Estado para controlar si el usuario tiene permisos de acciones
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -46,8 +44,7 @@ const Login = () => {
   };
 
   const inicio = () => {
-    const e = "si";
-    dispatch(iniciado(e));
+    dispatch(consultaSiIniciado("si"));
   };
 
   const handleSubmit = async (e) => {
@@ -55,11 +52,6 @@ const Login = () => {
 
     if (!userName || !password) {
       setError("Please enter your username and password");
-      return;
-    }
-
-    if (!isActions) {
-      setError("You are not allowed to login.");
       return;
     }
 
@@ -75,13 +67,10 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const userId = data.user.id;
-        const trueOrFalse = data.user.admin;
 
-        console.log(data.user, "datadatadata");
-
-        await dispatch(login(data.user));
+        // await dispatch(login(data.user));
         await dispatch(idUser(userId));
-        await dispatch(admin(trueOrFalse));
+
         setUserName("");
         setPassword("");
         setError("");
@@ -108,10 +97,6 @@ const Login = () => {
         // The signed-in user info.
         const user = result.user;
 
-        dispatch(loginWithGoogle(result));
-        dispatch(google("yes"));
-        dispatch(admin(false));
-
         try {
           const response = await fetch("http://localhost:3001/users/login", {
             method: "POST",
@@ -127,6 +112,7 @@ const Login = () => {
           if (response.status === 200) {
             const data = await response.json();
             dispatch(idUser(data.user.id));
+            dispatch(consultaSiIniciado("si"));
             navigate("/home");
             window.location.reload();
           } else {

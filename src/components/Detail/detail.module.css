@@ -26,8 +26,8 @@
 
 .productImg {
   background-color: rgba(255, 255, 255, 0.551);
-  height: 85%;
-  width: 40%;
+  height: 75%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,19 +38,20 @@
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.121);
 }
 .img {
-  height: 70%;
-  width: 70%;
-  /* background-color: azure; */
+  height: 60%;
+  width: 60%;
+  margin-top: 15%;
 }
 
-.divGaleryImg, .bttnArrow{
+.divGaleryImg,
+.bttnArrow {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
 
-.bttnArrow{
+.bttnArrow {
   background-color: transparent;
   border: none;
   width: 30px;
@@ -65,14 +66,13 @@
 /* CONTENEDOR PRINCIPAL 2 */
 .details {
   height: 100%;
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   border-radius: 15px;
-  margin: 20px;
 }
 .buyNow {
   width: 20%;
@@ -82,23 +82,6 @@
   justify-content: center;
 }
 
-.colorSize {
-  width: 80%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 15px;
-  border-radius: 15px;
-  background-color: purple;
-}
-div,
-label,
-input,
-h3 {
-  background-color: transparent;
-  border: none;
-}
 .cart {
   width: 70%;
   height: 50px;
@@ -219,14 +202,13 @@ h3 {
   align-items: center;
   height: 100vh;
   flex-direction: column;
-  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   background-image: linear-gradient(
     to top,
-    #ffffff 0%,
-    rgb(252, 218, 255) 100%
+    rgb(252, 218, 255) 0%,
+    #ffffff 100%
   );
 }
 
@@ -248,6 +230,8 @@ h3 {
 
 .reviewss {
   display: flex;
+  flex-direction: column;
+  width: 80%;
   justify-content: center;
   border: 1px solid black;
 }
@@ -260,4 +244,17 @@ h3 {
 
 .stars {
   width: 20px;
+}
+
+.reviewss2 {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.sinPro {
+  display: flex;
+  align-items: center;
 }

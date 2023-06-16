@@ -1,21 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
-import { useDispatch } from "react-redux";
-import { sinIniciar } from "../../redux/actions/actions";
-import { google } from "../../redux/actions/actions";
-import { admin } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { consultaSiIniciado } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const userId = useSelector((state) => state.userId);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSinIniciar = () => {
-    const e = "no";
-    dispatch(sinIniciar(e));
-    dispatch(google("no"));
-    dispatch(admin(false));
+    dispatch(consultaSiIniciado("no"));
     navigate("/home");
   };
 

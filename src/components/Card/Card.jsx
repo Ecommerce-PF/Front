@@ -5,19 +5,10 @@ import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 
 const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
   const favorites = useSelector((state) => state.myFavorites);
   const isFavorite = favorites.some((product) => product.id === id);
-  const admin = useSelector((state) => state.adminUser);
+  const userId = useSelector((state) => state.userId);
 
-  if (admin.length !== 0) {
-    localStorage.setItem("adminUser", JSON.stringify(admin));
-  }
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  const userAdmin = JSON.parse(localStorage.getItem("adminUser"));
   const handleAddFavorite = () => {
     dispatch(addFavorite({ id, name, image, price }));
   };
@@ -28,7 +19,7 @@ const Card = ({ name, image, id, price }) => {
 
   return (
     <div className={style.mainContainer}>
-      {userAdmin ? (
+      {userId.admin ? (
         <Link to={`/edit/${id}`}>
           <svg
             className={style.svg}

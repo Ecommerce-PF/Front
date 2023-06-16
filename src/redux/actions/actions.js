@@ -26,9 +26,7 @@ export const GET_USER_ALL = "GET_USER_ALL";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
-export const ADMIN_USER = "ADMIN_USER";
-export const SIN_INICIAR = "SIN_INICIAR";
-export const INICIADO = "INICIADO";
+export const CONSULTA_SI_INICIO = "CONSULTA_SI_INICIO";
 export const ACTIVE = "ACTIVE";
 export const BAN_OR_DESBAN = "BAN_OR_DESBAN";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
@@ -161,15 +159,6 @@ export const createUser = (user) => {
   };
 };
 
-export const getUserByEmail = (email) => {
-  return async (dispatch) => {
-    try {
-      const user = await axios.get(`/user?email=${email}`);
-      dispatch({ type: GET_USER, payload: user.data });
-    } catch (error) {}
-  };
-};
-
 export const getUserAll = () => {
   return async (dispatch) => {
     try {
@@ -204,13 +193,6 @@ export const idUser = (id) => {
   return {
     type: ID_USER,
     payload: id,
-  };
-};
-
-export const admin = (trueOrFalse) => {
-  return {
-    type: ADMIN_USER,
-    payload: trueOrFalse,
   };
 };
 
@@ -262,9 +244,9 @@ export const deleteProduct = (id) => {
   };
 };
 
-export const sinIniciar = (e) => {
+export const consultaSiIniciado = (e) => {
   return {
-    type: SIN_INICIAR,
+    type: CONSULTA_SI_INICIO,
     payload: e,
   };
 };
@@ -280,14 +262,8 @@ export const deleteUser = (id) => {
   };
 };
 
-export const iniciado = (e) => {
-  return {
-    type: INICIADO,
-    payload: e,
-  };
-};
-
 export const loginWithGoogle = (e) => {
+  console.log("esto es en action");
   return {
     type: LOGIN_WITH_GOOGLE,
     payload: e,

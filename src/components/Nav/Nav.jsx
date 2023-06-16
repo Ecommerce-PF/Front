@@ -7,11 +7,12 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Nav = () => {
-  const users = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
   const iniciado = useSelector((state) => state.iniciado);
+  const userId = useSelector((state) => state.userId);
 
-  console.log(users, "esto es user")
+  console.log(userId)
+
   
   if (iniciado?.length === 0) {
     // No hacer nada
@@ -41,7 +42,7 @@ const Nav = () => {
 
   /**************************************** */
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+  const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -127,7 +128,7 @@ const Nav = () => {
           )}
 
           <div className={style.contenedor_imagen}>
-            {userAdmin === "true" ? (
+            {userId.admin === true ? (
               <Link to="/DashBoardAdmin">
                 <svg
                   className={style.svg}

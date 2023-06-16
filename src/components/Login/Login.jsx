@@ -68,8 +68,7 @@ const Login = () => {
         const data = await response.json();
         const userId = data.user.id;
 
-        // await dispatch(login(data.user));
-        await dispatch(idUser(userId));
+        dispatch(idUser(userId));
 
         setUserName("");
         setPassword("");

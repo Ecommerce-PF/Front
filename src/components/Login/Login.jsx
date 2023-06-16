@@ -56,7 +56,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/users/login", {
+      const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const Login = () => {
         const user = result.user;
 
         try {
-          const response = await fetch("http://localhost:3001/users/login", {
+          const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

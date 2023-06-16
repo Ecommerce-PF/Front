@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { validate } from "./validator.js";
-import { createPost, getAllProducts } from "../../redux/actions/actions.js";
+import { getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
 import UploadFile from "../UploadFile/UploadFile";
@@ -13,13 +12,12 @@ export default function CreatePost() {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, []);
+  }, [dispatch]);
 
   const uniqueCategories = Array.from(
     new Set(products.map((product) => product.category))
   );
 
-  const [categories, setCategories] = useState(uniqueCategories);
   const [allCategories, setAllCategories] = useState("All categories");
 
   const [error, setError] = useState({
@@ -43,12 +41,8 @@ export default function CreatePost() {
     description: "",
   });
 
-  const [colores, setColores] = useState({
-    color: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback((event) => {
+    const { name, value } = event.target;
 
     if (name === "color") {
       const colorsArray = value.split(",").map((color) => ({
@@ -56,25 +50,28 @@ export default function CreatePost() {
         // otros atributos que necesites para el color
       }));
 
-      setInput({
-        ...input,
+      setInput((prevInput) => ({
+        ...prevInput,
         [name]: colorsArray,
-      });
+      }));
     } else {
-      setInput({
-        ...input,
+      setInput((prevInput) => ({
+        ...prevInput,
         [name]: value,
-      });
+      }));
     }
-  };
+  }, []);
 
   const [colors, setColors] = useState([]);
-  const addColors = (event) => {
-    event.preventDefault();
-    const newColor = { number: colors.length + 1, color: colores.color };
-    setColors([...colors, newColor]);
-    setInput({ ...input, color: [...colors, newColor] });
-  };
+  const addColors = useCallback(
+    (event) => {
+      event.preventDefault();
+      const newColor = { number: colors.length + 1, color: "" };
+      setColors((prevColors) => [...prevColors, newColor]);
+      setInput((prevInput) => ({ ...prevInput, color: [...colors, newColor] }));
+    },
+    [colors]
+  );
 
   const [count, setCount] = useState("");
 
@@ -85,33 +82,39 @@ export default function CreatePost() {
     }
   }, [colors]);
 
-  const changeHandler = (event) => {
+  const changeHandler = useCallback((event) => {
     const { name, value } = event.target;
     if (name === "category") {
       setAllCategories(value);
     }
-    setInput({
-      ...input,
+    setInput((prevInput) => ({
+      ...prevInput,
       [name]: name === "id" || name === "price" ? parseInt(value) : value,
-    });
+    }));
     setError((prevError) => ({
       ...prevError,
       [name]: "",
     }));
-  };
+  }, []);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    axios
-      .post("/products", input)
-      .then(() => alert("The clothe was created successfully"));
-  };
+  const submitHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      axios
+        .post("/products", input)
+        .then(() => alert("The clothe was created successfully"));
+    },
+    [input]
+  );
 
-  const handleUpload = async (error, result) => {
+  const handleUpload = useCallback(async (error, result) => {
     if (result && result.event === "success") {
-      setInput({ ...input, image: result.info.secure_url });
+      setInput((prevInput) => ({
+        ...prevInput,
+        image: result.info.secure_url,
+      }));
     }
-  };
+  }, []);
 
   return (
     <div className={styles.body}>

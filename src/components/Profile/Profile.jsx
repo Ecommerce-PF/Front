@@ -29,10 +29,9 @@ const Profile = () => {
     }
   };
 
-  {
-    /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
-  }
+  const id = useSelector((state) => state.idUsuario);
 
+  console.log(userId, "id");
 
 
   if (id.length === 0) {

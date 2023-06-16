@@ -14,13 +14,6 @@ const Profile = () => {
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
   
-  const id = useSelector((state) => state.idUsuario);
-
-  console.log(userId, "id");
-
-
-
-
   const handleUpload = async (error, result) => {
     if (result && result.event === "success") {
       setUrl(result.info.secure_url);

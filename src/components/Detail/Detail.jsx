@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { getDetail, addCart } from "../../redux/actions/actions.js";
+import {
+  getDetail,
+  addCart,
+  getUserById,
+} from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+import axios from "axios";
 import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md"
 import styles from "./detail.module.css";
 
@@ -11,6 +16,78 @@ function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const state = useSelector((state) => state.productDetail);
+  const idUser = useSelector((state) => state.idUsuario);
+  const user = useSelector((state) => state.userId);
+
+  if (user.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("users", user.name);
+  }
+  const userOnline = localStorage.getItem("users");
+
+  console.log(userOnline, "userOnline");
+
+  const [comments, setComments] = useState([]);
+
+  if (idUser.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("idUsers", idUser);
+  }
+  const idUsers = localStorage.getItem("ids");
+
+  const fecha = {
+    fecha: new Date(),
+  };
+
+  const [form, setForm] = useState({
+    review: "",
+    rating: 5,
+    date: fecha.fecha + "",
+    UserId: idUsers,
+    ClotheId: id,
+  });
+
+  const hanleChange = (event) => {
+    const value = event.target.value; // Corregir 'targer' a 'target'
+    const name = event.target.name; // Corregir 'targer' a 'target'
+
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/products/${id}/reviews`);
+        console.log(response.data, "response");
+        setComments(response.data); // Asignar los comentarios a la variable 'comments'
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post(`/products/${id}/reviews`, JSON.stringify(form), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      alert("Formulario enviado correctamente");
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  console.log(form);
 
   const [coloresPrt, setColoresPrt] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
@@ -19,23 +96,24 @@ function Detail() {
 
   const handleAddCart = () => {
     dispatch(addCart(state));
-
-    const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
-
-    for (let i = 0; i < listaCart.length; i++) {
-      if (listaCart[i].id === state.id) {
-        return Swal.fire({
-          icon: 'error',
-          title: '¡El producto ya se encuentra en el carrito!',
-          showConfirmButton: false,
-          timer: 1500
-        });
+    let listaCart = JSON.parse(localStorage.getItem("carritoLS"));
+    if (listaCart === null) {
+      listaCart = [];
+    } else {
+      for (var i = 0; i < listaCart.length; i++) {
+        if (listaCart[i].id === state.id) {
+          return (Swal.fire({
+            icon: 'error',
+            title: 'To producto ya se encuentra en Carrito!',
+            showConfirmButton: false,
+            timer: 1500
+          }))
+        }
       }
-    }
 
     listaCart.push({
       ...state,
-      quantity: 1
+      quantity: 1,
     });
 
     localStorage.setItem("carritoLS", JSON.stringify(listaCart));
@@ -48,6 +126,17 @@ function Detail() {
     });
   };
 
+  useEffect(() => {
+    dispatch(getDetail(id));
+    dispatch(getUserById(idUsers));
+  }, [dispatch, id]);
+
+  //Logica de galeria img
+  const [colorProductImg, setColorProductImg] = useState('');
+  const [coloresPrt, setColoresPrt] = useState([]);
+
+  function handleChange(e) {
+    console.log(e.target.value)
   const handleChange = (e) => {
     if (e.target.value === 'None') {
       setColoresPrt([]);
@@ -128,38 +217,38 @@ function Detail() {
 
           <div className={styles.containerSA}>
             <label htmlFor="color">Color:</label>
-            <select className={styles.buttonSelect} type="select" name="color" onChange={handleChange}>
+            <select className={styles.buttonSelect} type="select" name="color">
               <option className={styles.option}>None</option>
-              {state?.color && state.color.map((e) => (
-                <option className={styles.option} name={e.ColorName} key={e.ColorName}>
-                  {e.ColorName}
-                </option>
-              ))}
+              {state?.color &&
+                state.color.map((e) => (
+                  <option
+                    className={styles.option}
+                    name={e.ColorName}
+                    key={e.ColorName}
+                  >
+                    {e.ColorName}
+                  </option>
+                ))}
             </select>
             <div>
               <label htmlFor="color">Size:</label>
-              <select className={styles.buttonSelect} type="select" name="size" /* onChange={handleChange} */>
-              <option className={styles.option}>None</option>
-              {sizesArr && sizesArr.map((e) => (
-                <option className={styles.option} name={e.SizeName} key={e.SizeName}>
-                  {e.SizeName}
-                </option>
-              ))}
-            </select>
+              <button className={styles.size}>S</button>
+              <button className={styles.size}>M</button>
+              <button className={styles.size}>L</button>
             </div>
           </div>
         </div>
 
         <div className={styles.details}>
           <div className={styles.description}>
-            <div
-              className={styles.textss}
+            <div className={styles.textss}
               dangerouslySetInnerHTML={{ __html: state?.description }}
             ></div>
           </div>
           <div className={styles.cart}>
             <button className={styles.button} onClick={handleAddCart}>
-              Add to Cart <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
+              Add to Cart{" "}
+              <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
             </button>
             <NavLink to="/home">
               <button className={styles.button}>

@@ -7,11 +7,15 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
   const nextPage = () => {
     setInput(parseInt(input) + 1);
     setPagina(parseInt(pagina) + 1);
+    // document.documentElement.scrollTop = 0; // Para navegadores compatibles
+    // document.body.scrollTop = 0; // Para navegadores antiguos
   };
 
   const previousPage = () => {
     setInput(parseInt(input) - 1);
     setPagina(parseInt(pagina) - 1);
+  //   document.documentElement.scrollTop = 10; // Para navegadores compatibles
+  // document.body.scrollTop = 0; // Para navegadores antiguos
   };
 
   const onKeyDown = (e) => {

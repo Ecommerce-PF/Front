@@ -15,15 +15,13 @@
 .mainContainer:hover {
   box-shadow: 0 16px 25px rgba(0, 0, 0, 0.123);
   transition: 0.4s;
-transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 .card {
-width: 80%;
-border-radius: 3%;
-
+  width: 75%;
+  border-radius: 3%;
 }
-
 
 .title {
   text-align: center;
@@ -32,36 +30,50 @@ border-radius: 3%;
 }
 
 .price {
-
-  text-decoration: none; 
+  text-decoration: none;
   align-items: center;
   justify-content: center;
   font-size: 25px;
   color: #434343;
+  margin-top: 30px;
+  margin-bottom: -5px;
 }
 
-.link{
+.link {
   text-decoration: none;
+  max-height: 700px;
+  max-width: 460px;
 }
 
-.edit{
+.edit {
   width: 20px;
   height: 20px;
 }
 
-.edit:hover{
+.edit:hover {
   box-shadow: 0 16px 25px rgba(0, 0, 0, 0.827);
-  
 }
 
-.svg{
-  margin-left: 50px;
-  margin-top: 640px;
+.svg {
+  margin-left: 400px;
+  margin-top: 644px;
   position: absolute;
-  width: 40px;
+  width: 34px;
 }
 
-.svg:hover{
+.svg:hover {
+  transition: 0.4s;
+  transform: scale(1.5);
+}
+
+.svg2 {
+  width: 30px;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.svg2:hover {
   transition: 0.4s;
   transform: scale(1.5);
 }

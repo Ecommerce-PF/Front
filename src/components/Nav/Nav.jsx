@@ -6,7 +6,6 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-
 const Nav = () => {
   const user = useSelector((state) => state.user);
   const admin = useSelector((state) => state.adminUser);
@@ -14,7 +13,6 @@ const Nav = () => {
   const sesionIniciada = useSelector((state) => state.iniciado);
   const userGoogle = useSelector((state) => state.google);
   const inicioConGoogle = useSelector((state) => state.inicioConGoogle);
-
 
   if (inicioConGoogle?.length === 0) {
     // No hacer nada
@@ -31,7 +29,6 @@ const Nav = () => {
   }
 
   const google = localStorage.getItem("userGoogles");
-
 
   if (google?.length === 0 || inicio === "no") {
     //nada
@@ -54,7 +51,6 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-
   if (admin?.length === 0) {
     // No hacer nada
   } else {
@@ -62,7 +58,6 @@ const Nav = () => {
   }
 
   const userAdmin = localStorage.getItem("admins");
-
 
   /**************************************** */
 
@@ -96,9 +91,11 @@ const Nav = () => {
       <div className={style.loginSing}>
         <React.Fragment>
           {sesions === "no" ? (
-            <Link to="/login">
-              <button className={style.button}>Login</button>
-            </Link>
+            <div>
+              <Link to="/login">
+                <button className={style.button}>Login</button>
+              </Link>
+            </div>
           ) : (
             <div className={style.contenedor_imagen}>
               <Link to="/profile">
@@ -121,9 +118,15 @@ const Nav = () => {
           )}
 
           {sesions === "no" ? (
-            <Link to="/signup">
-              <button className={style.button}>SingUp</button>
-            </Link>
+            <div>
+              <Link to="/signup">
+                <button className={style.button}>SingUp</button>
+              </Link>
+
+              <Link to="/">
+                <button className={style.buttonLanding}>Back</button>
+              </Link>
+            </div>
           ) : (
             <div className={style.contenedor_imagen}>
               <button
@@ -197,13 +200,26 @@ const Nav = () => {
               </svg>
             </Link>
           </div>
+          <NavLink to="/favorites">
+            <div className={style.nav_fav}>
+              <svg
+              className={style.svg} 
+                width="47px"
+                height="47px"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                  stroke="#121923"
+                  stroke-width="1.2"
+                />
+              </svg>
+            </div>
+          </NavLink>
         </React.Fragment>
       </div>
-      <NavLink to="/favorites">
-        <div className={style.nav_fav}>
-          🤍
-        </div>
-      </NavLink>
     </div>
   );
 };

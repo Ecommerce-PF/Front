@@ -1,18 +1,21 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import UploadFile from "../UploadFile/UploadFile";
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.userId);
-  const id = useSelector((state) => state.idUsuario);
+
   const [url, setUrl] = useState("");
+  const userId = useSelector((state) => state.userId);
+  
+
+
 
 
   const handleUpload = async (error, result) => {
@@ -27,6 +30,8 @@ const Profile = () => {
     /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
   }
 
+  const id = useSelector((state) => state.idUsuario);
+
   console.log(userId, "id");
 
 
@@ -37,7 +42,7 @@ const Profile = () => {
   }
 
   const idUser = localStorage.getItem("ids");
-
+ 
 
   console.log(url, "idUser");
 
@@ -52,43 +57,12 @@ const Profile = () => {
       await dispatch(getUserById(idUser));
     };
     fetchData();
-  }, [dispatch, idUser, url]);
+  }, [dispatch, idUser]);
 
   const { name, email, phone, address, purchaseHistory, profileImage } = userId;
 
   return (
     <div>
-
-      <div>
-        <h2 className={styles.title}>Profile</h2>
-        <div>
-          <img src={url} alt="profilePicture" width="190" height="200"></img>
-          <p></p>
-          <UploadFile handleUpload={handleUpload} folder={"user"}></UploadFile>
-        </div>
-        <p className={styles.info}>Name: {name}</p>
-        <p className={styles.info}>Username: {userId.userName}</p>
-        <p className={styles.info}>Email: {email}</p>
-        <p className={styles.info}>Phone: {phone}</p>
-
-        <h3 className={styles.subtitle}>Address {address}</h3>
-        <p className={styles.address}></p>
-
-        <h3 className={styles.subtitle}>Purchase History </h3>
-        <ul className={styles.purchaseList}>
-          {purchaseHistory &&
-            purchaseHistory.map((purchase) => (
-              <li key={purchase.id}>
-                <p className={styles.purchaseInfo}>
-                  Product: {purchase.product}
-                </p>
-                <p className={styles.purchaseInfo}>Price: {purchase.price}</p>
-                <p className={styles.purchaseInfo}>Date: {purchase.date}</p>
-              </li>
-            ))}
-        </ul>
-      </div>
-
       <h2 className={styles.title}>Profile</h2>
       <p className={styles.info}>Name: </p>
       <h1>{name}</h1>
@@ -122,11 +96,9 @@ const Profile = () => {
         </button>
       </Link>
 
-            <Link to={`/editProfile`}>
-            <button className={styles.button}>
-              Edit Profile</button>
-            </Link>
-
+      <Link to={`/editProfile`}>
+        <button className={styles.button}>Edit Profile</button>
+      </Link>
     </div>
   );
 };

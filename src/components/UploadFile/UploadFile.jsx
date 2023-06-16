@@ -15,13 +15,17 @@ const UploadFile = ({ handleUpload, folder }) => {
       handleUpload
     );
   }, []);
+/******************************************************* */
+  const handleClick = (event) => {  // para que no se recargue la pagina al apretar el boton
+    
+    event.preventDefault();
+    widgetRef.current.open();
+  };
+
+/*****************************************************   */
   return (
-    <button
-      onClick={() => {
-        widgetRef.current.open();
-      }}
-    >
-      Upload
+    <button onClick={handleClick}>
+      Upload Image
     </button>
   );
 };

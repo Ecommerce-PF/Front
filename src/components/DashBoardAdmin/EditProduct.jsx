@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 
+import UploadFile from "../UploadFile/UploadFile.jsx";
+
 
 import styles from "./EditProduct.module.css";
 import axios from "axios";
@@ -137,13 +139,14 @@ const handleSubmit = (e) => {
            
 
             <label htmlFor="color">Color</label>
-      <input
+            <UploadFile handleUpload={handleChange} folder={'product'}/>
+      {/* <input
         type="text"
         name="color"
         id="color"
         onChange={handleChange}
         value={form.color.map((color) => color.name).join(", ")}
-        />
+        /> */}
 
 
             <label htmlFor="price">Price</label>

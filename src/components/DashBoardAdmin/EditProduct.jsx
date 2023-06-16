@@ -23,12 +23,13 @@ const EditProduct = () => {
 
   useEffect(() => {
     dispatch(getDetail(id));
-  }, [id]);
+  }, [dispatch,id]);
 
   /*****************************ESTO ES DEL FORMULARIO************************************************ */
   const [url, setUrl] = useState('');
   useEffect(() => {
     setUrl(state?.image);
+    // eslint-disable-next-line
   }, []);
   const [form, setForm] = useState({
     id: id,

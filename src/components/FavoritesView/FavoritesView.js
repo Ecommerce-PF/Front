@@ -15,6 +15,7 @@ const FavoritesView = () => {
 
   useEffect(() => {
     dispatch(getUser(user.id));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addFavorite,
@@ -40,9 +40,9 @@ const FavoritesView = () => {
           price={favorite.price}
         ></Card>
       ))}
-      <NavLink to="/home" className={styles.navlink}>
-        <button>Back</button>
-      </NavLink>
+      <Link to="/home" className={styles.navlink}>
+        <button className={styles.button}>Back</button>
+      </Link>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import Swal from 'sweetalert2'
 
 const SignUp = () => {
   const firebaseConfig = {
@@ -130,8 +131,15 @@ const SignUp = () => {
   useEffect(() => {
     if (google) {
       try {
-        const response = axios.post("/users/signup", user).then((res) => {
-          alert("Registro exitoso");
+         axios.post("/users/signup", user)
+        .then((res) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your count have been registered succesfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/login");
           window.location.reload();
         });

@@ -19,6 +19,7 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
+
   const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();
 
@@ -105,7 +106,7 @@ const Nav = () => {
           )}
 
           <div className={style.contenedor_imagen}>
-            {userId.admin === true ? (
+            {userId.admin === true && sesions === "si" ? (
               <Link to="/DashBoardAdmin">
                 <svg
                   className={style.svg}

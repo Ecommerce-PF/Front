@@ -6,9 +6,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Card = ({ name, image, id, price }) => {
+  const iniciado = useSelector((state) => state.iniciado);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
+  
+
+  if (iniciado?.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("sesions", iniciado);
+  }
+
+  const sesions = localStorage.getItem("sesions");
   
   const isFavorite = favorites.some((product) => product.id === id);
 
@@ -70,7 +80,7 @@ const Card = ({ name, image, id, price }) => {
   return (
     <div>
       <div className={style.mainContainer}>
-        {userId.admin ? (
+        {userId.admin && sesions === "si" ? (
           <Link to={`/edit/${id}`}>
             <svg
               className={style.svg}

@@ -1,7 +1,7 @@
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import { addFavorite, deleteFavorite, setFavorites } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
-  
+
 
   if (iniciado?.length === 0) {
     // No hacer nada
@@ -19,10 +19,8 @@ const Card = ({ name, image, id, price }) => {
   }
 
   const sesions = localStorage.getItem("sesions");
-  
-  const isFavorite = favorites.some((product) => product.id === id);
 
-  
+
   const [form, setForm] = useState({
     id: id,
     UserId: userId.id,
@@ -32,7 +30,6 @@ const Card = ({ name, image, id, price }) => {
     const fetchFavoriteProducts = async () => {
       try {
         const response = await axios.get(`/whishListProduct/${id}`);
-        console.log(response)
       } catch (error) {
         console.error("Error al obtener los productos favoritos", error);
       }
@@ -41,13 +38,9 @@ const Card = ({ name, image, id, price }) => {
     fetchFavoriteProducts();
   }, []);
 
-
-
-
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      
       const reponse = await axios.post(
         "http://localhost:3001/whishListProduct",
         form
@@ -59,6 +52,7 @@ const Card = ({ name, image, id, price }) => {
       //   showConfirmButton: false,
       //   timer: 800
       // })
+      alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
@@ -82,6 +76,11 @@ const Card = ({ name, image, id, price }) => {
       console.error("Error al eliminar", error);
     }
   };
+
+
+
+
+  const isFavorite = favorites.some((product) => product.id === id);
 
   return (
     <div>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 import { getDetail } from "../../redux/actions/actions.js";
-import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 import UploadFile from "../UploadFile/UploadFile.jsx";
 
@@ -14,10 +14,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const EditProduct = () => {
-  /****************************BOTON DE REGRESO***************************** */
-  const handleGoBack = () => {
-    window.history.back(); // Navegar a la página anterior
-  };
 
   const navigate = useNavigate();
 

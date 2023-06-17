@@ -17,7 +17,6 @@ import {
   DELETE_USER_FAILURE,
   CONSULTA_SI_INICIO,
   LOGIN_WITH_GOOGLE,
-  GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
 } from "../actions/actions";

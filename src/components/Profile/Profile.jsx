@@ -13,13 +13,6 @@ const Profile = () => {
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
 
-  const handleUpload = async (error, result) => {
-    if (result && result.event === "success") {
-      setUrl(result.info.secure_url);
-      await axios.put(`/users/1`, { profileImage: result.info.secure_url });
-      console.log({ profileImage: url });
-    }
-  };
 
   const id = useSelector((state) => state.idUsuario);
 

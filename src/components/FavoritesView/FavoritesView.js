@@ -26,18 +26,12 @@ const FavoritesView = () => {
     // Actualiza la lista de productos favoritos cuando el estado del usuario cambia
   }, [myFavorites]);
 
-  const handleAddFavorite = () => {
-    // Agrega el producto a la lista de favoritos del usuario
-    dispatch(addFavorite());
-  };
 
   const handleDeleteFavorite = (id) => {
     dispatch(deleteFavorite(id));
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-  };
+  
   // dar etiqutas de estilos para style.module.css
   return (
     <div className={styles.container_fav}>

@@ -4,16 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const Nav = () => {
-  const admin = useSelector((state) => state.adminUser);
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
 
-  console.log(userId)
+  const id = userId.id
 
-  
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {
@@ -22,25 +19,6 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  if (admin?.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("admins", admin);
-  }
-
-  const userAdmin = localStorage.getItem("admins");
-
-  /**************************************** */
-
-  function mostrarTexto(elemento) {
-    elemento.nextSibling.style.display = "block";
-  }
-
-  function ocultarTexto(elemento) {
-    elemento.nextSibling.style.display = "none";
-  }
-
-  /**************************************** */
 
   const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();
@@ -128,7 +106,7 @@ const Nav = () => {
           )}
 
           <div className={style.contenedor_imagen}>
-            {userId.admin === true ? (
+            {userId.admin === true && sesions === "si" ? (
               <Link to="/DashBoardAdmin">
                 <svg
                   className={style.svg}
@@ -171,7 +149,7 @@ const Nav = () => {
               </svg>
             </Link>
           </div>
-          <NavLink to="/favorites">
+          <NavLink to={`/favorites/${id}`}>
             <div className={style.nav_fav}>
               <svg
                 className={style.svg}

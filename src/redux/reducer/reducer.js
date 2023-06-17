@@ -19,6 +19,7 @@ import {
   LOGIN_WITH_GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
+  SET_FAVORITES,
 } from "../actions/actions";
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
   cart: [],
   idUsuario: [],
   userId: [],
+  favorites: [],
   adminUser: [],
   priceRange: [0, Infinity],
   iniciado: [],
@@ -216,6 +218,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         google: action.payload,
+      };
+
+    case SET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
 
     default:

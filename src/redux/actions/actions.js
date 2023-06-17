@@ -28,11 +28,11 @@ export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 export const ID_USER = "ID_USER";
 export const CONSULTA_SI_INICIO = "CONSULTA_SI_INICIO";
 export const ACTIVE = "ACTIVE";
-export const BAN_OR_DESBAN = "BAN_OR_DESBAN";
 export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
+export const SET_FAVORITES = "SET_FAVORITES";
 
 export const getUser = (userId) => {
   return async (dispatch) => {
@@ -270,16 +270,14 @@ export const loginWithGoogle = (e) => {
   };
 };
 
+export const setFavorites = (favorites) => ({
+  type: SET_FAVORITES,
+  payload: favorites,
+});
+
 export const google = (e) => {
   return {
     type: GOOGLE,
     payload: e,
   };
 };
-
-// export const activeAccount = (e) => {
-//   return {
-//     type: ACTIVE,
-//     payload: e,
-//   };
-// };

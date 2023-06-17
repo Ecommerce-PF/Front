@@ -9,7 +9,6 @@ const Card = ({ name, image, id, price }) => {
   const isFavorite = favorites.some((product) => product.id === id);
   const userId = useSelector((state) => state.userId);
 
-
   const handleAddFavorite = () => {
     dispatch(addFavorite({ id, name, image, price }));
   };

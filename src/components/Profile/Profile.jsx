@@ -7,19 +7,11 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 
-
 const Profile = () => {
   const dispatch = useDispatch();
 
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
-  
-  const id = useSelector((state) => state.idUsuario);
-
-  console.log(userId, "id");
-
-
-
 
   const handleUpload = async (error, result) => {
     if (result && result.event === "success") {
@@ -29,11 +21,9 @@ const Profile = () => {
     }
   };
 
-  {
-    /* <UploadFile handleUpload={handleUpload} folder={'user'}/> */
-  }
+  const id = useSelector((state) => state.idUsuario);
 
-
+  console.log(userId, "id");
 
   if (id.length === 0) {
     // No hacer nada
@@ -42,14 +32,12 @@ const Profile = () => {
   }
 
   const idUser = localStorage.getItem("ids");
- 
 
   console.log(url, "idUser");
 
   useEffect(() => {
     setUrl(userId.profileImage);
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {

@@ -175,12 +175,6 @@ const rootReducer = (state = initialState, action) => {
         users: action.payload,
       };
 
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-
     case DELETE_PRODUCT_SUCCESS:
       const updatedProducts = state.products.filter(
         (product) => product.id !== action.payload

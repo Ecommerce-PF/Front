@@ -15,9 +15,11 @@ import { consultaSiIniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
+
 import Swal from "sweetalert2";
 
 import axios from "axios";
+
 
 const Login = () => {
   const firebaseConfig = {
@@ -51,28 +53,29 @@ const Login = () => {
     dispatch(consultaSiIniciado("si"));
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!userName || !password) {
       setError("Please enter your username and password");
       return;
     }
-  
+
     try {
-      const response = await axios.post("/users/login", {
-        userName,
-        password,
+      const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userName, password }),
       });
-  
-      if (response.status === 200) {
-        const data = response.data;
+
+      if (response.ok) {
+        const data = await response.json();
         const userId = data.user.id;
-  
+
         dispatch(idUser(userId));
-  
+
         setUserName("");
         setPassword("");
         setError("");

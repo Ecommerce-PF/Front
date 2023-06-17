@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
+import { FaArrowLeft } from "react-icons/fa";
 import UploadFile from "../UploadFile/UploadFile";
 
 export default function CreatePost() {
@@ -34,8 +35,7 @@ export default function CreatePost() {
     name: "",
     color: [],
     price: 0,
-    image:
-      "https://res.cloudinary.com/finalproject123/image/upload/v1686800930/Dummy-Default_paxnhf.jpg",
+    image:"",
     category: "",
     parentCategory: "",
     description: "",
@@ -268,12 +268,17 @@ export default function CreatePost() {
         <button className="enviar" type="submit">
           ENVIAR
         </button>
-        <div className={styles.nav}>
-          <Link to="/home">
-            <button className={styles.button}>Back</button>
-          </Link>
-        </div>
+       
       </form>
+
+
+
+      
+<Link to="/DashBoardAdmin">
+<button className={styles.button}>
+  Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+</button>
+</Link>
     </div>
   );
 }

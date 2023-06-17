@@ -2,6 +2,7 @@ import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import Swal from "sweetalert2";
 
 const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,13 @@ const Card = ({ name, image, id, price }) => {
 
   const handleAddFavorite = () => {
     dispatch(addFavorite({ id, name, image, price }));
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'You add to favorites',
+      showConfirmButton: false,
+      timer: 800
+    })
   };
 
   const handleDeleteFavorite = () => {

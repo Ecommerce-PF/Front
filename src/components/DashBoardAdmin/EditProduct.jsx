@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate , Link} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 import { getDetail } from "../../redux/actions/actions.js";
-import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 import UploadFile from "../UploadFile/UploadFile.jsx";
 
 import styles from "./EditProduct.module.css";
+import Swal from "sweetalert2";
+
 import axios from "axios";
 
 const EditProduct = () => {
-  /****************************BOTON DE REGRESO***************************** */
-  const handleGoBack = () => {
-    window.history.back(); // Navegar a la página anterior
-  };
+
+  const navigate = useNavigate();
 
   /*************************ESTO ES PARA MONTAR LA CARTA*********************************************** */
   const dispatch = useDispatch();
   const { id } = useParams();
   const state = useSelector((state) => state.productDetail);
+  const { name, color, price, image, category, parentCategory, description } =
+    state;
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -33,14 +36,14 @@ const EditProduct = () => {
   }, []);
   const [form, setForm] = useState({
     id: id,
-    name: "",
-    color: [],
-    price: "",
-    image: "",
-    category: "",
-    parentCategory: "",
-    description: "",
-    stock: "",
+    name,
+    color ,
+    price ,
+    image,
+    category,
+    parentCategory,
+    description,
+    // stock,
   });
 
   const handleChange = (e) => {
@@ -70,10 +73,25 @@ const EditProduct = () => {
       await axios
         .put(`/products/${id}`, form)
         .then((res) => {
-          alert("Producto editado con exito");
+
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          .then(() => {
+            navigate(`/detail/${id}`);
+          });
         });
     } catch (error) {
-      alert("No se pudo editar el producto");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="">Why do I have this issue?</a>'
+})
     }
   };
 
@@ -112,10 +130,11 @@ const EditProduct = () => {
           {/* <p>{state?.description}</p> */}
           <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
 
-          <button onClick={handleGoBack}>
-            {" "}
-            Back <FaArrowLeft className={styles.icon} />{" "}
-          </button>
+          <Link to="/home">
+        <button className={styles.button}>
+          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+        </button>
+      </Link>
         </div>
 
         {/* /**************************************************************************************** */}
@@ -143,13 +162,7 @@ const EditProduct = () => {
               placeholder="Could copy from URL"
             />
             <UploadFile handleUpload={handleUpload} folder={"product"} />
-            {/* <input
-        type="text"
-        name="color"
-        id="color"
-        onChange={handleChange}
-        value={form.color.map((color) => color.name).join(", ")}
-        /> */}
+             
 
             <label htmlFor="price">Price</label>
             <input
@@ -159,6 +172,14 @@ const EditProduct = () => {
               onChange={handleChange}
               value={form.price}
             />
+            
+            {/* <label htmlFor="color">Colors</label>
+            <input 
+            type="text"
+            name="color"
+            id="color"
+            onChange={handleChange}
+            value={form.color} /> */}
 
             <label htmlFor="category">Category</label>
             <input
@@ -196,7 +217,9 @@ const EditProduct = () => {
               value={form.stock}
             />
 
-            <button type="submit">Save Changes</button>
+            <button type="submit" className={styles.button}>Save Changes</button>
+            
+
           </form>
         </div>
       </div>

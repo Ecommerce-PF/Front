@@ -5,8 +5,6 @@ import { getUserAll, getUserById } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
-
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -24,30 +22,26 @@ const Profile = () => {
 
   const id = useSelector((state) => state.idUsuario);
 
-  console.log(userId, "id");
-
 
   if (id.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("ids", id);
   }
-
+  const profileImages= userId.profileImage
+  
   const idUser = localStorage.getItem("ids");
- 
-
-  console.log(url, "idUser");
 
   useEffect(() => {
-    setUrl(userId.profileImage);
+    setUrl(profileImages);
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getUserAll());
       await dispatch(getUserById(idUser));
     };
+
     fetchData();
   }, [dispatch, idUser]);
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import { deleteFavorite, getUser } from "../../redux/actions/actions";
+
 import Card from "../Card/Card";
-import { getUser, deleteProduct } from "../../redux/actions/actions";
 import styles from "./favorite.module.css";
+import { FaArrowLeft } from "react-icons/fa";
 
 // crear un boton de back para regresar a favoritos
 const FavoritesView = () => {
@@ -26,19 +27,12 @@ const FavoritesView = () => {
     // Actualiza la lista de productos favoritos cuando el estado del usuario cambia
   }, [myFavorites]);
 
-  const handleAddFavorite = () => {
-    // Agrega el producto a la lista de favoritos del usuario
-    dispatch(addFavorite());
-  };
 
   const handleDeleteFavorite = (id) => {
     dispatch(deleteFavorite(id));
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-  };
-  // dar etiqutas de estilos para style.module.css
+
   return (
     <div className={styles.container_fav}>
       <h1 className={styles.title_fav}>Productos Favoritos</h1>
@@ -57,9 +51,12 @@ const FavoritesView = () => {
           </Card>
         );
       })}
-      <NavLink to="/home" className={styles.navlink}>
-        <button>Back</button>
-      </NavLink>
+      
+      <Link to="/home">
+        <button className={styles.button}>
+          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+        </button>
+      </Link>
     </div>
   );
 };

@@ -17,7 +17,6 @@ import {
   DELETE_USER_FAILURE,
   CONSULTA_SI_INICIO,
   LOGIN_WITH_GOOGLE,
-  GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
 } from "../actions/actions";
@@ -173,12 +172,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         users: action.payload,
-      };
-
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
       };
 
     case DELETE_PRODUCT_SUCCESS:

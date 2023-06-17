@@ -15,6 +15,8 @@ import { consultaSiIniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
+import axios from "axios";
+
 const Login = () => {
   const firebaseConfig = {
     apiKey: "AIzaSyB5fkHI-K8lcyC8U8TSDfnjkqFjMZ6mmTQ",
@@ -47,29 +49,28 @@ const Login = () => {
     dispatch(consultaSiIniciado("si"));
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!userName || !password) {
       setError("Please enter your username and password");
       return;
     }
-
+  
     try {
-      const response = await fetch("http://localhost:3001/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userName, password }),
+      const response = await axios.post("/users/login", {
+        userName,
+        password,
       });
-
-      if (response.ok) {
-        const data = await response.json();
+  
+      if (response.status === 200) {
+        const data = response.data;
         const userId = data.user.id;
-
+  
         dispatch(idUser(userId));
-
+  
         setUserName("");
         setPassword("");
         setError("");
@@ -82,7 +83,7 @@ const Login = () => {
       setError("Error occurred while logging in");
     }
   };
-
+  
   const provider = new GoogleAuthProvider();
 
   const auth = getAuth();
@@ -97,7 +98,7 @@ const Login = () => {
         const user = result.user;
 
         try {
-          const response = await fetch("http://localhost:3001/users/login", {
+          const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

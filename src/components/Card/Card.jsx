@@ -1,7 +1,7 @@
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import { addFavorite, deleteFavorite, setFavorites } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ const Card = ({ name, image, id, price }) => {
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
 
+
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {
@@ -18,8 +19,6 @@ const Card = ({ name, image, id, price }) => {
   }
 
   const sesions = localStorage.getItem("sesions");
-
-  const isFavorite = favorites.some((product) => product.id === id);
 
 
   const [form, setForm] = useState({
@@ -53,6 +52,7 @@ const Card = ({ name, image, id, price }) => {
       //   showConfirmButton: false,
       //   timer: 800
       // })
+      alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
@@ -76,6 +76,11 @@ const Card = ({ name, image, id, price }) => {
       console.error("Error al eliminar", error);
     }
   };
+
+
+
+
+  const isFavorite = favorites.some((product) => product.id === id);
 
   return (
     <div>

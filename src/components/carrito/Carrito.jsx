@@ -32,7 +32,7 @@ export default function Carrito() {
   function eliminarObjetosRepetidos(array) {
     var objetosUnicos = [];
 
-    array.forEach(function (objeto) {
+    array && array.forEach(function (objeto) {
       if (
         !objetosUnicos.some(function (item) {
           return item.id === objeto.id; // Compara las propiedades relevantes
@@ -83,7 +83,7 @@ export default function Carrito() {
             })}
 
             <div className={styles.carritoTotalPrecio} >
-              <h3>Total del carrito: {precioTotal.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
+              <h3>Total del carrito: {precioTotal?.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
             </div>
           </div> :
           <section className={styles.emptyCart}>

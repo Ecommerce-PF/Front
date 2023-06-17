@@ -53,41 +53,41 @@ const Login = () => {
     dispatch(consultaSiIniciado("si"));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    if (!userName || !password) {
-      setError("Please enter your username and password");
-      return;
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!userName || !password) {
+    setError("Please enter your username and password");
+    return;
+  }
+
+  try {
+    const response = await axios.post("/users/login", {
+      userName,
+      password,
+    });
+
+    if (response.status === 200) {
+      const data = response.data;
+      const userId = data.user.id;
+
+      dispatch(idUser(userId));
+
+      setUserName("");
+      setPassword("");
+      setError("");
+      navigate("/home");
+      window.location.reload();
+    } else {
+      setError("Invalid username or password");
     }
+  } catch (error) {
+    setError("Error occurred while logging in");
+  }
+};
 
-    try {
-      const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userName, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const userId = data.user.id;
-
-        dispatch(idUser(userId));
-
-        setUserName("");
-        setPassword("");
-        setError("");
-        navigate("/home");
-        window.location.reload();
-      } else {
-        setError("Invalid username or password");
-      }
-    } catch (error) {
-      setError("Error occurred while logging in");
-    }
-  };
   
 
   const provider = new GoogleAuthProvider();

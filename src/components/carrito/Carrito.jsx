@@ -65,6 +65,8 @@ export default function Carrito() {
   };
 
   return (
+    <>
+  
     <section>
       <section className={styles.componentCart}>
         <Nav />
@@ -76,7 +78,7 @@ export default function Carrito() {
 
             <div className={styles.carritoTotalPrecio}>
               <h3>Total del carrito: {precioTotal.toFixed(2)}</h3>{" "}
-              <button onClick={funcionPago}>Proceder al pago</button>
+              <button onClick={funcionPago} className={styles.button}>Proceder al pago</button>
             </div>
           </div>
         ) : (
@@ -87,9 +89,9 @@ export default function Carrito() {
                 Tu carrito de compras está vacio! <FaSadTear></FaSadTear>
               </h2>
               <NavLink to="/home">
-                <button>Buscar articulos</button>
+                <button className={styles.button}>Buscar articulos</button>
               </NavLink>
-              <button onClick={() => window.location.reload()}>
+              <button className={styles.button} onClick={() => window.location.reload()}>
                 {" "}
                 <TfiReload />{" "}
               </button>
@@ -98,11 +100,12 @@ export default function Carrito() {
         )}
 
         <div className={styles.types}>
-          <Link to="/home">
-            <button className={styles.button}>Back</button>
-          </Link>
         </div>
       </section>
     </section>
+          <Link to="/home">
+            <button className={styles.button}>Back</button>
+          </Link>
+          </>
   );
 }

@@ -11,9 +11,11 @@ import {
   google,
 } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
-import { iniciado } from "../../redux/actions/actions";
+import { consultaSiIniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+import axios from "axios";
 
 const Login = () => {
   const firebaseConfig = {
@@ -32,8 +34,6 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isBanned, setIsBanned] = useState(false); // Estado para controlar si el usuario está baneado
-  const [isActions, setIsActions] = useState(true); // Estado para controlar si el usuario tiene permisos de acciones
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -46,42 +46,31 @@ const Login = () => {
   };
 
   const inicio = () => {
-    const e = "si";
-    dispatch(iniciado(e));
+    dispatch(consultaSiIniciado("si"));
   };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!userName || !password) {
       setError("Please enter your username and password");
       return;
     }
-
-    if (!isActions) {
-      setError("You are not allowed to login.");
-      return;
-    }
-
+  
     try {
-      const response = await fetch("http://localhost:3001/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userName, password }),
+      const response = await axios.post("/users/login", {
+        userName,
+        password,
       });
-
-      if (response.ok) {
-        const data = await response.json();
+  
+      if (response.status === 200) {
+        const data = response.data;
         const userId = data.user.id;
-        const trueOrFalse = data.user.admin;
-
-        console.log(data.user, "datadatadata");
-
-        await dispatch(login(data.user));
-        await dispatch(idUser(userId));
-        await dispatch(admin(trueOrFalse));
+  
+        dispatch(idUser(userId));
+  
         setUserName("");
         setPassword("");
         setError("");
@@ -94,7 +83,7 @@ const Login = () => {
       setError("Error occurred while logging in");
     }
   };
-
+  
   const provider = new GoogleAuthProvider();
 
   const auth = getAuth();
@@ -108,12 +97,8 @@ const Login = () => {
         // The signed-in user info.
         const user = result.user;
 
-        dispatch(loginWithGoogle(result));
-        dispatch(google("yes"));
-        dispatch(admin(false));
-
         try {
-          const response = await fetch("http://localhost:3001/users/login", {
+          const response = await fetch("https://server-ecommerce.up.railway.app/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -127,6 +112,7 @@ const Login = () => {
           if (response.status === 200) {
             const data = await response.json();
             dispatch(idUser(data.user.id));
+            dispatch(consultaSiIniciado("si"));
             navigate("/home");
             window.location.reload();
           } else {

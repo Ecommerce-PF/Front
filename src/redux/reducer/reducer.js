@@ -15,11 +15,8 @@ import {
   ID_USER,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
-  ADMIN_USER,
-  SIN_INICIAR,
-  INICIADO,
+  CONSULTA_SI_INICIO,
   LOGIN_WITH_GOOGLE,
-  GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
 } from "../actions/actions";
@@ -35,10 +32,8 @@ const initialState = {
   userId: [],
   adminUser: [],
   priceRange: [0, Infinity],
-  inicio: [],
   iniciado: [],
   google: {},
-  inicioConGoogle: [],
   myFavorites: [],
 };
 
@@ -179,12 +174,6 @@ const rootReducer = (state = initialState, action) => {
         users: action.payload,
       };
 
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-
     case DELETE_PRODUCT_SUCCESS:
       const updatedProducts = state.products.filter(
         (product) => product.id !== action.payload
@@ -217,19 +206,7 @@ const rootReducer = (state = initialState, action) => {
         idUsuario: action.payload,
       };
 
-    case ADMIN_USER:
-      return {
-        ...state,
-        adminUser: action.payload,
-      };
-
-    case SIN_INICIAR:
-      return {
-        ...state,
-        inicio: action.payload,
-      };
-
-    case INICIADO:
+    case CONSULTA_SI_INICIO:
       return {
         ...state,
         iniciado: action.payload,
@@ -239,12 +216,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         google: action.payload,
-      };
-
-    case GOOGLE:
-      return {
-        ...state,
-        inicioConGoogle: action.payload,
       };
 
     default:

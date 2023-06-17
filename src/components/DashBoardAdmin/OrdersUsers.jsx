@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getUserAll,
   deleteUser,
   getUserById,
 } from "../../redux/actions/actions.js";
+
 import style from "../DashBoardAdmin/OrdersUsers.module.css";
+import { FaArrowLeft } from "react-icons/fa";
+
 import axios from "axios";
+
 
 const OrdersUsers = () => {
   const dispatch = useDispatch();
@@ -69,6 +74,8 @@ const OrdersUsers = () => {
   }, [users]);
 
   return (
+    <>
+   
     <div className={style.container}>
       <h1>Usuarios registrados</h1>
       {users && users.length === 0 ? (
@@ -113,6 +120,15 @@ const OrdersUsers = () => {
         </table>
       )}
     </div>
+
+
+<Link to="/DashBoardAdmin">
+<button className={style.button}>
+  Back <FaArrowLeft className={style.icon}></FaArrowLeft>
+</button>
+</Link>
+
+</>
   );
 };
 

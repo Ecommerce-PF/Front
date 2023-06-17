@@ -2,28 +2,23 @@ import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import Swal from "sweetalert2";
 
 const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.loading);
   const favorites = useSelector((state) => state.myFavorites);
   const isFavorite = favorites.some((product) => product.id === id);
-  const admin = useSelector((state) => state.adminUser);
-
-  if (admin.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("adminUser", JSON.stringify(admin));
-  }
-
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
-  const userAdmin = JSON.parse(localStorage.getItem("adminUser"));
+  const userId = useSelector((state) => state.userId);
 
   const handleAddFavorite = () => {
     dispatch(addFavorite({ id, name, image, price }));
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'You add to favorites',
+      showConfirmButton: false,
+      timer: 800
+    })
   };
 
   const handleDeleteFavorite = () => {
@@ -32,7 +27,7 @@ const Card = ({ name, image, id, price }) => {
 
   return (
     <div className={style.mainContainer}>
-      {userAdmin ? (
+      {userId.admin ? (
         <Link to={`/edit/${id}`}>
           <svg
             className={style.svg}

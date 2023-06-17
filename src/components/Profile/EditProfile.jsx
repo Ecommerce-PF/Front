@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { getUserAll, getUserById } from "../../redux/actions/actions";
 import UploadFile from "../UploadFile/UploadFile";
-import styles from "./EditProfile.module.css";
 import axios from "axios";
 
+import styles from "./EditProfile.module.css";
+import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa"
+import Swal from "sweetalert2";
+
 const EditProfile = () => {
+
+
+/*********************************************************************************** */
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const id = useSelector((state) => state.idUsuario);
@@ -35,7 +42,7 @@ const EditProfile = () => {
     email,
     password,
   });
-
+/********************************************************************** */
   useEffect(() => {
     const fetchData = async () => {
       dispatch(getUserAll());
@@ -43,7 +50,7 @@ const EditProfile = () => {
     };
     fetchData();
   }, []);
-
+/********************************************************************** */
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(form);
@@ -53,17 +60,32 @@ const EditProfile = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`/users/${idUser}`, form).then((res) => {
-        alert("information editada con exito");
-        navigate("/profile");
+/********************************************************* */
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+   
+      await axios.put(`/users/${idUser}`, form);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      .then(() => {
+        navigate('/profile');
       });
-    } catch (error) {
-      alert(error);
-    }
-  };
+   
+  } catch (error) {
+    alert(error);
+  }
+};
+
+
+
 
   const handleUpload = async (error, result) => {
     if (result && result.event === "success") {
@@ -101,7 +123,7 @@ const EditProfile = () => {
           <form action="" onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.form__group}>
               <label htmlFor="name" className={styles.form__label}>
-                Name =
+                Name 
               </label>
               <input
                 type="text"
@@ -116,7 +138,7 @@ const EditProfile = () => {
 
             <div className={styles.form__group}>
               <label htmlFor="lastName" className={styles.form__label}>
-                User Name =
+                User Name 
               </label>
               <input
                 type="text"
@@ -131,7 +153,7 @@ const EditProfile = () => {
 
             <div className={styles.form__group}>
               <label htmlFor="email" className={styles.form__label}>
-                Email =
+                Email 
               </label>
               <input
                 type="email"
@@ -146,7 +168,7 @@ const EditProfile = () => {
 
             <div className={styles.form__group}>
               <label htmlFor="phone" className={styles.form__label}>
-                Phone =
+                Phone 
               </label>
               <input
                 type="number"
@@ -161,7 +183,7 @@ const EditProfile = () => {
 
             <div className={styles.form__group}>
               <label htmlFor="password" className={styles.form__label}>
-                Password =
+                Password 
               </label>
               <input
                 type="password"
@@ -178,12 +200,20 @@ const EditProfile = () => {
               folder={"user"}
             ></UploadFile>
 
-            <button type="submit" className={styles.form__submit}>
+            <button type="submit" className={styles.button} >
+            {/* className={styles.form__submit} */}
               Save Data
             </button>
           </form>
         </div>
       </div>
+      
+      <Link to="/profile">
+        <button className={styles.button}>
+          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+        </button>
+      </Link>
+
     </>
   );
 };

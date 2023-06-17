@@ -8,7 +8,7 @@ export default function Footer() {
       <div class={s.grupo2}>
         <div class={s.box}>
           <figure className={s.figure}>
-            <a className={s.a} href="#"></a>
+            {/* <a className={s.a} href="#"></a> */}
           </figure>
         </div>
         <div class={s.box}>

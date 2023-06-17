@@ -86,7 +86,7 @@ const Login = () => {
     }
   };
   
-  
+
   const provider = new GoogleAuthProvider();
 
   const auth = getAuth();
@@ -225,3 +225,4 @@ const Login = () => {
 };
 
 export default Login;
+

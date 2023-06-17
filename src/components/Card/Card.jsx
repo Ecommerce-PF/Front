@@ -52,13 +52,13 @@ const Card = ({ name, image, id, price }) => {
         "http://localhost:3001/whishListProduct",
         form
       );
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'You add to favorites',
-        showConfirmButton: false,
-        timer: 800
-      })
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: 'You add to favorites',
+      //   showConfirmButton: false,
+      //   timer: 800
+      // })
     } catch (error) {
       // Handle the error here
     }

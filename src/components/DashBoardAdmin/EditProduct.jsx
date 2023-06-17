@@ -73,7 +73,7 @@ const EditProduct = () => {
       await axios
         .put(`/products/${id}`, form)
         .then((res) => {
-          // alert("Producto editado con exito");
+
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -86,7 +86,12 @@ const EditProduct = () => {
           });
         });
     } catch (error) {
-      alert("No se pudo editar el producto");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="">Why do I have this issue?</a>'
+})
     }
   };
 

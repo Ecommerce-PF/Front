@@ -16,31 +16,39 @@ const Admin = () => {
   const userAdmin = localStorage.getItem("admins");
 
   return userAdmin === "true" ? (
-    <div className={style.container}>
-      <div className="btn-group btn-group-toggle m-1">
-        <div>
-          <Link to="/CreatePost" className={style.link}>
-            Create Product
-          </Link>
-        </div>
+   
+   
+   <div className={style.container}>
 
-        <div>
-          <Link to="/Delete" className={style.link}>
-            Delete Product
-          </Link>
-          <Link to="/Order" className={style.link}>
-            Order Users
-          </Link>
-        </div>
-      </div>
+            <div className={style.buton_container}>
+              <Link to="/CreatePost" className={style.link}>
+                Create Product
+              </Link>
+            </div>
 
-      <Link to="/home">
-<button className={style.button}>
-  Back <FaArrowLeft className={style.icon}></FaArrowLeft>
-</button>
-</Link>
+            <div className={style.buton_container}>
+              <Link to="/Delete" className={style.link}>
+                Delete Product
+              </Link>
+            </div>
+            
+            <div className={style.buton_container}>
+              <Link to="/Order" className={style.link}>
+                Order Users
+              </Link>
+            </div>
+          
+            <div className={style.buton_container}>
+              <Link to="/home">
+                <button className={style.button}>
+                Back <FaArrowLeft className={style.icon}></FaArrowLeft>
+                </button>
+              </Link>
+            </div>
+        
     </div>
-  ) : 
+  ) 
+  : 
   <div>
     <h1>USTED NO TIENE PERMISOS </h1>
   </div>

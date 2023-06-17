@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import style from "../DashBoardAdmin/DashBoardAdmin.module.css";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Admin = () => {
   const admin = useSelector((state) => state.adminUser);
@@ -32,6 +33,12 @@ const Admin = () => {
           </Link>
         </div>
       </div>
+
+      <Link to="/home">
+<button className={style.button}>
+  Back <FaArrowLeft className={style.icon}></FaArrowLeft>
+</button>
+</Link>
     </div>
   ) : 
   <div>

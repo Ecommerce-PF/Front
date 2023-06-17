@@ -2,50 +2,70 @@ import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
+  
   const isFavorite = favorites.some((product) => product.id === id);
 
+  
   const [form, setForm] = useState({
     id: id,
     UserId: userId.id,
   });
 
+  useEffect(() => {
+    const fetchFavoriteProducts = async () => {
+      try {
+        const response = await axios.get(`/whishListProduct/${id}`);
+        console.log(response)
+      } catch (error) {
+        console.error("Error al obtener los productos favoritos", error);
+      }
+    };
+
+    fetchFavoriteProducts();
+  }, []);
+
+
+
 
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      const reponse = await axios.post("http://localhost:3001/whishListProduct", form);
-      console.log(reponse, "reponse")
-      console.log(form, "form")
+      
+      const reponse = await axios.post(
+        "http://localhost:3001/whishListProduct",
+        form
+      );
+      alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
   };
 
-
   const handleDeleteFavorite = async () => {
+    dispatch(deleteFavorite(id));
     const deleteForm = {
       id: id,
       UserId: userId.id,
     };
-  
-    console.log(deleteForm, "deleteForm" )
+
     try {
-      const reponse = await axios.delete(`/whishListProduct/`, { data: deleteForm });
-      console.log(reponse, "reponse")
-      alert("Se eliminó");
+      const response = await axios.delete(`/whishListProduct/`, {
+        data: deleteForm,
+      });
+      console.log(response.data);
+      alert("se saco");
+      // Manejar la respuesta aquí
     } catch (error) {
       console.error("Error al eliminar", error);
     }
-    alert("Se eliminó correctamente");
   };
-  
 
   return (
     <div>

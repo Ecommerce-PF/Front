@@ -13,7 +13,6 @@ import axios from "axios";
 
 const FavoritesView = () => {
   const { id } = useParams();
-
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
   useEffect(() => {

@@ -39,11 +39,7 @@ const FavoritesView = () => {
           name={favorite.name}
           image={favorite.image}
           price={favorite.price}
-        >
-          <button onClick={() => handleDeleteFavorite(favorite.id)}>
-            Eliminar
-          </button>
-        </Card>
+        ></Card>
       ))}
       <NavLink to="/home" className={styles.navlink}>
         <button>Back</button>

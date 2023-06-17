@@ -10,7 +10,6 @@ const Card = ({ name, image, id, price }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
-  
 
   if (iniciado?.length === 0) {
     // No hacer nada
@@ -19,10 +18,10 @@ const Card = ({ name, image, id, price }) => {
   }
 
   const sesions = localStorage.getItem("sesions");
-  
+
   const isFavorite = favorites.some((product) => product.id === id);
 
-  
+
   const [form, setForm] = useState({
     id: id,
     UserId: userId.id,
@@ -32,7 +31,6 @@ const Card = ({ name, image, id, price }) => {
     const fetchFavoriteProducts = async () => {
       try {
         const response = await axios.get(`/whishListProduct/${id}`);
-        console.log(response)
       } catch (error) {
         console.error("Error al obtener los productos favoritos", error);
       }
@@ -41,13 +39,9 @@ const Card = ({ name, image, id, price }) => {
     fetchFavoriteProducts();
   }, []);
 
-
-
-
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      
       const reponse = await axios.post(
         "http://localhost:3001/whishListProduct",
         form

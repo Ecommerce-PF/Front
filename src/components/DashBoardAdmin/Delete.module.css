@@ -21,3 +21,5 @@
   .button:active {
     transform: translateY(-1px);
   }
+
+  .containerPause{margin-top: 20%;}

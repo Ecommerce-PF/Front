@@ -12,7 +12,7 @@ const OrdersUsers = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const id = useSelector((state) => state.idUsuario);
-  const [idBan, setIdBan] = useState({ active: false }); // Estado idBan y su función de actualización
+  const [banButtonMap, setBanButtonMap] = useState({}); // Mapa para almacenar el estado de los botones de banear
 
   useEffect(() => {
     dispatch(getUserAll());
@@ -26,17 +26,22 @@ const OrdersUsers = () => {
 
   const idUser = localStorage.getItem("ids");
 
-
-
   const handleBanUser = (id) => {
     dispatch(getUserById(id));
-    const updatedIdBan = { ...idBan };
-    updatedIdBan.active = !updatedIdBan.active;
 
+    // Actualizar el estado del botón correspondiente
+    setBanButtonMap((prevButtonMap) => ({
+      ...prevButtonMap,
+      [id]: !prevButtonMap[id], // Invertir el estado del botón al que se le hizo clic
+    }));
+
+    const updatedIdBan = {
+      active: banButtonMap[id], // Utilizar el estado actual del botón para determinar el valor de "active"
+    };
 
     try {
       axios.put(`/users/${id}`, updatedIdBan).then((res) => {
-        if (updatedIdBan.active === true) {
+        if (updatedIdBan.active) {
           alert("Usuario desbaneado correctamente");
         } else {
           alert("Usuario baneado correctamente");
@@ -45,14 +50,23 @@ const OrdersUsers = () => {
     } catch (error) {
       alert("No se pudo editar el usuario");
     }
-
-    // Actualizar el estado idBan con el nuevo valor
-    setIdBan(updatedIdBan);
   };
 
   const handleDeleteUser = (id) => {
-    dispatch(deleteUser(id));
+    // Mostrar ventana emergente de confirmación antes de eliminar al usuario
+    if (window.confirm("¿Estás seguro de que quieres eliminar a este usuario definitivamente?")) {
+      dispatch(deleteUser(id));
+    }
   };
+
+  useEffect(() => {
+    // Crear el estado inicial de los botones de banear al cargar los usuarios
+    const initialButtonMap = {};
+    users.forEach((user) => {
+      initialButtonMap[user.id] = user.isActive;
+    });
+    setBanButtonMap(initialButtonMap);
+  }, [users]);
 
   return (
     <div className={style.container}>
@@ -84,21 +98,14 @@ const OrdersUsers = () => {
                   >
                     Eliminar
                   </button>
-                  {user.isActive ? (
-                    <button
-                      className="btn btn-warning"
-                      onClick={() => handleBanUser(user.id)}
-                    >
-                      Desbanear
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-success"
-                      onClick={() => handleBanUser(user.id)}
-                    >
-                      Banear
-                    </button>
-                  )}
+                  <button
+                    className={`btn ${
+                      banButtonMap[user.id] ? "btn-success" : "btn-warning"
+                    }`}
+                    onClick={() => handleBanUser(user.id)}
+                  >
+                    {banButtonMap[user.id] ? "Desbanear" : "Banear"}
+                  </button>
                 </td>
               </tr>
             ))}

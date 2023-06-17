@@ -46,7 +46,7 @@ function App() {
         <Route path="/pending" element={<MercadoPagoPendiente />} />
         <Route path="/success" element={<MercadoPagoAceptado />} />
         <Route path="/failure" element={<MercadoPagoRechazado />} />
-        <Route path="/favorites" element={<FavoritesView />} />
+        <Route path="/favorites/:id" element={<FavoritesView />} />
       </Routes>
     </div>
   );

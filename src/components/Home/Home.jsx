@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <section>
-      {idBan.active === true ? (
+      {!idBan.active === false ? (
         <div className={style.container}>
           <Nav />
           <Buttons />

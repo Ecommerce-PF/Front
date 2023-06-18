@@ -9,16 +9,20 @@ import axios from "axios";
 
 export default function Delete() {
   const [borrar, setBorrar] = useState(false);
+  const [borrar2, setBorrar2] = useState(false);
   const [errors, setErrors] = useState({ noInputs: "No hay inputs" });
   const [input, setInputs] = useState({ id: "" });
   const [input2, setInputs2] = useState({ id: "" });
+  const [input3, setInputs3] = useState({ id: "" });
   const [selectedProductName, setSelectedProductName] = useState("");
   const [selectedProductNames2, setSelectedProductNames2] = useState("");
+  const [selectedProductNames3, setSelectedProductNames3] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = function (e) {
-    const productId = e.target.value;
+    const productId = e?.target.value;
     const product = getProductById(productId);
+
     const productName = product?.name;
     setErrors(validate({ ...input, id: productId }));
     setInputs({ id: productId });
@@ -31,6 +35,9 @@ export default function Delete() {
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
+
+  const productsNotAvailable = products.filter((product) => !product.isAvaible);
+  const productsIsAvailable = products.filter((product) => product.isAvaible);
 
   function toggle() {
     setBorrar(!borrar);
@@ -47,20 +54,43 @@ export default function Delete() {
     }, 3000);
   }
 
-  const handlePausarProducto = async (e) => {
-    console.log(e.target.value, "esto es e")
-    const productIds = e.target.value;
+  const handleDespausarProducto = async (e) => {
+    const productIds = e?.target.value;
     const productImg = getProductById(productIds);
     const productNames = productImg?.name;
-    setErrors(validate({ ...input2, id: productIds }));
+    const pausado = { ...productImg, isAvaible: true };
+    setInputs3({ id: productIds });
+    setSelectedProductNames3(productNames);
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/products/${input3.id}`,
+        pausado
+      );
+
+      console.log(response);
+      // Realiza acciones adicionales después de la respuesta exitosa aquí
+    } catch (error) {
+      // Maneja el error aquí
+    }
+  };
+
+  const handlePausarProducto = async (e) => {
+    const productIds = e?.target.value;
+    const productImg = getProductById(productIds);
+    const productNames = productImg?.name;
+    const pausado = { ...productImg, isAvaible: false };
     setInputs2({ id: productIds });
     setSelectedProductNames2(productNames);
     try {
-      const reponse = await axios.put(
-        `http://localhost:3001/products${input.id}`
+      const response = await axios.put(
+        `http://localhost:3001/products/${input2.id}`,
+        pausado
       );
+
+      console.log(response);
+      // Realiza acciones adicionales después de la respuesta exitosa aquí
     } catch (error) {
-      // Handle the error here
+      // Maneja el error aquí
     }
   };
 
@@ -71,7 +101,6 @@ export default function Delete() {
   function getProductById(productId) {
     return products.find((product) => product.id === productId);
   }
-
 
   var danger = {
     marginTop: "7px",
@@ -97,15 +126,58 @@ export default function Delete() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deletee(null, input);
+        deletee();
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        window.location.reload();
       }
     });
   }
 
+  
+
+  function confirmPause() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Desactivar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Desactivada!", "Tu prenda fue desactivada", "success");
+        handlePausarProducto();
+        window.location.reload();
+      }
+    });
+  }
+
+  function confirmDespause() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Desactivar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Desactivada!", "Tu prenda fue desactivada", "success");
+        handleDespausarProducto();
+        window.location.reload();
+      }
+    });
+  }
+
+
   return (
-    <>
-      <div className="container text-center d-flex justify-content-center align-items-center">
+    <div className={styles.container}>
+      {/* ================================================================================ */}
+      {/* BORRAR PRODUCTO */}
+
+      <div className={styles.delete}>
         <form className="m-5">
           <select
             name="id"
@@ -176,48 +248,141 @@ export default function Delete() {
         )}
       </div>
 
+      {/* ================================================================================ */}
+      {/* PAUSAR PRODUCTO */}
+
       <div className={styles.containerPause}>
-  <form className="m-5">
-    <select
-      name="id"
-      value={input2.id}
-      onChange={handlePausarProducto}
-    >
-      <option value="" disabled>
-        SELECCIONAR PRENDA
-      </option>
-      {products.map((product) => {
-        return (
-          <option key={product.id} value={product.id}>
-            {product.name}
-          </option>
-        );
-      })}
-    </select>
+        <form className="m-5">
+          <select name="id" value={input2.id} onChange={handlePausarProducto}>
+            <option value="" disabled>
+              SELECCIONAR PRENDA
+            </option>
+            {productsIsAvailable.map((product) => {
+              return (
+                <option key={product.id} value={product.id}>
+                  {product.name}
+                </option>
+              );
+            })}
+          </select>
 
-    {selectedProductNames2 && (
-      <div className="card-body">
-        <img
-          src={getProductById(input2.id)?.image}
-          alt="Product"
-          className="card-img-top"
-          style={imgStyle}
-        />
-        <p className="card-text">
-          Usted va a desactivar la prenda, ¿está seguro?
-        </p>
+          {selectedProductNames2 && (
+            <div className="card-body">
+              <img
+                src={getProductById(input2.id)?.image}
+                alt="Product"
+                className="card-img-top"
+                style={imgStyle}
+              />
+              <p className="card-text">
+                Usted va a desactivar la prenda, ¿está seguro?
+              </p>
+            </div>
+          )}
+        </form>
+
+        <button
+          className="btn btn-warning d-print-block p-2"
+          onClick={confirmPause}
+        >
+          Pausar producto
+        </button>
+
+        {borrar2 && (
+          <div className="container">
+            <div className="row">
+              <div className="col align-self-center">
+                <div className="card-body">
+                  <button className="btn btn-danger" onClick={toggle}>
+                    No
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={confirmPause}
+                    type="submit"
+                  >
+                    Sí
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    )}
-  </form>
-</div>
 
+      {/* ---------------------------------------------------------------------------- */}
+      {/* DESPAUSAR */}
+
+      <div className={styles.containerDespause}>
+        <form className="m-5">
+          <select
+            name="id"
+            value={input3.id}
+            onChange={handleDespausarProducto}
+          >
+            <option value="" disabled>
+              SELECCIONAR PRENDA
+            </option>
+
+            {productsNotAvailable.map((product) => (
+              <option key={product.id} value={product.id}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+
+          {selectedProductNames3 && (
+            <div className="card-body">
+              <img
+                src={getProductById(input3.id)?.image}
+                alt="Product"
+                className="card-img-top"
+                style={imgStyle}
+              />
+              <p className="card-text">
+                Usted va a desactivar la prenda, ¿está seguro?
+              </p>
+            </div>
+          )}
+        </form>
+
+        <button
+          className="btn btn-warning d-print-block p-2"
+          onClick={confirmDespause}
+        >
+          Despausar producto
+        </button>
+
+        {borrar2 && (
+          <div className="container">
+            <div className="row">
+              <div className="col align-self-center">
+                <div className="card-body">
+                  <button className="btn btn-danger" onClick={toggle}>
+                    No
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={confirmDespause}
+                    type="submit"
+                  >
+                    Sí
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ================================================================================ */}
 
       <Link to="/DashBoardAdmin">
         <button className={styles.button}>
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
-      </Link> 
-    </>
+      </Link>
+    </div>
   );
 }
 

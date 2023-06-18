@@ -1,3 +1,5 @@
+
+
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,15 +8,15 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const Card = ({ name, image, id, price }) => {
+const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   const iniciado = useSelector((state) => state.iniciado);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
+  const [isFavorite, setIsFavorite] = useState(favorites.some((product) => product.id === id));
 
 
-
-
+  
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {
@@ -58,6 +60,7 @@ const Card = ({ name, image, id, price }) => {
     }
   };
 
+
   const handleDeleteFavorite = async () => {
     dispatch(deleteFavorite(id));
     const deleteForm = {
@@ -66,21 +69,19 @@ const Card = ({ name, image, id, price }) => {
     };
 
     try {
-      const response = await axios.delete(`/whishListProduct/`, {
+      await axios.delete(`/whishListProduct/`, {
         data: deleteForm,
       });
-      // console.log(response.data);
-      // alert("se saco");
-      // Manejar la respuesta aquí
+      onUpdateFavorites(id); // Llama a la función de actualización para eliminar la carta de la lista de favoritos en FavoritesView
+      // ...
     } catch (error) {
       console.error("Error al eliminar", error);
     }
   };
 
+  
 
-
-
-  const isFavorite = favorites.some((product) => product.id === id);
+  const isFavorites = favorites.some((product) => product.id === id);
 
   return (
     <div>
@@ -107,7 +108,7 @@ const Card = ({ name, image, id, price }) => {
           <h2 className={style.title}>{name}</h2>
           <img className={style.card} src={image} alt="" />
           <p className={style.price}>${price}</p>
-          {isFavorite ? (
+          {isFavorites ? (
             <Link value={id} onClick={handleDeleteFavorite}>
               <svg
                 className={style.svg2}

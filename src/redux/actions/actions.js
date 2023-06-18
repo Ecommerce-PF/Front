@@ -229,10 +229,11 @@ export const addCart = (producto) => {
   };
 };
 
-export const deleteCart = (id) => {
+export const deleteCart = (array) => {
+  localStorage.setItem("carritoLS", JSON.stringify(array));
   return {
     type: DELETE_CART,
-    payload: id,
+    payload: array,
   };
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { addCart } from '../../../redux/actions/actions.js';
+import { deleteCart } from '../../../redux/actions/actions.js';
 
 import styles from "../carrito.module.css";
 
@@ -13,11 +13,13 @@ export default function CartProduct({ product }) {
     const [producto, setProducto] = useState([]);
     const carritoState = useSelector((state) => state.cart);
     const cart = JSON.parse(localStorage.getItem("carritoLS"));
+    console.log(cart)
 
     const handleDelete = () => {
-        let deleteCart = cart.filter(e => e.id !== product.id);
-        localStorage.setItem("carritoLS", JSON.stringify(deleteCart));
-        window.location.reload();
+        let deleteCartArray = cart.filter(e => e.id !== product.id);
+        dispatch(deleteCart(deleteCartArray));
+        // localStorage.setItem("carritoLS", JSON.stringify(deleteCart));
+        // window.location.reload();
     }
 
     function modificarObjetoPorId(arreglo, id, nuevosDatos) {

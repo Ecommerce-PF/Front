@@ -60,7 +60,7 @@ export default function Carrito() {
       setDefaultCart(false);
     }
   }, [defaultCart, dispatch])
-  console.log(carritoState)
+  // console.log(carritoState)
 
   return (
     <section>

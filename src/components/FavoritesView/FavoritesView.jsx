@@ -6,7 +6,6 @@ import Card from "../Card/Card";
 import { getUser, deleteProduct } from "../../redux/actions/actions";
 import styles from "./favorite.module.css";
 
-
 // crear un boton de back para regresar a favoritos
 const FavoritesView = () => {
   const dispatch = useDispatch();
@@ -40,8 +39,11 @@ const FavoritesView = () => {
   };
   // dar etiqutas de estilos para style.module.css
   return (
+    <div className={styles.favorite_container}>
+          <div>
+        <h1 className={styles.title_fav}>Productos Favoritos</h1>
+      </div>
     <div className={styles.container_fav}>
-      <h1 className={styles.title_fav}>Productos Favoritos</h1>
       {myFavorites.map((favorite) => {
         return (
           <Card
@@ -60,6 +62,7 @@ const FavoritesView = () => {
       <NavLink to="/home" className={styles.navlink}>
         <button>Back</button>
       </NavLink>
+      </div>
     </div>
   );
 };

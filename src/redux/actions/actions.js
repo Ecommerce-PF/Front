@@ -132,11 +132,9 @@ export const filterByColor = (color) => {
   };
 };
 
-export const resetFilters = () => {
-  return {
-    type: RESET_FILTERS,
-  };
-};
+export const resetFilters = () => ({
+  type: RESET_FILTERS,
+});
 
 export const createPost = (newprod) => {
   return async (dispatch) => {

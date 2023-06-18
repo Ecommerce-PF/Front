@@ -41,6 +41,41 @@ const initialState = {
   iniciado: [],
   google: {},
   myFavorites: [],
+  filters: {
+    category: "",
+    priceRange: [0, 1000],
+    orderBy: "asc",
+  },
+};
+
+const filterAndSortProducts = (products, { category, priceRange, orderBy }) => {
+  let filteredProducts = products;
+
+  if (category) {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category === category
+    );
+  }
+
+  if (priceRange) {
+    filteredProducts = filteredProducts.filter(
+      (product) =>
+        product.price >= priceRange[0] && product.price <= priceRange[1]
+    );
+  }
+
+  if (orderBy) {
+    filteredProducts = filteredProducts.sort((a, b) => {
+      if (orderBy === "asc") {
+        return a.price - b.price;
+      } else if (orderBy === "des") {
+        return b.price - a.price;
+      }
+      return 0;
+    });
+  }
+
+  return filteredProducts;
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -63,43 +98,53 @@ const rootReducer = (state = initialState, action) => {
 
     case FILTER_BY_CATEGORY:
       const { payload: category } = action;
-      const { priceRange } = state;
+      const { priceRange: categoryPriceRange } = state;
 
       if (category === "") {
         // No se aplica ningún filtro por categoría
         const filteredByPriceProducts = state.allProducts.filter(
           (product) =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
+            product.price >= categoryPriceRange[0] &&
+            product.price <= categoryPriceRange[1]
         );
         return {
           ...state,
           products: filteredByPriceProducts,
+          filters: {
+            ...state.filters,
+            category,
+          },
         };
       } else {
         // Se aplica el filtro por categoría seleccionada y filtro de precios
         const filteredByCategoryProducts = state.allProducts.filter(
           (product) =>
             product.category === category &&
-            product.price >= priceRange[0] &&
-            product.price <= priceRange[1]
+            product.price >= categoryPriceRange[0] &&
+            product.price <= categoryPriceRange[1]
         );
         return {
           ...state,
           products: filteredByCategoryProducts,
+          filters: {
+            ...state.filters,
+            category,
+          },
         };
       }
+
     case GET_USER:
       return {
         ...state,
         user: action.payload,
       };
 
-    /* -------------------------------------------------------------------------- */
     case ADD_FAVORITE:
       return {
         ...state,
         myFavorites: [...state.myFavorites, action.payload],
       };
+
     case DELETE_FAVORITE:
       return {
         ...state,
@@ -108,7 +153,16 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-    /* -------------------------------------------------------------------------- */
+    case "FILTER_PRODUCTS":
+      return {
+        ...state,
+        products: filterAndSortProducts(state.products, action.payload),
+        filters: {
+          ...state.filters,
+          ...action.payload,
+        },
+      };
+
     case FILTER_BY_PRICE:
       const { payload: price } = action;
       const filteredByPriceProducts = state.allProducts.filter(
@@ -165,7 +219,11 @@ const rootReducer = (state = initialState, action) => {
     case RESET_FILTERS:
       return {
         ...state,
-        products: state.allProducts,
+        filters: {
+          ...state.filters,
+          category: "",
+          priceRange: [0, 1000],
+        },
       };
 
     case GET_DETAIL:
@@ -234,19 +292,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
-      }
+      };
 
     case DELETE_CART:
       return {
         ...state,
         cart: action.payload,
-      }
+      };
 
     case UPDATE_CART:
       return {
         ...state,
         cart: action.payload,
-      }
+      };
 
     case SET_FAVORITES:
       return {

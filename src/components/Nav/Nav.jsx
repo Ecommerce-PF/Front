@@ -50,8 +50,8 @@ const Nav = () => {
               <Link to="/profile">
                 <svg
                   className={style.svg}
-                  width="80px"
-                  height="80px"
+                  width="30px"
+                  height="30px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -67,13 +67,12 @@ const Nav = () => {
           )}
 
           {sesions === "no" ? (
-            <div>
+            <div className={style.contenedor_singup_back}>
               <Link to="/signup">
                 <button className={style.button}>SingUp</button>
-              </Link>
-
+              </Link>              
               <Link to="/">
-                <button className={style.buttonLanding}>Back</button>
+                <button className={style.button}>Back</button>
               </Link>
             </div>
           ) : (
@@ -84,8 +83,8 @@ const Nav = () => {
               >
                 <svg
                   className={style.svg}
-                  width="80px"
-                  height="80px"
+                  width="30px"
+                  height="30px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +109,8 @@ const Nav = () => {
               <Link to="/DashBoardAdmin">
                 <svg
                   className={style.svg}
-                  width="80px"
-                  height="80px"
+                  width="30px"
+                  height="30px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -135,8 +134,8 @@ const Nav = () => {
             <Link to="/carrito">
               <svg
                 className={style.svg}
-                width="80px"
-                height="80px"
+                width="30px"
+                height="30px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -153,8 +152,8 @@ const Nav = () => {
             <div className={style.nav_fav}>
               <svg
                 className={style.svg}
-                width="47px"
-                height="47px"
+                width="30px"
+                height="30px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

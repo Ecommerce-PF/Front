@@ -107,6 +107,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
         <Link className={style.link} to={`/detail/${id}`}>
           <h2 className={style.title}>{name}</h2>
           <img className={style.card} src={image} alt="" />
+          <div className={style.price_and_fav}>
           <p className={style.price}>${price}</p>
           {isFavorites ? (
             <Link value={id} onClick={handleDeleteFavorite}>
@@ -143,7 +144,8 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
                 />
               </svg>
             </Link>
-          )}
+            )}
+          </div>
         </Link>
       </div>
     </div>

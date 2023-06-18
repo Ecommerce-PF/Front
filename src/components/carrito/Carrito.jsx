@@ -1,50 +1,31 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Nav from '../Nav/Nav.jsx';
 import axios from "axios";
 import { FaSadTear } from 'react-icons/fa';
 import CartProduct from "./cartProduct/CartProduct.jsx";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
-import { Link } from "react-router-dom";
+// import { getCart } from '../../redux/actions/actions.js'
 import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
 export default function Carrito() {
 
+  // const dispatch = useDispatch();
+
   const id = useSelector((state) => state.idUsuario);
-  
-  if (id.length === 0) {
-  } else {
-    localStorage.setItem("ids", id);
-  }
-  
+  if (!id.length === 0) localStorage.setItem("ids", id);
   const idUser = localStorage.getItem("ids");
+
   const cart = JSON.parse(localStorage.getItem("carritoLS"));
-  
+
   if (cart !== null && cart.length > 0) {
     var precioTotal = 0;
     for (let i = 0; i < cart.length; i++) {
       precioTotal += (cart[i].price * cart[i].quantity);
     }
   }
-
-  function eliminarObjetosRepetidos(array) {
-    var objetosUnicos = [];
-
-    array && array.forEach(function (objeto) {
-      if (
-        !objetosUnicos.some(function (item) {
-          return item.id === objeto.id; // Compara las propiedades relevantes
-        })
-      ) {
-        objetosUnicos.push(objeto);
-      }
-    });
-    return objetosUnicos;
-  }
-
-  const productosUnicos = eliminarObjetosRepetidos(cart);
 
   const funcionPago = async () => {
     if (!!idUser) {
@@ -69,8 +50,9 @@ export default function Carrito() {
         footer: '<a href="./login">Inicia sesion aquí</a>'
       })
     }
-
   }
+
+  // console.log(carritoState)
 
   return (
     <section>
@@ -78,7 +60,7 @@ export default function Carrito() {
         <Nav />
         {cart === null || cart.length > 0 ?
           <div className={styles.containerCart}>
-            {productosUnicos.map(product => {
+            {cart.map(product => {
               return (<CartProduct key={product.id} product={product} />)
             })}
 

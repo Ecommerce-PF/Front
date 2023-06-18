@@ -5,15 +5,16 @@ import style from "../DashBoardAdmin/DashBoardAdmin.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 
 const Admin = () => {
-  const admin = useSelector((state) => state.adminUser);
+  const userId = useSelector((state) => state.userId);
 
-  if (admin.length === 0) {
+
+  if (userId.length === 0) {
     // No hacer nada
   } else {
-    localStorage.setItem("admins", admin);
+    localStorage.setItem("userId", userId.admin);
   }
 
-  const userAdmin = localStorage.getItem("admins");
+  const userAdmin = localStorage.getItem("userId");
 
   return userAdmin === "true" ? (
    

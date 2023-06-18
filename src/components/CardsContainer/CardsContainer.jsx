@@ -13,24 +13,31 @@ const CardsContainer = () => {
   return (
     <div>
       <div className={style.container}>
-        {products?.slice(
-          (pagina - 1) * porPagina,
-          (pagina - 1) * porPagina + porPagina
-        ).map((product) => {
-          return (
-            <>
-              <div>
-                <Card
-                  key={product.id}
-                  name={product.name}
-                  image={product.image}
-                  price={product.price}
-                  id={product.id}
-                />
-              </div>
-            </>
-          );
-        })}
+        {products
+          ?.slice(
+            (pagina - 1) * porPagina,
+            (pagina - 1) * porPagina + porPagina
+          )
+          .map((product) => {
+            console.log(product)
+            if (product.isAvaible === false) {
+              return null; // No renderizar nada cuando isAvaible es true
+            } else {
+              return (
+                <>
+                  <div>
+                    <Card
+                      key={product.id}
+                      name={product.name}
+                      image={product.image}
+                      price={product.price}
+                      id={product.id}
+                    />
+                  </div>
+                </>
+              );
+            }
+          })}
       </div>
       <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />
     </div>

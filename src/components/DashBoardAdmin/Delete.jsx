@@ -62,15 +62,11 @@ export default function Delete() {
     setInputs3({ id: productIds });
     setSelectedProductNames3(productNames);
     try {
-      const response = await axios.put(
-        `http://localhost:3001/products/${input3.id}`,
-        pausado
-      );
+      const response = await axios.put(`/products/${input3.id}`, pausado );
 
-      console.log(response);
-      // Realiza acciones adicionales después de la respuesta exitosa aquí
+  
     } catch (error) {
-      // Maneja el error aquí
+      
     }
   };
 
@@ -82,10 +78,7 @@ export default function Delete() {
     setInputs2({ id: productIds });
     setSelectedProductNames2(productNames);
     try {
-      const response = await axios.put(
-        `http://localhost:3001/products/${input2.id}`,
-        pausado
-      );
+      const response = await axios.put(`/products/${input2.id}`,pausado);
 
       console.log(response);
       // Realiza acciones adicionales después de la respuesta exitosa aquí
@@ -138,15 +131,15 @@ export default function Delete() {
   function confirmPause() {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You will to get this clothe out from your avaiable stock !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Desactivar!",
+      confirmButtonText: "Yes, I want to do!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Desactivada!", "Tu prenda fue desactivada", "success");
+        Swal.fire("Desactivada!", "The Clothe have been pick out from estock", "success");
         handlePausarProducto();
         window.location.reload();
       }
@@ -156,15 +149,15 @@ export default function Delete() {
   function confirmDespause() {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You would ike to List this Clothe Again?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Desactivar!",
+      confirmButtonText: "Yes, Active Again!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Desactivada!", "Tu prenda fue desactivada", "success");
+        Swal.fire("Active!", "Your Clothe is Active Again", "Success");
         handleDespausarProducto();
         window.location.reload();
       }
@@ -173,6 +166,8 @@ export default function Delete() {
 
 
   return (
+    <>
+    
     <div className={styles.container}>
       {/* ================================================================================ */}
       {/* BORRAR PRODUCTO */}
@@ -186,7 +181,7 @@ export default function Delete() {
             onChange={handleInputChange}
           >
             <option value="" disabled>
-              SELECCIONAR PRENDA
+              SELECT PRODUCT
             </option>
             {products.map((product) => {
               return (
@@ -207,8 +202,7 @@ export default function Delete() {
                 style={imgStyle}
               />
               <p className="card-text">
-                Usted va a eliminar definitivamente esta prenda. ¿Seguro que
-                desea hacerlo?
+                You would like to delte this product permanently?
               </p>
             </div>
           )}
@@ -217,24 +211,25 @@ export default function Delete() {
         <button
           className="btn btn-warning d-print-block p-2"
           onClick={confirmDelete}
-          disabled={isNotEmpty(errors)}
-        >
-          Borrar producto
-        </button>
+          disabled={isNotEmpty(errors)}>
+            
+             Delete Product
+             
+             </button>
         {borrar && (
           <div className="container">
             <div className="row">
               <div className="col align-self-center">
                 <div className="card-body">
                   <button className="btn btn-danger" onClick={toggle}>
-                    No
+                    Not
                   </button>
                   <button
                     className="btn btn-danger"
                     onClick={confirmDelete}
                     type="submit"
                   >
-                    Sí
+                    Yes
                   </button>
                 </div>
               </div>
@@ -243,7 +238,7 @@ export default function Delete() {
         )}
         {showAlert && selectedProductName && (
           <div className="alert alert-success mt-3" role="alert">
-            ¡La prenda {selectedProductNames2} ha sido borrada exitosamente!
+            ¡The clothe  {selectedProductNames2} have been erase succesufully!
           </div>
         )}
       </div>
@@ -255,7 +250,7 @@ export default function Delete() {
         <form className="m-5">
           <select name="id" value={input2.id} onChange={handlePausarProducto}>
             <option value="" disabled>
-              SELECCIONAR PRENDA
+              SELECT PRODUCT
             </option>
             {productsIsAvailable.map((product) => {
               return (
@@ -284,8 +279,9 @@ export default function Delete() {
         <button
           className="btn btn-warning d-print-block p-2"
           onClick={confirmPause}
+          // disabled={isNotEmpty(errors)}
         >
-          Pausar producto
+          Pick Off
         </button>
 
         {borrar2 && (
@@ -294,14 +290,14 @@ export default function Delete() {
               <div className="col align-self-center">
                 <div className="card-body">
                   <button className="btn btn-danger" onClick={toggle}>
-                    No
+                    Do not
                   </button>
                   <button
                     className="btn btn-danger"
                     onClick={confirmPause}
                     type="submit"
                   >
-                    Sí
+                    Yes!
                   </button>
                 </div>
               </div>
@@ -321,7 +317,7 @@ export default function Delete() {
             onChange={handleDespausarProducto}
           >
             <option value="" disabled>
-              SELECCIONAR PRENDA
+            SELECT PRODUCT
             </option>
 
             {productsNotAvailable.map((product) => (
@@ -340,7 +336,7 @@ export default function Delete() {
                 style={imgStyle}
               />
               <p className="card-text">
-                Usted va a desactivar la prenda, ¿está seguro?
+                You would like to get this clothe out from your avaiable stock?
               </p>
             </div>
           )}
@@ -349,8 +345,9 @@ export default function Delete() {
         <button
           className="btn btn-warning d-print-block p-2"
           onClick={confirmDespause}
+          // disabled={isNotEmpty(errors)}
         >
-          Despausar producto
+          Publish Product
         </button>
 
         {borrar2 && (
@@ -377,12 +374,13 @@ export default function Delete() {
 
       {/* ================================================================================ */}
 
+    </div>
       <Link to="/DashBoardAdmin">
         <button className={styles.button}>
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
       </Link>
-    </div>
+    </>
   );
 }
 

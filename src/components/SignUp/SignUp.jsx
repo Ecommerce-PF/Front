@@ -47,11 +47,22 @@ const SignUp = () => {
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await axios.post("/users/signup", user).then((res) => {
-          alert("Registro exitoso");
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your count have beeen registered succesfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/login");
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
   };
@@ -144,7 +155,12 @@ const SignUp = () => {
           window.location.reload();
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
   }, [google]);
@@ -153,7 +169,6 @@ const SignUp = () => {
     <section className={styles.back}>
       <div
         className={styles.container}
-        style={{ backgroundImage: `url("../../assets/pika.gif")` }}
       >
         <h2 className={styles.title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>

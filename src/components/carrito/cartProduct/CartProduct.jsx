@@ -36,7 +36,6 @@ export default function CartProduct({ product }) {
     }
 
     return (
-
         <div className={styles.crtPrdct} >
             <img src={product.image} alt={product.name} className={styles.imgCarrito} />
             <div>

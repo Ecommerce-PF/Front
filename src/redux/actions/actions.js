@@ -34,6 +34,7 @@ export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
 export const GET_CART = "GET_CART";
 export const UPDATE_CART = "UPDATE_CART";
+export const SET_FAVORITES = "SET_FAVORITES";
 
 export const getUser = (userId) => {
   return async (dispatch) => {
@@ -290,6 +291,11 @@ export const loginWithGoogle = (e) => {
     payload: e,
   };
 };
+
+export const setFavorites = (favorites) => ({
+  type: SET_FAVORITES,
+  payload: favorites,
+});
 
 export const google = (e) => {
   return {

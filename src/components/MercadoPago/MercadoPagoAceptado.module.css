@@ -1,27 +1,4 @@
-.container{
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(222, 166, 239, 0.484);
-  }
-
-  .table{
-    border: 2px solid black;
-    padding: 20px;
-    margin: 10px;
-  }
-
-  .arriba{
-    margin: 2px;
-  }
-
-  /*************************************************************************/
-
-
-  .button {
+.button {
     width: 150px;
     height: 50px;
     font-size: 14px;
@@ -43,3 +20,4 @@
   .button:active {
     transform: translateY(-1px);
   }
+  

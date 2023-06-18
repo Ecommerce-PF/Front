@@ -8,6 +8,7 @@ import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import Swal from 'sweetalert2'
 
 const SignUp = () => {
   const firebaseConfig = {
@@ -46,11 +47,22 @@ const SignUp = () => {
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await axios.post("/users/signup", user).then((res) => {
-          alert("Registro exitoso");
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your count have beeen registered succesfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/login");
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
   };
@@ -130,13 +142,25 @@ const SignUp = () => {
   useEffect(() => {
     if (google) {
       try {
-        const response = axios.post("/users/signup", user).then((res) => {
-          alert("Registro exitoso");
+         axios.post("/users/signup", user)
+        .then((res) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your count have been registered succesfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/login");
           window.location.reload();
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
   }, [google]);
@@ -145,7 +169,6 @@ const SignUp = () => {
     <section className={styles.back}>
       <div
         className={styles.container}
-        style={{ backgroundImage: `url("../../assets/pika.gif")` }}
       >
         <h2 className={styles.title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>

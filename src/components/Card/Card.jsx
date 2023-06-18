@@ -1,17 +1,22 @@
+
+
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
+import { addFavorite, deleteFavorite, setFavorites } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 
-const Card = ({ name, image, id, price }) => {
+const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   const iniciado = useSelector((state) => state.iniciado);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
-  
+  const [isFavorite, setIsFavorite] = useState(favorites.some((product) => product.id === id));
 
+
+  
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {
@@ -19,10 +24,8 @@ const Card = ({ name, image, id, price }) => {
   }
 
   const sesions = localStorage.getItem("sesions");
-  
-  const isFavorite = favorites.some((product) => product.id === id);
 
-  
+
   const [form, setForm] = useState({
     id: id,
     UserId: userId.id,
@@ -32,7 +35,6 @@ const Card = ({ name, image, id, price }) => {
     const fetchFavoriteProducts = async () => {
       try {
         const response = await axios.get(`/whishListProduct/${id}`);
-        console.log(response)
       } catch (error) {
         console.error("Error al obtener los productos favoritos", error);
       }
@@ -41,22 +43,23 @@ const Card = ({ name, image, id, price }) => {
     fetchFavoriteProducts();
   }, []);
 
-
-
-
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      
-      const reponse = await axios.post(
-        "http://localhost:3001/whishListProduct",
-        form
-      );
-      alert("se agrego");
+      const reponse = await axios.post("/whishListProduct",form );
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'You add to favorites',
+        showConfirmButton: false,
+        timer: 800
+      })
+      // alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
   };
+
 
   const handleDeleteFavorite = async () => {
     dispatch(deleteFavorite(id));
@@ -66,16 +69,19 @@ const Card = ({ name, image, id, price }) => {
     };
 
     try {
-      const response = await axios.delete(`/whishListProduct/`, {
+      await axios.delete(`/whishListProduct/`, {
         data: deleteForm,
       });
-      console.log(response.data);
-      alert("se saco");
-      // Manejar la respuesta aquí
+      onUpdateFavorites(id); // Llama a la función de actualización para eliminar la carta de la lista de favoritos en FavoritesView
+      // ...
     } catch (error) {
       console.error("Error al eliminar", error);
     }
   };
+
+  
+
+  const isFavorites = favorites.some((product) => product.id === id);
 
   return (
     <div>
@@ -102,7 +108,7 @@ const Card = ({ name, image, id, price }) => {
           <h2 className={style.title}>{name}</h2>
           <img className={style.card} src={image} alt="" />
           <p className={style.price}>${price}</p>
-          {isFavorite ? (
+          {isFavorites ? (
             <Link value={id} onClick={handleDeleteFavorite}>
               <svg
                 className={style.svg2}

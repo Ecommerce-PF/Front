@@ -17,13 +17,13 @@ import {
   DELETE_USER_FAILURE,
   CONSULTA_SI_INICIO,
   LOGIN_WITH_GOOGLE,
-  GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
   ADD_CART,
   DELETE_CART,
   GET_CART,
   UPDATE_CART,
+  SET_FAVORITES,
 } from "../actions/actions";
 
 const initialState = {
@@ -35,6 +35,7 @@ const initialState = {
   cart: [],
   idUsuario: [],
   userId: [],
+  favorites: [],
   adminUser: [],
   priceRange: [0, Infinity],
   iniciado: [],
@@ -179,12 +180,6 @@ const rootReducer = (state = initialState, action) => {
         users: action.payload,
       };
 
-    case GET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-
     case DELETE_PRODUCT_SUCCESS:
       const updatedProducts = state.products.filter(
         (product) => product.id !== action.payload
@@ -252,6 +247,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       }
+
+    case SET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
+      };
 
     default:
       return state;

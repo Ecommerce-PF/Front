@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Nav from '../Nav/Nav.jsx';
 import axios from "axios";
-import { FaSadTear } from 'react-icons/fa';
+import { FaSadTear } from "react-icons/fa";
 import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink, Link } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
@@ -35,18 +35,18 @@ export default function Carrito() {
         });
       }
       const body = {
-        "products": arrProducts,
-        "userId": parseInt(idUser)
-      }
-      const newOrder = await axios.post('/payment/create-order', body);
+        products: arrProducts,
+        userId: parseInt(idUser),
+      };
+      const newOrder = await axios.post("/payment/create-order", body);
       window.location.replace(newOrder.data.redirect);
     } else {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Tienes que iniciar sesion para poder realizar esta compra!',
-        footer: '<a href="./login">Inicia sesion aquí</a>'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Tienes que iniciar sesion para poder realizar esta compra!",
+        footer: '<a href="./login">Inicia sesion aquí</a>',
+      });
     }
   }
 
@@ -60,8 +60,10 @@ export default function Carrito() {
   }, [defaultCart, dispatch])
 
   return (
+    <>
+  
     <section>
-      <section className={styles.componentCart} >
+      <section className={styles.componentCart}>
         <Nav />
         {carritoState === null || carritoState.length > 0 ?
           <div className={styles.containerCart}>
@@ -72,28 +74,32 @@ export default function Carrito() {
             <div className={styles.carritoTotalPrecio} >
               <h3>Total del carrito: {precioTotal?.toFixed(2)}</h3> <button onClick={funcionPago} >Proceder al pago</button>
             </div>
-          </div> :
+          </div>
+        ) : (
           <section className={styles.emptyCart}>
             <div className={styles.cart}></div>
             <div className={styles.cartDescription}>
               <h2>
                 Tu carrito de compras está vacio! <FaSadTear></FaSadTear>
               </h2>
-              <NavLink to='/home'>
-                <button>Buscar articulos</button>
+              <NavLink to="/home">
+                <button className={styles.button}>Buscar articulos</button>
               </NavLink>
-              <button onClick={() => window.location.reload()} > <TfiReload /> </button>
+              <button className={styles.button} onClick={() => window.location.reload()}>
+                {" "}
+                <TfiReload />{" "}
+              </button>
             </div>
           </section>
-        }
+        )}
 
         <div className={styles.types}>
+        </div>
+      </section>
+    </section>
           <Link to="/home">
             <button className={styles.button}>Back</button>
           </Link>
-        </div>
-      </section>
-
-    </section>
+          </>
   );
 }

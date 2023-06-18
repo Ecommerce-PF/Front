@@ -15,6 +15,12 @@ import { consultaSiIniciado } from "../../redux/actions/actions";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
+
+import Swal from "sweetalert2";
+
+import axios from "axios";
+
+
 const Login = () => {
   const firebaseConfig = {
     apiKey: "AIzaSyB5fkHI-K8lcyC8U8TSDfnjkqFjMZ6mmTQ",
@@ -47,41 +53,42 @@ const Login = () => {
     dispatch(consultaSiIniciado("si"));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    if (!userName || !password) {
-      setError("Please enter your username and password");
-      return;
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!userName || !password) {
+    setError("Please enter your username and password");
+    return;
+  }
+
+  try {
+    const response = await axios.post("/users/login", {
+      userName,
+      password,
+    });
+
+    if (response.status === 200) {
+      const data = response.data;
+      const userId = data.user.id;
+
+      dispatch(idUser(userId));
+
+      setUserName("");
+      setPassword("");
+      setError("");
+      navigate("/home");
+      window.location.reload();
+    } else {
+      setError("Invalid username or password");
     }
+  } catch (error) {
+    setError("Error occurred while logging in");
+  }
+};
 
-    try {
-      const response = await fetch("http://localhost:3001/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userName, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const userId = data.user.id;
-
-        dispatch(idUser(userId));
-
-        setUserName("");
-        setPassword("");
-        setError("");
-        navigate("/home");
-        window.location.reload();
-      } else {
-        setError("Invalid username or password");
-      }
-    } catch (error) {
-      setError("Error occurred while logging in");
-    }
-  };
+  
 
   const provider = new GoogleAuthProvider();
 
@@ -90,48 +97,40 @@ const Login = () => {
   function callLoginGoogle() {
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // The signed-in user info.
+  
         const user = result.user;
-
+  
         try {
-          const response = await fetch("http://localhost:3001/users/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userName: user.displayName,
-              password: user.accessToken,
-            }),
+          const response = await axios.post("/users/login", {
+            userName: user.displayName,
+            password: user.accessToken,
           });
-
+  
           if (response.status === 200) {
-            const data = await response.json();
+            const data = response.data;
             dispatch(idUser(data.user.id));
             dispatch(consultaSiIniciado("si"));
             navigate("/home");
             window.location.reload();
           } else {
-            alert("No se encuentra registrado");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Your count hasn't been registered yet!",
+              footer: '<a href="/signup">Do you want to register to this Webpage?</a>',
+            });
           }
-
-          console.log(response);
         } catch (error) {
           setError("Error occurred while logging in");
         }
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   }
 
@@ -229,3 +228,4 @@ const Login = () => {
 };
 
 export default Login;
+

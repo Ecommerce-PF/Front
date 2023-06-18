@@ -1,9 +1,11 @@
-
-
 import style from "./Card.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addFavorite, deleteFavorite, setFavorites } from "../../redux/actions/actions";
+import {
+  addFavorite,
+  deleteFavorite,
+  setFavorites,
+} from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -13,10 +15,10 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
   const favorites = useSelector((state) => state.myFavorites);
-  const [isFavorite, setIsFavorite] = useState(favorites.some((product) => product.id === id));
+  const [isFavorite, setIsFavorite] = useState(
+    favorites.some((product) => product.id === id)
+  );
 
-
-  
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {
@@ -24,7 +26,6 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   }
 
   const sesions = localStorage.getItem("sesions");
-
 
   const [form, setForm] = useState({
     id: id,
@@ -46,20 +47,19 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      const reponse = await axios.post("/whishListProduct",form );
+      const reponse = await axios.post("/whishListProduct", form);
       Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'You add to favorites',
+        position: "top-end",
+        icon: "success",
+        title: "You add to favorites",
         showConfirmButton: false,
-        timer: 800
-      })
+        timer: 800,
+      });
       // alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
   };
-
 
   const handleDeleteFavorite = async () => {
     dispatch(deleteFavorite(id));
@@ -78,8 +78,6 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
       console.error("Error al eliminar", error);
     }
   };
-
-  
 
   const isFavorites = favorites.some((product) => product.id === id);
 
@@ -107,7 +105,9 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
         <Link className={style.link} to={`/detail/${id}`}>
           <h2 className={style.title}>{name}</h2>
           <img className={style.card} src={image} alt="" />
-          <p className={style.price}>${price}</p>
+          <p className={style.price}>
+            {price === "Sin stock" ? "Sin stock" : price}
+          </p>
           {isFavorites ? (
             <Link value={id} onClick={handleDeleteFavorite}>
               <svg

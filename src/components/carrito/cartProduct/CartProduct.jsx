@@ -1,36 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
-// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from '../../../redux/actions/actions.js';
 
 import styles from "../carrito.module.css";
 
 export default function CartProduct({ product }) {
 
+    const dispatch = useDispatch();
+    const [updateCart, setUpdateCart] = useState(false);
+    const [valueInp, setValueInp] = useState(parseInt(product.quantity));
+    const [producto, setProducto] = useState([]);
+    const carritoState = useSelector((state) => state.cart);
+    const cart = JSON.parse(localStorage.getItem("carritoLS"));
+
     const handleDelete = () => {
-        const cart = JSON.parse(localStorage.getItem("carritoLS"));
-        let deleteCart = cart.filter(e => {
-            return e.id !== product.id;
-        });
+        let deleteCart = cart.filter(e => e.id !== product.id);
         localStorage.setItem("carritoLS", JSON.stringify(deleteCart));
         window.location.reload();
     }
 
-    const [valueInp, setValueInp] = useState(parseInt(product.quantity));
-
     function modificarObjetoPorId(arreglo, id, nuevosDatos) {
         const indice = arreglo.findIndex(objeto => objeto.id === id);
-        if (indice !== -1) {
-            arreglo[indice] = { ...arreglo[indice], ...nuevosDatos };
-        } else {
-            console.log('No se encontró el objeto con el ID especificado.');
-        }
-
+        if (indice !== -1) arreglo[indice] = { ...arreglo[indice], ...nuevosDatos };
+        // else console.log('No se encontró el objeto con el ID especificado.');
     }
 
     const handleAddition = () => {
         setValueInp(parseInt(valueInp + 1));
-        const cart = JSON.parse(localStorage.getItem("carritoLS"));
-
         modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp + 1, })
         localStorage.setItem("carritoLS", JSON.stringify(cart));
         window.location.reload();
@@ -39,7 +36,6 @@ export default function CartProduct({ product }) {
     const handleSubtraction = () => {
         if (valueInp > 1) {
             setValueInp(parseInt(valueInp - 1));
-            const cart = JSON.parse(localStorage.getItem("carritoLS"));
 
             modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp - 1, })
             localStorage.setItem("carritoLS", JSON.stringify(cart));

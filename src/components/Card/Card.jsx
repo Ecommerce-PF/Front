@@ -83,7 +83,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
 
   return (
     <div>
-      <d className={style.mainContainer}>
+      <div className={style.mainContainer}>
         {userId.admin && sesions === "si" ? (
           <Link to={`/edit/${id}`}>
             <svg
@@ -145,7 +145,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
             </Link>
             )}
         </Link>
-      </d>
+      </div>
     </div>
             
   );

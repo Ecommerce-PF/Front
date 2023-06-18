@@ -26,7 +26,7 @@ export default function Stock() {
       const response = await axios.put(`/products/${id}`, productToUpdate);
       // Realizar acciones adicionales después de una respuesta exitosa aquí
 
-      dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
+      dispatch({ type: "UPDATE_PRODUCTS", payload: updatedProducts }); // Actualizar el estado global de products
     } catch (error) {
       // Manejar el error aquí
     }
@@ -45,7 +45,7 @@ export default function Stock() {
       const response = await axios.put(`/products/${id}`, productToUpdate);
       // Realizar acciones adicionales después de una respuesta exitosa aquí
 
-      dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
+      dispatch({ type: "UPDATE_PRODUCTS", payload: updatedProducts }); // Actualizar el estado global de products
     } catch (error) {
       // Manejar el error aquí
     }
@@ -62,10 +62,10 @@ export default function Stock() {
       {products.map((product) => (
         <div className={styles.container} key={product.id}>
           <ul className={styles.ul}>
-            <span className={styles.span}>{product.name}</span>
+            <p className={styles.span}>{product.name}</p>
             <img className={styles.img} src={product.image} alt="" />
-            <span className={styles.span}>{product.stock}</span>
-            <span>Stock disponible</span>
+            <p className={styles.span}>{product.stock}</p>
+            <p>Stock disponible</p>
           </ul>
 
           <div className={styles.buttonContainer}>

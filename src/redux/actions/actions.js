@@ -33,6 +33,7 @@ export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
 export const GET_CART = "GET_CART";
+export const UPDATE_CART = "UPDATE_CART";
 
 export const getUser = (userId) => {
   return async (dispatch) => {
@@ -236,6 +237,14 @@ export const deleteCart = (array) => {
     payload: array,
   };
 };
+
+export const updatedCart = (array) => {
+  localStorage.setItem("carritoLS", JSON.stringify(array));
+  return {
+    type: UPDATE_CART,
+    payload: array,
+  };
+}
 
 export const getCart = () => {
   const producto = JSON.parse(localStorage.getItem("carritoLS"));

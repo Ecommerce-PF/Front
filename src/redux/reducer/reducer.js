@@ -23,6 +23,7 @@ import {
   ADD_CART,
   DELETE_CART,
   GET_CART,
+  UPDATE_CART,
 } from "../actions/actions";
 
 const initialState = {
@@ -241,6 +242,12 @@ const rootReducer = (state = initialState, action) => {
       }
 
     case DELETE_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      }
+
+    case UPDATE_CART:
       return {
         ...state,
         cart: action.payload,

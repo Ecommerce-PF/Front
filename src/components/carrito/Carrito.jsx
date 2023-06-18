@@ -22,9 +22,7 @@ export default function Carrito() {
 
   if (carritoState !== null && carritoState.length > 0) {
     var precioTotal = 0;
-    for (let i = 0; i < carritoState.length; i++) {
-      precioTotal += (carritoState[i].price * carritoState[i].quantity);
-    }
+    for (let i = 0; i < carritoState.length; i++) precioTotal += (carritoState[i].price * carritoState[i].quantity);
   }
 
   const funcionPago = async () => {

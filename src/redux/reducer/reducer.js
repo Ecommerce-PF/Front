@@ -19,6 +19,10 @@ import {
   LOGIN_WITH_GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
+  ADD_CART,
+  DELETE_CART,
+  GET_CART,
+  UPDATE_CART,
   SET_FAVORITES,
 } from "../actions/actions";
 
@@ -219,6 +223,30 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         google: action.payload,
       };
+
+    case GET_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+
+    case ADD_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      }
+
+    case DELETE_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      }
+
+    case UPDATE_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      }
 
     case SET_FAVORITES:
       return {

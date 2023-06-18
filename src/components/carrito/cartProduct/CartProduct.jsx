@@ -23,7 +23,6 @@ export default function CartProduct({ product }) {
     function modificarObjetoPorId(arreglo, id, nuevosDatos) {
         const indice = arreglo.findIndex(objeto => objeto.id === id);
         if (indice !== -1) arreglo[indice] = { ...arreglo[indice], ...nuevosDatos };
-        // else console.log('No se encontró el objeto con el ID especificado.');
     }
 
     const handleAddition = () => {
@@ -36,7 +35,6 @@ export default function CartProduct({ product }) {
     const handleSubtraction = () => {
         if (valueInp > 1) {
             setValueInp(parseInt(valueInp - 1));
-
             modificarObjetoPorId(cart, product.id, { ...product, quantity: valueInp - 1, })
             localStorage.setItem("carritoLS", JSON.stringify(cart));
             window.location.reload();

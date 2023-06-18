@@ -88,33 +88,36 @@ export default function Detail() {
     }
   };
 
+
   const handleAddCart = () => {
     dispatch(addCart(state));
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
+    let isProductInCart = false;
+    
     for (var i = 0; i < listaCart.length; i++) {
       if (listaCart[i].id === state.id) {
-        return Swal.fire({
-          icon: "error",
-          title: "To producto ya se encuentra en Carrito!",
+        listaCart[i].quantity += 1;
+        isProductInCart = true;
+        break;
+      }
+    }
+  
+    if (!isProductInCart) {
+      listaCart.push({
+        ...state,
+        quantity: 1,
+      });
+    }
+    
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+    Swal.fire({
+          icon: "success",
+          title: "Su producto se ha agregado al carrito!!",
           showConfirmButton: false,
           timer: 1500,
         });
-      }
-    }
-
-    listaCart.push({
-      ...state,
-      quantity: 1,
-    });
-    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
-
-    Swal.fire({
-      icon: "success",
-      title: "Su producto se ha agregado al carrito!!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
   };
+  
 
   useEffect(() => {
     dispatch(getDetail(id));

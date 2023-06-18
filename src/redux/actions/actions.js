@@ -33,7 +33,7 @@ export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
 export const SET_FAVORITES = "SET_FAVORITES";
-
+export const GET_ORDERS = "GET_ORDERS";
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {
@@ -281,3 +281,16 @@ export const google = (e) => {
     payload: e,
   };
 };
+
+export function getOrders(request) {
+  return function(dispatch) {
+      return axios.get(`http://localhost:3001/order`)
+      .then(res => 
+          dispatch({
+              type: GET_ORDERS,
+              payload: res.data
+          })
+      );
+        
+  };
+}

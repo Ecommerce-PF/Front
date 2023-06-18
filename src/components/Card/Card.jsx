@@ -12,6 +12,8 @@ const Card = ({ name, image, id, price }) => {
   const favorites = useSelector((state) => state.myFavorites);
 
 
+
+
   if (iniciado?.length === 0) {
     // No hacer nada
   } else {

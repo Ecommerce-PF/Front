@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite, setFavorites } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const Card = ({ name, image, id, price }) => {
@@ -41,18 +42,15 @@ const Card = ({ name, image, id, price }) => {
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
     try {
-      const reponse = await axios.post(
-        "http://localhost:3001/whishListProduct",
-        form
-      );
-      // Swal.fire({
-      //   position: 'top-end',
-      //   icon: 'success',
-      //   title: 'You add to favorites',
-      //   showConfirmButton: false,
-      //   timer: 800
-      // })
-      alert("se agrego");
+      const reponse = await axios.post("/whishListProduct",form );
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'You add to favorites',
+        showConfirmButton: false,
+        timer: 800
+      })
+      // alert("se agrego");
     } catch (error) {
       // Handle the error here
     }
@@ -69,8 +67,8 @@ const Card = ({ name, image, id, price }) => {
       const response = await axios.delete(`/whishListProduct/`, {
         data: deleteForm,
       });
-      console.log(response.data);
-      alert("se saco");
+      // console.log(response.data);
+      // alert("se saco");
       // Manejar la respuesta aquí
     } catch (error) {
       console.error("Error al eliminar", error);

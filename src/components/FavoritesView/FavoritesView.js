@@ -1,61 +1,108 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteFavorite, getUser } from "../../redux/actions/actions";
+// import React, { useEffect, useState } from "react";
+// import { Link, useParams } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
+// import {
+//   addFavorite,
+//   deleteFavorite,
+//   getUser,
+//   deleteProduct,
+// } from "../../redux/actions/actions";
+// import Card from "../Card/Card";
+// import styles from "./favorite.module.css";
+// import axios from "axios";
 
+// const FavoritesView = () => {
+//   const { id } = useParams();
+//   const [favoriteProducts, setFavoriteProducts] = useState([]);
+
+//   useEffect(() => {
+//     const fetchFavoriteProducts = async () => {
+//       try {
+//         const response = await axios.get(`/whishListProduct/${id}`);
+//         setFavoriteProducts(response.data.Clothes);
+//       } catch (error) {
+//         console.error("Error al obtener los productos favoritos", error);
+//       }
+//     };
+
+//     fetchFavoriteProducts();
+//   }, [id]);
+
+//   return (
+//     <div className={styles.container_fav}>
+//       <h1 className={styles.title_fav}>Productos Favoritos</h1>
+//       {favoriteProducts.map((favorite) => (
+//         <Card
+//           key={favorite.id}
+//           id={favorite.id}
+//           name={favorite.name}
+//           image={favorite.image}
+//           price={favorite.price}
+//         ></Card>
+//       ))}
+//       <Link to="/home" className={styles.navlink}>
+//         <button className={styles.button}>Back</button>
+//       </Link>
+//     </div>
+//   );
+// };
+
+// export default FavoritesView;
+/************************************************************************************* */
+
+// FavoritesView.js
+
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addFavorite,
+  deleteFavorite,
+  getUser,
+  deleteProduct,
+} from "../../redux/actions/actions";
 import Card from "../Card/Card";
 import styles from "./favorite.module.css";
-import { FaArrowLeft } from "react-icons/fa";
+import axios from "axios";
 
-// crear un boton de back para regresar a favoritos
 const FavoritesView = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const [favProducts, setFavProducts] = useState([]);
-  const myFavorites = useSelector((state) => state.myFavorites);
+  const { id } = useParams();
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
 
-  useEffect(() => {
-    dispatch(getUser(user.id));
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    setFavProducts(user.products);
-  }, [user]);
-
-  useEffect(() => {
-    // Actualiza la lista de productos favoritos cuando el estado del usuario cambia
-  }, [myFavorites]);
-
-
-  const handleDeleteFavorite = (id) => {
-    dispatch(deleteFavorite(id));
+  const updateFavoritesList = (productId) => {
+    setFavoriteProducts((prevFavorites) =>
+      prevFavorites.filter((product) => product.id !== productId)
+    );
   };
 
+  useEffect(() => {
+    const fetchFavoriteProducts = async () => {
+      try {
+        const response = await axios.get(`/whishListProduct/${id}`);
+        setFavoriteProducts(response.data.Clothes);
+      } catch (error) {
+        console.error("Error al obtener los productos favoritos", error);
+      }
+    };
+
+    fetchFavoriteProducts();
+  }, [id]);
 
   return (
     <div className={styles.container_fav}>
       <h1 className={styles.title_fav}>Productos Favoritos</h1>
-      {myFavorites.map((favorite) => {
-        return (
-          <Card
-            key={favorite.id}
-            id={favorite.id}
-            name={favorite.name}
-            image={favorite.image}
-            price={favorite.price}
-          >
-            <button onClick={() => handleDeleteFavorite(favorite.id)}>
-              Eliminar
-            </button>
-          </Card>
-        );
-      })}
-      
-      <Link to="/home">
-        <button className={styles.button}>
-          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-        </button>
+      {favoriteProducts.map((favorite) => (
+        <Card
+          key={favorite.id}
+          id={favorite.id}
+          name={favorite.name}
+          image={favorite.image}
+          price={favorite.price}
+          onUpdateFavorites={updateFavoritesList} // Pasa la función de actualización como prop al componente Card
+        />
+      ))}
+      <Link to="/home" className={styles.navlink}>
+        <button className={styles.button}>Back</button>
       </Link>
     </div>
   );

@@ -6,34 +6,34 @@ import { FaSadTear } from 'react-icons/fa';
 import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink, Link } from "react-router-dom";
 import { TfiReload } from "react-icons/tfi";
-// import { getCart } from '../../redux/actions/actions.js'
+import { getCart } from '../../redux/actions/actions.js'
 import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
 export default function Carrito() {
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const id = useSelector((state) => state.idUsuario);
   if (!id.length === 0) localStorage.setItem("ids", id);
   const idUser = localStorage.getItem("ids");
 
-  const cart = JSON.parse(localStorage.getItem("carritoLS"));
+  const carritoState = useSelector((state) => state.cart);
 
-  if (cart !== null && cart.length > 0) {
+  if (carritoState !== null && carritoState.length > 0) {
     var precioTotal = 0;
-    for (let i = 0; i < cart.length; i++) {
-      precioTotal += (cart[i].price * cart[i].quantity);
+    for (let i = 0; i < carritoState.length; i++) {
+      precioTotal += (carritoState[i].price * carritoState[i].quantity);
     }
   }
 
   const funcionPago = async () => {
     if (!!idUser) {
       var arrProducts = [];
-      for (let i = 0; i < cart.length; i++) {
+      for (let i = 0; i < carritoState.length; i++) {
         arrProducts.push({
-          id: cart[i].id,
-          quantity: cart[i].quantity,
+          id: carritoState[i].id,
+          quantity: carritoState[i].quantity,
         });
       }
       const body = {
@@ -52,15 +52,23 @@ export default function Carrito() {
     }
   }
 
-  // console.log(carritoState)
+  const [defaultCart, setDefaultCart] = useState(true);
+
+  useEffect(() => {
+    if (defaultCart) {
+      dispatch(getCart());
+      setDefaultCart(false);
+    }
+  }, [defaultCart, dispatch])
+  console.log(carritoState)
 
   return (
     <section>
       <section className={styles.componentCart} >
         <Nav />
-        {cart === null || cart.length > 0 ?
+        {carritoState === null || carritoState.length > 0 ?
           <div className={styles.containerCart}>
-            {cart.map(product => {
+            {carritoState.map(product => {
               return (<CartProduct key={product.id} product={product} />)
             })}
 

@@ -32,6 +32,7 @@ export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
+export const GET_CART = "GET_CART";
 
 export const getUser = (userId) => {
   return async (dispatch) => {
@@ -220,6 +221,8 @@ export const login = (email, password) => {
 };
 
 export const addCart = (producto) => {
+  //  localStorage.setItem("carritoLS", JSON.stringify(producto));
+  // console.log(`producto: ${producto}`);
   return {
     type: ADD_CART,
     payload: producto,
@@ -232,6 +235,15 @@ export const deleteCart = (id) => {
     payload: id,
   };
 };
+
+export const getCart = () => {
+  const producto = JSON.parse(localStorage.getItem("carritoLS"));
+  return {
+    type: GET_CART,
+    payload: producto,
+  }
+}
+
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {

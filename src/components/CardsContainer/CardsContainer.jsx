@@ -35,7 +35,7 @@ const CardsContainer = () => {
                 />
               );
             }
-            {
+            
               return (
                 <>
                   <div>
@@ -43,13 +43,13 @@ const CardsContainer = () => {
                       key={product.id}
                       name={product.name}
                       image={product.image}
-                      price={product.price}
+                      price={"$"+product.price}
                       id={product.id}
                     />
                   </div>
                 </>
               );
-            }
+            
           })}
       </div>
       <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />

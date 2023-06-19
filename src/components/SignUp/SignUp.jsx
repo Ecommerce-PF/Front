@@ -7,7 +7,7 @@ import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const firebaseConfig = {
@@ -31,37 +31,49 @@ const SignUp = () => {
     password: "",
     profileImage: "",
   });
+
+  const [googleUser, setGoogleUser] = useState({
+    name: "",
+    userName: "",
+    phone: "",
+    email: "",
+    password: "",
+    profileImage: "",
+  });
+
   const [google, setGoogle] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
+    setGoogle(false)
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
         await axios.post("/users/signup", user).then((res) => {
           Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Your count have beeen registered succesfully!',
+            position: "center",
+            icon: "success",
+            title: "Your count have beeen registered succesfully!",
             showConfirmButton: false,
-            timer: 1500
-          })
+            timer: 1500,
+          });
           navigate("/login");
         });
       } catch (error) {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-          footer: '<a href="">Why do I have this issue?</a>'
-        })
+          icon: "error",
+          title: "Oops...",
+          text: "Al parecer tu cuenta ya se encuentra registrada...",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       }
     }
   };
@@ -109,16 +121,12 @@ const SignUp = () => {
   async function callLoginGoogle() {
     try {
       const result = await signInWithPopup(auth, provider);
-
-      // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = await GoogleAuthProvider.credentialFromResult(result);
-      // eslint-disable-next-line no-unused-vars
       const token = credential.accessToken;
-      // The signed-in user info.
       const users = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-      setUser({
+
+      setGoogleUser({
+
         name: users.displayName,
         userName: users.displayName,
         phone: "12212",
@@ -128,48 +136,54 @@ const SignUp = () => {
       });
       setGoogle(true);
     } catch (error) {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // // The email of the user's account used.
-      // const email = error.customData.email;
-      // // The AuthCredential type that was used.
-      // const credential = await GoogleAuthProvider.credentialFromError(error);
-
-      alert("Error al procesar la solicitud");
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error,
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
     }
   }
 
   useEffect(() => {
     if (google) {
       try {
-         axios.post("/users/signup", user)
-        .then((res) => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Your count have been registered succesfully!',
-            showConfirmButton: false,
-            timer: 1500
+        const repo = axios
+          .post("/users/signup", googleUser)
+
+          .then((res) => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Your count have been registered succesfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/login");
           })
-          navigate("/login");
-          window.location.reload();
+          .catch((res) => {
+                    Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Al parecer tu cuenta ya se encuentra registrada...",
+          footer: '<a href="">Why do I have this issue?</a>',
         });
+          })
       } catch (error) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: error,
           footer: '<a href="">Why do I have this issue?</a>'
         })
+
       }
     }
-  }, [navigate,user,google]);
+  }, [navigate, user, google]);
 
   return (
     <section className={styles.back}>
-      <div
-        className={styles.container}
-      >
+      <div className={styles.container}>
         <h2 className={styles.title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div>

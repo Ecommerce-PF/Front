@@ -24,7 +24,7 @@ const CardsContainer = () => {
       }
     };
     fetchFavoriteProducts();
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const { products } = useSelector((state) => {
     return {
@@ -39,9 +39,6 @@ const CardsContainer = () => {
 
   return (
     <div>
-      <div>
-        <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />
-      </div>
       <div className={style.container}>
         {products
           ?.slice(
@@ -62,18 +59,20 @@ const CardsContainer = () => {
                 />
               );
             }
-            
-              return (
-                <Card
-                  name={product.name}
-                  image={product.image}
-                  price={product.price}
-                  id={product.id}
-                  key={product.id}
-                ></Card>
-              );
-            
+
+            return (
+              <Card
+                name={product.name}
+                image={product.image}
+                price={product.price}
+                id={product.id}
+                key={product.id}
+              ></Card>
+            );
           })}
+      </div>
+      <div>
+        <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />
       </div>
     </div>
   );

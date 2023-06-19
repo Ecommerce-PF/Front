@@ -169,7 +169,7 @@ export default function Detail() {
   }
 
   const findArrSize = (valorBuscado) => {
-    for (let i = 0; i < state.color.length; i++) {
+    for (let i = 0; i < state.color?.length; i++) {
       if (state.color[i].ColorName === valorBuscado) {
         return state.color[i].Sizes;
       }
@@ -178,7 +178,7 @@ export default function Detail() {
   };
 
   const clrPrdct = (valorBuscado) => {
-    for (let i = 0; i < state.color.length; i++) {
+    for (let i = 0; i < state.color?.length; i++) {
       if (state.color[i].ColorName === valorBuscado) {
         return state.color[i].ProductImages;
       }
@@ -190,12 +190,12 @@ export default function Detail() {
     if (numberImg > 0) {
       setNumberImg(numberImg - 1);
     } else {
-      setNumberImg(coloresPrt.length - 1);
+      setNumberImg(coloresPrt?.length - 1);
     }
   };
 
   const changeRigth = () => {
-    if (numberImg < coloresPrt.length - 1) {
+    if (numberImg < coloresPrt?.length - 1) {
       setNumberImg(numberImg + 1);
     } else {
       setNumberImg(0);
@@ -213,7 +213,7 @@ export default function Detail() {
           <div className={styles.productImg}>
             <h3>{state?.name}</h3>
             <div className={styles.img}>
-              {!!coloresPrt.length ? (
+              {!!coloresPrt?.length ? (
                 <div className={styles.divGaleryImg}>
                   <button onClick={changeLeft} className={styles.bttnArrow}>
                     <MdOutlineArrowBackIos />
@@ -306,7 +306,7 @@ export default function Detail() {
         </div>
       </div>
       <div className={styles.back2}>
-        {comments.length === 0 ? (
+        {comments?.length === 0 ? (
           <div className={styles.reviewss2}>
             <h2 className={styles.sinPro}>
               Todavía no hay comentarios sobre este producto.

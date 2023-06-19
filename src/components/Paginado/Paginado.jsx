@@ -38,7 +38,10 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
   };
 
   useEffect(() => {
-    if (pagina > Math.ceil(maximo)) {
+    if (pagina < 1) {
+      setPagina(1);
+      setInput(1);
+    } else if (pagina > Math.ceil(maximo)) {
       setPagina(Math.ceil(maximo));
       setInput(Math.ceil(maximo));
     }

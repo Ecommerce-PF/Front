@@ -131,14 +131,21 @@ export default function CreatePost() {
   }, []);
 
   return (
+    
     <div className={styles.body_container}>
+     
+     
       <form className={styles.form} onSubmit={submitHandler}>
+        
         <div className={styles.statsAndTypes}>
+          
           <div className={styles.stats}>
-            <h3>Characteristics</h3>
+            
+            <h1>Create New Clothe </h1>
 
-            <div className={styles.centralize}>
+{/* /********************************************************************************* */} 
               <div className={styles.inputBlock}>
+                <label className={styles.label_name}>Name Clothe:</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -150,44 +157,27 @@ export default function CreatePost() {
                   onChange={changeHandler}
                 />
                 {error.name && <p>{error.name}</p>}
-                <span className={styles.placeholder}>Name</span>
               </div>
+            
+{/* /********************************************************************************* */}
+            
+            <div  className={styles.felx_container}>
+            
+            <div  >
+              <UploadFile
+                handleUpload={handleUpload}
+                folder={"product"}
+              ></UploadFile>  
             </div>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="parentCategory"
-                  id="input-text"
-                  required
-                  spellCheck="false"
-                  value={input.parentCategory}
-                  onChange={changeHandler}
-                />
-                {error.name && <p>{error.name}</p>}
-                <span className={styles.placeholder}>Parent Category</span>
-              </div>
-            </div>
-
-
-              <div>
-                <label htmlFor="color">Color</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="color"
-                  id="color"
-                  onChange={handleChange}
-                  value={input.color.map((color) => color.name).join(", ")}
-                />
-              </div>
-          
-        
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
+            
+            <img
+                src={input.image}
+                className={styles.imgPreview}
+                alt={input.name}
+                width="250"
+                height="250"/>
+              <div >
+              <label className={styles.label_name}>Price</label>
                 <input
                   className={styles.input}
                   type="number"
@@ -198,25 +188,30 @@ export default function CreatePost() {
                   value={input.price}
                   onChange={changeHandler}
                 />
-                <span className={styles.placeholder}>Price</span>
-              </div>
-            </div>
-            <div>
-              <img
-                src={input.image}
-                alt="productImage"
-                width="90"
-                height="110"
-              ></img>
-              <p></p>
-              <UploadFile
-                handleUpload={handleUpload}
-                folder={"product"}
-              ></UploadFile>
+                {error.price && <p>{error.price}</p>} 
             </div>
 
-            <div className={styles.centralize}>
+            </div>
+           
+
+{/* /********************************************************************************* */}
               <div className={styles.inputBlock}>
+                <label htmlFor="color" className={styles.label_name} >Color:</label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="color"
+                  id="color"
+                  onChange={handleChange}
+                  value={input.color.map((color) => color.name).join(", ")}
+                />
+              </div>
+
+
+{/* /********************************************************************************* */}
+           
+              <div className={styles.inputBlock}>
+              <label className={styles.label_name}>Description :</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -227,18 +222,23 @@ export default function CreatePost() {
                   value={input.description}
                   onChange={changeHandler}
                 />
-                <span className={styles.placeholder}>Description</span>
+                
               </div>
-            </div>
-          </div>
+            
+         
+ {/* /********************************************************************************* */}
+ 
+ 
+        <div className={styles.inputBlock}>
 
+         <label htmlFor=""  className={styles.label_name}>Category: </label>
           <select
             className={styles.select}
             value={input.category}
             name="category"
             onChange={changeHandler}
           >
-            <option className={styles.all} value="">
+            <option value="">
               {allCategories}
             </option>
             {uniqueCategories.map((category) => {
@@ -256,21 +256,51 @@ export default function CreatePost() {
               );
             })}
           </select>
+
+          </div>
+
+          {/* /*********************************************************************************       */}
+          <div className={styles.inputBlock}>
+
+          <label className={styles.label_name}>Parent Category:</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="parentCategory"
+              id="input-text"
+              required
+              spellCheck="false"
+              value={input.category}
+              onChange={changeHandler}
+            />
+            {error.name && <p>{error.name}</p>}
+
+          </div>
+       
+       
         </div>
-        <button className="enviar" type="submit">
-          ENVIAR
+
+      </div>
+      <br /><br />
+        <button className={styles.enviar} type="submit">
+          Create
         </button>
        
       </form>
 
-
-
+{/* /********************  BOTON BACK  ****************************** * */}
+      <br />
+      <br />
+      <br />
       
+      <div>
       <Link to="/DashBoardAdmin">
         <button className={styles.button}>
         Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
       </button>
       </Link>
+      </div>
+
     </div>
   );
 }

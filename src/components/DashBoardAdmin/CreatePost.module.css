@@ -1,3 +1,138 @@
+.body_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 3px solid #2a2828;
+}
+
+.form {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.statsAndTypes {
+  display: flex;
+}
+
+.stats {
+  flex: 1;
+}
+
+.centralize {
+  display: flex;
+  align-items: center;
+}
+
+.inputBlock {
+  margin-bottom: 20px;
+}
+
+.label_name {
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input[type="number"] {
+  width: 80px;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.enviar {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.felx_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+/* Additional Styles */
+
+
+.imgPreview {
+  width: 150px;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 5px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .body_container {
+    padding: 10px;
+  }
+
+  .input {
+    font-size: 14px;
+  }
+
+  .select {
+    font-size: 14px;
+  }
+
+  .enviar,
+  .button {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .imgPreview {
+    width: 70px;
+    height: 80px;
+  }
+}
 
 
 /************************************************************/

@@ -6,6 +6,16 @@
  
 }
 
+.linkButton{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 7%;
+  border: 1px solid;
+  text-decoration: none;
+  color: black;
+  background-color: #9a9a9a;
+}
 
 
 /******************/

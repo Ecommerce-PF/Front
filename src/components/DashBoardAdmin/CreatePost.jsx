@@ -13,7 +13,6 @@ export default function CreatePost() {
  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const idUsed = products.map((product) => product.id);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -25,14 +24,7 @@ export default function CreatePost() {
 
   const [allCategories, setAllCategories] = useState("All categories");
 
-  const [error, setError] = useState({
-    name: "",
-    color: "",
-    price: "",
-    image: "",
-    category: [],
-    description: "",
-  });
+/************************************************************************************************************ */
 
   const [input, setInput] = useState({
     id: 0,
@@ -45,6 +37,19 @@ export default function CreatePost() {
     parentCategory: "",
     description: "",
   });
+
+
+  const [error, setError] = useState({
+    name: "",
+    color: "",
+    price: "",
+    image: "",
+    category: [],
+    description: "",
+  });
+
+
+  /************************************************************************************************************ */
 
   useEffect(() => {
     function generarNumeroAleatorio() {
@@ -67,6 +72,9 @@ export default function CreatePost() {
       id: generarNumeroAleatorio(),
     }));
   }, []);
+
+
+  /************************************************************************************************************ */
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
@@ -104,27 +112,40 @@ export default function CreatePost() {
     }));
   }, []);
 
-  const submitHandler = useCallback(
-    (e) => {
-      e.preventDefault();
-      axios
-        .post("/products", input)
-        .then(() =>
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your clothe has been saved successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          })
-        )
-        .then(() => navigate(`/detail/${input.id}`))
-        .catch((error) => alert(error));
-    },
-    [input]
-  );
+/************ ***************************************************************************************** */
 
-  const handleUpload = useCallback(async (error, result) => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
+  
+    const formErrors = validate(input); // Validar el formulario
+    setError(formErrors); // Establecer los errores en el estado
+  
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        await axios.post("/products", input);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your clothe has been saved successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(`/detail/${input.id}`);
+      } catch (error) {
+        alert(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong!',
+          text: error,
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
+      }
+    }
+  };
+  
+/*********************************** CLOUDINARY ************************************************************************* */  
+  
+    const handleUpload = useCallback(async (error, result) => {
     if (result && result.event === "success") {
       setInput((prevInput) => ({
         ...prevInput,
@@ -133,9 +154,8 @@ export default function CreatePost() {
     }
   }, []);
 
+/************************************ VALIDACIONES ************************************************************************ */
 
-
-  
 const validate = (input) => {
   let error = {};
   if (!input.name) {
@@ -144,8 +164,17 @@ const validate = (input) => {
   if (!input.color) {
     error.color = "Color is required";
   }
-  if (!input.price) {
+  if(input.color.length === 0 || input.color === "") {
+    error.color = "Color is required";
+  }
+  if (input.color.length > 0 && input.color.length < 1) {
+    error.color = "You must enter at least 1 colors";
+  }
+  if (!input.price && input.price === 0) {
     error.price = "Price is required";
+  }
+  if ( input.price < 0.5 || input.price > 500) {
+    error.price = "Price must be between 0.5 and 500";
   }
   if (!input.category) {
     error.category = "Category is required";
@@ -156,8 +185,13 @@ const validate = (input) => {
   return error;
 };
 
+useEffect(()=>{
+  setError(validate(input))
+}, [input])
+/******************************************************************************************************** */
 
   return (
+    <>
     <div className={styles.body_container}>
       <form className={styles.form} onSubmit={submitHandler}>
         <div className={styles.statsAndTypes}>
@@ -165,6 +199,7 @@ const validate = (input) => {
             <h1>Create New Clothe </h1>
 
             {/* /********************************************************************************* */}
+
             <div className={styles.inputBlock}>
               <label className={styles.label_name}>Name Clothe:</label>
               <input
@@ -177,18 +212,23 @@ const validate = (input) => {
                 value={input.name}
                 onChange={changeHandler}
               />
-              {error.name && <p>{error.name}</p>}
+
+              { error.name 
+            ? <span className={styles.error}>❌{error.name}</span>
+            : <span >✅</span> } 
+
+
             </div>
 
             {/* /********************************************************************************* */}
 
-            <div className={styles.felx_container}>
-              <div>
-                <UploadFile
-                  handleUpload={handleUpload}
-                  folder={"product"}
-                ></UploadFile>
-              </div>
+              <div className={styles.felx_container}>
+                <div>
+                  <UploadFile
+                    handleUpload={handleUpload}
+                    folder={"product"}
+                  ></UploadFile>
+                </div>
 
               <img
                 src={input.image}
@@ -197,35 +237,52 @@ const validate = (input) => {
                 width="250"
                 height="250"
               />
-              <div>
-                <label className={styles.label_name}>Price</label>
-                <input
-                  className={styles.input}
-                  type="number"
-                  name="price"
-                  id="input-text"
-                  required
-                  spellCheck="false"
-                  value={input.price}
-                  onChange={changeHandler}
-                />
-                {error.price && <p>{error.price}</p>}
+
+              <div className={styles.price_container}>
+                <div>
+                  <label className={styles.label_name}>Price</label>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    name="price"
+                    id="input-text"
+                    min="0.5"
+                    max="500"
+                    step="0.5"
+                    required
+                    spellCheck="false"
+                    value={input.price}
+                    onChange={changeHandler}
+                    />
+                  </div>
+                <div>
+                  { error.price
+                  ? <span className={styles.error}>❌{error.price}</span>
+                  : <span >✅</span> }
+                </div>
+
               </div>
+
             </div>
 
             {/* /********************************************************************************* */}
+
             <div className={styles.inputBlock}>
-              <label htmlFor="color" className={styles.label_name}>
-                Color:
-              </label>
+              <label htmlFor="color" className={styles.label_name}>Color:</label>
               <input
                 className={styles.input}
                 type="text"
                 name="color"
                 id="color"
                 onChange={handleChange}
-                value={input.color.map((color) => color.name).join(", ")}
+                value={input.color.map((color) => color.name).join(",")}
+                placeholder='Must use "," for separate each color'
               />
+              {/* <span>Must use "," for separate each color</span> */}
+              <br />
+              { error.color
+              ? <span className={styles.error}>❌{error.color}</span>
+              : <span >✅</span> }
             </div>
 
             {/* /********************************************************************************* */}
@@ -242,6 +299,11 @@ const validate = (input) => {
                 value={input.description}
                 onChange={changeHandler}
               />
+
+              { error.description
+              ? <span className={styles.error}>❌{error.description}</span>
+              : <span >✅</span> }
+
             </div>
 
             {/* /********************************************************************************* */}
@@ -272,6 +334,11 @@ const validate = (input) => {
                   );
                 })}
               </select>
+
+              { error.category
+              ? <span className={styles.error}>❌{error.category}</span>
+              : <span >✅</span> }
+
             </div>
 
             {/* /*********************************************************************************       */}
@@ -287,22 +354,38 @@ const validate = (input) => {
                 value={input.category}
                 onChange={changeHandler}
               />
-              {error.name && <p>{error.name}</p>}
+
+              {/* {error.category && <p>{error.category}</p>} */}
+              { error.category
+              ? <span className={styles.error}>❌{error.category}</span>
+              : <span >✅</span> }
+
             </div>
+
+ {/* /**************************************************************************************************** * */}
+          
           </div>
         </div>
+
+{/* /**************************************  BOTON CREATE  *********************************************** * */}
         <br />
-        <br />
-        <button className={styles.enviar} type="submit">
-          Create
-        </button>
+        <br />     
+                {
+                  Object.keys(error).length ===0                                                 
+                  ? (  <button className={styles.enviar} type="submit"> Create </button>) 
+                  : null
+                }
+                {
+                  Object.keys(error).length === 0 && <p>The Form has been validate ✅</p>
+                } 
+         
       </form>
 
       {/* /********************  BOTON BACK  ****************************** * */}
       <br />
       <br />
       <br />
-
+      </div>
       <div>
         <Link to="/DashBoardAdmin">
           <button className={styles.button}>
@@ -310,6 +393,7 @@ const validate = (input) => {
           </button>
         </Link>
       </div>
-    </div>
+   
+    </>
   );
 }

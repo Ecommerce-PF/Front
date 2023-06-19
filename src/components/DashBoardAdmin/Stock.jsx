@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Stock.module.css";
+import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import { getAllProducts } from "../../redux/actions/actions";
 
@@ -86,6 +88,12 @@ export default function Stock() {
           </div>
         </div>
       ))}
+
+                <Link to="/DashBoardAdmin">
+                <button className={styles.button_back}>
+                Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
+                </button>
+              </Link>
     </>
   );
 }

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { getUserAll, getUserById, getOrderById, getAllOrders, getAllProducts } from "../../redux/actions/actions.js";
+import styles from "./OrderList.module.css";
+import { FaArrowLeft } from "react-icons/fa";
+
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -110,6 +114,7 @@ const OrderList = () => {
   };
 
   return (
+    <>
     <div style={{ textAlign: "center" }}>
       <h2>Order List</h2>
       <select onChange={(e) => handleUserChange(e.target.value)}>
@@ -157,6 +162,14 @@ const OrderList = () => {
       )}
       <button onClick={handleViewAllOrders}>View All Orders</button>
     </div>
+
+              <Link to="/DashBoardAdmin">
+                <button className={styles.button_back}>
+                Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
+                </button>
+              </Link>
+
+      </>
   );
 };
 

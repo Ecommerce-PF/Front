@@ -26,6 +26,7 @@
 
 .inputBlock {
   margin-bottom: 20px;
+  padding: 10px;
 }
 
 .label_name {
@@ -68,6 +69,11 @@
 .felx_container {
   display: flex;
   justify-content: space-between;
+}
+
+.price_container {
+  display: block;
+  align-items: center;
 }
 
 .button {
@@ -133,6 +139,7 @@
     height: 80px;
   }
 }
+
 
 
 /************************************************************/

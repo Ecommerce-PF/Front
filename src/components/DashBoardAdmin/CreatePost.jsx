@@ -46,15 +46,7 @@ export default function CreatePost() {
     description: "",
   });
   
-  
- const idGenerator = ()=> {
-    setInput(prevInput => ({
-      ...prevInput,
-      id: prevInput.id + 1,
-     }));
 
- console.log(input.id)
-  }
   useEffect(() => {
     setInput(prevInput => ({
       ...prevInput,
@@ -103,7 +95,6 @@ export default function CreatePost() {
   const submitHandler = useCallback(
     (e) => {
       e.preventDefault();
-      idGenerator();
       axios
         .post("/products", input)
         .then(() =>

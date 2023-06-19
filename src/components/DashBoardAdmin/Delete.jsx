@@ -9,7 +9,6 @@ import axios from "axios";
 
 export default function Delete() {
   const [borrar, setBorrar] = useState(false);
-  const [borrar2, setBorrar2] = useState(false);
   const [errors, setErrors] = useState({ noInputs: "No hay inputs" });
   const [input, setInputs] = useState({ id: "" });
   const [input2, setInputs2] = useState({ id: "" });
@@ -62,11 +61,9 @@ export default function Delete() {
     setInputs3({ id: productIds });
     setSelectedProductNames3(productNames);
     try {
-      const response = await axios.put(`/products/${input3.id}`, pausado );
-
-  
+      await axios.put(`/products/${input3.id}`, pausado );  
     } catch (error) {
-      
+      console.log(error);
     }
   };
 
@@ -284,7 +281,7 @@ export default function Delete() {
           Pick Off
         </button>
 
-        {borrar2 && (
+        {false && (
           <div className="container">
             <div className="row">
               <div className="col align-self-center">
@@ -350,7 +347,7 @@ export default function Delete() {
           Publish Product
         </button>
 
-        {borrar2 && (
+        {false && (
           <div className="container">
             <div className="row">
               <div className="col align-self-center">

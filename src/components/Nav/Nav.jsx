@@ -109,7 +109,7 @@ const Nav = () => {
             {userId.admin === true && sesions === "si" ? (
               <Link to="/DashBoardAdmin">
                 <svg
-                  className={style.svg}
+                  className={style.svg2}
                   width="80px"
                   height="80px"
                   viewBox="0 0 25 25"

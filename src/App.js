@@ -18,7 +18,7 @@ import EditProduct from "./components/DashBoardAdmin/EditProduct";
 import FavoritesView from "./components/FavoritesView/FavoritesView";
 import EditProfile from "./components/Profile/EditProfile";
 import OrderList from "./components/DashBoardAdmin/OrderList";
-import ListUser from "./components/DashBoardAdmin/ListUser";
+import ListUser from "./components/Profile/ListUser";
 import Stock from "./components/DashBoardAdmin/Stock";
 
 function App() {

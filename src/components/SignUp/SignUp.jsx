@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { signUpUser } from "../../redux/actions/actions";
+//import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
@@ -20,8 +19,8 @@ const SignUp = () => {
     appId: "1:86387538325:web:9e422e0928cf885f689e9c",
     measurementId: "G-JSSCSKPYD9",
   };
-  const app = initializeApp(firebaseConfig);
-  const dispatch = useDispatch();
+  initializeApp(firebaseConfig);
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -33,7 +32,7 @@ const SignUp = () => {
     profileImage: "",
   });
   const [google, setGoogle] = useState(false);
-
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -46,12 +45,23 @@ const SignUp = () => {
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await axios.post("/users/signup", user).then((res) => {
-          alert("Registro exitoso");
+        await axios.post("/users/signup", user).then((res) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your count have beeen registered succesfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           navigate("/login");
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
   };
@@ -102,6 +112,7 @@ const SignUp = () => {
 
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = await GoogleAuthProvider.credentialFromResult(result);
+      // eslint-disable-next-line no-unused-vars
       const token = credential.accessToken;
       // The signed-in user info.
       const users = result.user;
@@ -117,12 +128,12 @@ const SignUp = () => {
       });
       setGoogle(true);
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = await GoogleAuthProvider.credentialFromError(error);
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // // The email of the user's account used.
+      // const email = error.customData.email;
+      // // The AuthCredential type that was used.
+      // const credential = await GoogleAuthProvider.credentialFromError(error);
 
       alert("Error al procesar la solicitud");
     }
@@ -144,16 +155,20 @@ const SignUp = () => {
           window.location.reload();
         });
       } catch (error) {
-        alert("Error al procesar la solicitud");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     }
-  }, [google]);
+  }, [navigate,user,google]);
 
   return (
     <section className={styles.back}>
       <div
         className={styles.container}
-        style={{ backgroundImage: `url("../../assets/pika.gif")` }}
       >
         <h2 className={styles.title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>

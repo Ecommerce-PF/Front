@@ -32,6 +32,8 @@ export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
+export const GET_CART = "GET_CART";
+export const UPDATE_CART = "UPDATE_CART";
 export const SET_FAVORITES = "SET_FAVORITES";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
@@ -133,11 +135,9 @@ export const filterByColor = (color) => {
   };
 };
 
-export const resetFilters = () => {
-  return {
-    type: RESET_FILTERS,
-  };
-};
+export const resetFilters = () => ({
+  type: RESET_FILTERS,
+});
 
 export const createPost = (newprod) => {
   return async (dispatch) => {
@@ -224,18 +224,38 @@ export const login = (email, password) => {
 };
 
 export const addCart = (producto) => {
+  //  localStorage.setItem("carritoLS", JSON.stringify(producto));
+  // console.log(`producto: ${producto}`);
   return {
     type: ADD_CART,
     payload: producto,
   };
 };
 
-export const deleteCart = (id) => {
+export const deleteCart = (array) => {
+  localStorage.setItem("carritoLS", JSON.stringify(array));
   return {
     type: DELETE_CART,
-    payload: id,
+    payload: array,
   };
 };
+
+export const updatedCart = (array) => {
+  localStorage.setItem("carritoLS", JSON.stringify(array));
+  return {
+    type: UPDATE_CART,
+    payload: array,
+  };
+}
+
+export const getCart = () => {
+  const producto = JSON.parse(localStorage.getItem("carritoLS"));
+  return {
+    type: GET_CART,
+    payload: producto,
+  }
+}
+
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {

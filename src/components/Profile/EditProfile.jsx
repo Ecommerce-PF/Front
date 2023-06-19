@@ -6,7 +6,7 @@ import UploadFile from "../UploadFile/UploadFile";
 import axios from "axios";
 
 import styles from "./EditProfile.module.css";
-import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa"
+import { FaArrowLeft } from "react-icons/fa"
 import Swal from "sweetalert2";
 
 const EditProfile = () => {
@@ -26,7 +26,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     setUrl(userId.profileImage);
-  }, []);
+  }, [userId.profileImage]);
 
   if (id.length === 0) {
     // No hacer nada
@@ -49,7 +49,7 @@ const EditProfile = () => {
       dispatch(getUserById(idUser));
     };
     fetchData();
-  }, []);
+  }, [dispatch,idUser]);
 /********************************************************************** */
   const handleChange = (e) => {
     const { name, value } = e.target;

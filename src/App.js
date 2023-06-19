@@ -19,6 +19,8 @@ import FavoritesView from "./components/FavoritesView/FavoritesView";
 import EditProfile from "./components/Profile/EditProfile";
 import OrderList from "./components/DashBoardAdmin/OrderList";
 import ListUser from "./components/DashBoardAdmin/ListUser";
+import Stock from "./components/DashBoardAdmin/Stock";
+
 function App() {
   return (
     <div className="App">
@@ -34,6 +36,7 @@ function App() {
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/DashBoardAdmin/*" element={<DashBoardAdmin />} />
         <Route path="/CreatePost" element={<CreatePost />} />
+        <Route path="/Stock" element={<Stock />} />
         <Route path="/Delete" element={<Delete />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editProfile" element={<EditProfile />} />

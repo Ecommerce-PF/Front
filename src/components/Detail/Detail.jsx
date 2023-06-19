@@ -22,6 +22,8 @@ export default function Detail() {
   const idUser = useSelector((state) => state.idUsuario);
   const user = useSelector((state) => state.userId);
 
+  console.log(state.stock, "caca");
+
   if (user.length === 0) {
     // No hacer nada
   } else {
@@ -91,23 +93,24 @@ export default function Detail() {
   const handleAddCart = () => {
     dispatch(addCart(state));
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
+    let isProductInCart = false;
+
     for (var i = 0; i < listaCart.length; i++) {
       if (listaCart[i].id === state.id) {
-        return Swal.fire({
-          icon: "error",
-          title: "To producto ya se encuentra en Carrito!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        listaCart[i].quantity += 1;
+        isProductInCart = true;
+        break;
       }
     }
 
-    listaCart.push({
-      ...state,
-      quantity: 1,
-    });
-    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+    if (!isProductInCart) {
+      listaCart.push({
+        ...state,
+        quantity: 1,
+      });
+    }
 
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
     Swal.fire({
       icon: "success",
       title: "Su producto se ha agregado al carrito!!",
@@ -117,12 +120,37 @@ export default function Detail() {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      const stock = state.stock;
+
+      if (stock === 1 || stock === 2 || stock === 3) {
+        Swal.fire({
+          title: "Apurate!",
+          text: "Quedan pocas unidades en stock",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+        });
+      } else if (stock === 0) {
+        Swal.fire({
+          title: "No quedan más unidades disponibles!",
+          text: "Lo sentimos por las molestias...",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+        });
+      }
+    }, 1000); // Retraso de 1 segundo (1000 milisegundos)
+
+    return () => clearTimeout(timer); // Limpiar el temporizador al desmontar el componente
+  }, [state.stock]);
+
+  useEffect(() => {
     dispatch(getDetail(id));
     dispatch(getUserById(idUsers));
   }, [dispatch, id, idUsers]);
 
   //Logica de galeria img
-  const [colorProductImg, setColorProductImg] = useState("");
   const [coloresPrt, setColoresPrt] = useState([]);
   const [sizesArr, setSizeArr] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
@@ -131,7 +159,6 @@ export default function Detail() {
     if (e.target.value === "None") {
       setColoresPrt([]);
     } else {
-      setColorProductImg(e.target.value);
       setColoresPrt(clrPrdct(e.target.value));
       setSizeArr(findArrSize(e.target.value));
     }
@@ -170,10 +197,6 @@ export default function Detail() {
       setNumberImg(0);
     }
   };
-
-  useEffect(() => {
-    // setColorProductImg()
-  }, []);
 
   return (
     <div>
@@ -259,10 +282,12 @@ export default function Detail() {
               ></div>
             </div>
             <div className={styles.cart}>
-              <button className={styles.button} onClick={handleAddCart}>
-                Add to Cart{" "}
-                <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
-              </button>
+              {state.stock === 0 ? null : (
+                <button className={styles.button} onClick={handleAddCart}>
+                  Add to Cart
+                  <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
+                </button>
+              )}
               <NavLink to="/home">
                 <button className={styles.button}>
                   Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
@@ -282,37 +307,37 @@ export default function Detail() {
         ) : (
           <div className={styles.reviewss}>
             {comments.map((comment) => (
-            <div key={comment.id}>
-              <p className={styles.info}>Review: {comment.review}</p>
-              <p className={styles.info}>Rating:</p>
-              {Array.from({ length: comment.rating }).map((_, index) => (
-                <svg
-                  className={styles.stars}
-                  key={index}
-                  width="0px"
-                  height="20px"
-                  viewBox="0 0 25 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 4L15.2747 9.8691L21.5595 10.2188L16.6806 14.1959L18.2901 20.2812L13 16.87L7.70993 20.2812L9.31941 14.1959L4.44049 10.2188L10.7253 9.8691L13 4Z"
-                    stroke="#121923"
-                    strokeWidth="1.2"
-                  />
-                </svg>
-              ))}
-              <p className={styles.info}>
-                Day:
+              <div key={comment.id}>
+                <p className={styles.info}>Review: {comment.review}</p>
+                <p className={styles.info}>Rating:</p>
+                {Array.from({ length: comment.rating }).map((_, index) => (
+                  <svg
+                    className={styles.stars}
+                    key={index}
+                    width="0px"
+                    height="20px"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 4L15.2747 9.8691L21.5595 10.2188L16.6806 14.1959L18.2901 20.2812L13 16.87L7.70993 20.2812L9.31941 14.1959L4.44049 10.2188L10.7253 9.8691L13 4Z"
+                      stroke="#121923"
+                      strokeWidth="1.2"
+                    />
+                  </svg>
+                ))}
                 <p className={styles.info}>
-                  {new Date(comment.date).toLocaleString([], {
-                    day: "numeric",
-                    month: "numeric",
-                    year: "numeric",
-                  })}
+                  Day:
+                  <p className={styles.info}>
+                    {new Date(comment.date).toLocaleString([], {
+                      day: "numeric",
+                      month: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
                 </p>
-              </p>
-            </div>
+              </div>
             ))}
           </div>
         )}

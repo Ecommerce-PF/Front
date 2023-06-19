@@ -222,14 +222,35 @@ margin-right: 40px;
   transform: translateY(-1px);
 }
 
-.svg{
+.svg {
+  width: 50px;
+  margin: 10px;
+
+}
+
+.svg2 {
   width: 50px;
   margin: 10px;
 }
 
-.svg:hover{
+.svg2:hover {
   cursor: pointer;
   transform: scale(1.2);
   transition: transform 0.2s;
+}
+
+.svg:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform 0.2s;
+}
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 

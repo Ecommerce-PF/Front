@@ -125,7 +125,6 @@ export default function Detail() {
   }, [dispatch, id, idUsers]);
 
   //Logica de galeria img
-  const [colorProductImg, setColorProductImg] = useState("");
   const [coloresPrt, setColoresPrt] = useState([]);
   const [sizesArr, setSizeArr] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
@@ -134,7 +133,6 @@ export default function Detail() {
     if (e.target.value === "None") {
       setColoresPrt([]);
     } else {
-      setColorProductImg(e.target.value);
       setColoresPrt(clrPrdct(e.target.value));
       setSizeArr(findArrSize(e.target.value));
     }
@@ -173,10 +171,6 @@ export default function Detail() {
       setNumberImg(0);
     }
   };
-
-  useEffect(() => {
-    // setColorProductImg()
-  }, []);
 
   return (
     <div>

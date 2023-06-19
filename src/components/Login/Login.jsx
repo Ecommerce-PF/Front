@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import {
   idUser,
-  admin,
-  loginWithGoogle,
-  google,
 } from "../../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { consultaSiIniciado } from "../../redux/actions/actions";
@@ -31,7 +26,7 @@ const Login = () => {
     appId: "1:86387538325:web:9e422e0928cf885f689e9c",
     measurementId: "G-JSSCSKPYD9",
   };
-  const app = initializeApp(firebaseConfig);
+  initializeApp(firebaseConfig);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -96,12 +91,8 @@ const handleSubmit = async (e) => {
 
   function callLoginGoogle() {
     signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-  
-        const user = result.user;
-  
+      .then(async (result) => {  
+        const user = result.user;  
         try {
           const response = await axios.post("/users/login", {
             userName: user.displayName,
@@ -127,10 +118,7 @@ const handleSubmit = async (e) => {
         }
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error);
       });
   }
 

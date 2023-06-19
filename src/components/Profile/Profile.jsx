@@ -11,8 +11,6 @@ const Profile = () => {
 
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
-
-
   const id = useSelector((state) => state.idUsuario);
 
 
@@ -21,24 +19,23 @@ const Profile = () => {
   } else {
     localStorage.setItem("ids", id);
   }
-  const profileImages= userId.profileImage
   
   const idUser = localStorage.getItem("ids");
 
   useEffect(() => {
-    setUrl(profileImages);
-  }, []);
+    setUrl(userId.profileImage);
+  }, [userId.profileImage]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getUserAll());
-      await dispatch(getUserById(idUser));
+      dispatch(getUserAll());
+      dispatch(getUserById(idUser));
     };
 
     fetchData();
   }, [dispatch, idUser]);
 
-  const { name, email, phone, address, purchaseHistory, profileImage } = userId;
+  const { name, email, phone, address, purchaseHistory } = userId;
 
   return (
     <div>
@@ -52,7 +49,7 @@ const Profile = () => {
       <p className={styles.info}>Phone: </p>
       <h2>{phone}</h2>
 
-      <img className={styles.img_profile} src={profileImage} alt={name} />
+      <img className={styles.img_profile} src={url} alt={name} />
 
       <h3 className={styles.subtitle}>Address {address}</h3>
       <p className={styles.address}></p>

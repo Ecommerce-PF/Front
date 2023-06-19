@@ -38,12 +38,6 @@ const Admin = () => {
                 Order Users
               </Link>
             </div>
-
-            <div className={style.buton_container}>
-              <Link to="/Stock" className={style.link}>
-                Stock
-              </Link>
-            </div>
           
             <div className={style.buton_container}>
               <Link to="/home">
@@ -52,8 +46,6 @@ const Admin = () => {
                 </button>
               </Link>
             </div>
-
-            
         
     </div>
   ) 

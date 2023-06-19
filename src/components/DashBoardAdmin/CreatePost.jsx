@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
@@ -9,7 +9,6 @@ import UploadFile from "../UploadFile/UploadFile";
 import Swal from "sweetalert2";
 
 export default function CreatePost() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const idUsed = products.map((product) => product.id);
@@ -89,6 +88,26 @@ console.log(input)
       }));
     }
   }, []);
+
+  const [colors, setColors] = useState([]);
+  const addColors = useCallback(
+    (event) => {
+      event.preventDefault();
+      const newColor = { number: colors.length + 1, color: "" };
+      setColors((prevColors) => [...prevColors, newColor]);
+      setInput((prevInput) => ({ ...prevInput, color: [...colors, newColor] }));
+    },
+    [colors]
+  );
+
+  const [count, setCount] = useState("");
+
+  useEffect(() => {
+    const lastNumber = colors[colors.length - 1]?.number;
+    if (lastNumber) {
+      setCount(lastNumber);
+    }
+  }, [colors]);
 
   const changeHandler = useCallback((event) => {
     const { name, value } = event.target;

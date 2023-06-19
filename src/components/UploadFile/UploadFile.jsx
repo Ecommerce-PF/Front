@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import styles from "../DashBoardAdmin/CreatePost.module.css"
 
 const UploadFile = ({ handleUpload, folder }) => {
   const cloudinaryRef = useRef();

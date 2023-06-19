@@ -79,7 +79,7 @@ const handleSubmit = async (e) => {
       setError("Invalid username or password");
     }
   } catch (error) {
-    setError("Error occurred while logging in");
+    setError("❌Invalid Username or Password❌");
   }
 };
 
@@ -114,7 +114,13 @@ const handleSubmit = async (e) => {
             });
           }
         } catch (error) {
-          setError("Error occurred while logging in");
+          setError( 
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Your count hasn't been registered yet!",
+            footer: '<a href="/signup">Do you want to register to this Webpage?</a>',
+          }));
         }
       })
       .catch((error) => {
@@ -164,15 +170,22 @@ const handleSubmit = async (e) => {
             </div>
 
             <div className={styles.buttons}>
-              <div className={styles.types}>
-                <button
-                  onClick={inicio}
-                  type="submit"
-                  className={styles.button}
-                >
-                  Login
-                </button>
-              </div>
+            
+               
+               {
+                  userName && password 
+                ?  <div className={styles.types}>
+                   <button
+                    onClick={inicio}
+                    type="submit"
+                    className={styles.button}
+                  >  Login
+                  </button>
+                  </div>
+                
+                : null
+               }
+  
 
               <div className={styles.types}>
                 <Link to="/">

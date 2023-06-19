@@ -117,7 +117,36 @@ export default function Detail() {
           timer: 1500,
         });
   };
+<<<<<<< HEAD
   
+=======
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const stock = state.stock;
+
+      if (stock === 1 || stock === 2 || stock === 3) {
+        Swal.fire({
+          title: "Apurate!",
+          text: "Quedan pocas unidades en stock",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+        });
+      } else if (stock === 0) {
+        Swal.fire({
+          title: "No quedan más unidades disponibles!",
+          text: "Lo sentimos por las molestias...",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+        });
+      }
+    }, 1000); // Retraso de 1 segundo (1000 milisegundos)
+
+    return () => clearTimeout(timer); // Limpiar el temporizador al desmontar el componente
+  }, [state.stock]);
+>>>>>>> 974c1073c642f333cfa2c0470c747c4543aa554c
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -125,7 +154,6 @@ export default function Detail() {
   }, [dispatch, id, idUsers]);
 
   //Logica de galeria img
-  const [colorProductImg, setColorProductImg] = useState("");
   const [coloresPrt, setColoresPrt] = useState([]);
   const [sizesArr, setSizeArr] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
@@ -134,7 +162,6 @@ export default function Detail() {
     if (e.target.value === "None") {
       setColoresPrt([]);
     } else {
-      setColorProductImg(e.target.value);
       setColoresPrt(clrPrdct(e.target.value));
       setSizeArr(findArrSize(e.target.value));
     }
@@ -174,9 +201,23 @@ export default function Detail() {
     }
   };
 
-  useEffect(() => {
-    // setColorProductImg()
-  }, []);
+  /* 
+  state?.color &&
+                  state.color.map((e) => (
+                    <option
+                      className={styles.option}
+                      name={e.ColorName}
+                      key={e.ColorName}
+                    >
+                      {e.ColorName}
+                    </option>
+                  ))
+  */
+ console.log(state)
+ const arrayColor = state?.color && state?.color.map((e) => (
+  e.ColorName ? e.ColorName: e.name
+))
+console.log(arrayColor) 
 
   return (
     <div>
@@ -185,7 +226,11 @@ export default function Detail() {
           <div className={styles.productImg}>
             <h3>{state?.name}</h3>
             <div className={styles.img}>
+<<<<<<< HEAD
               {!!coloresPrt?.length ? (
+=======
+              {coloresPrt && !!coloresPrt.length ? (
+>>>>>>> 974c1073c642f333cfa2c0470c747c4543aa554c
                 <div className={styles.divGaleryImg}>
                   <button onClick={changeLeft} className={styles.bttnArrow}>
                     <MdOutlineArrowBackIos />
@@ -220,14 +265,14 @@ export default function Detail() {
                 onChange={handleChange}
               >
                 <option className={styles.option}>None</option>
-                {state?.color &&
-                  state.color.map((e) => (
+                {arrayColor &&
+                  arrayColor.map((e) => (
                     <option
                       className={styles.option}
-                      name={e.ColorName}
-                      key={e.ColorName}
+                      name={e}
+                      key={e}
                     >
-                      {e.ColorName}
+                      {e}
                     </option>
                   ))}
               </select>
@@ -239,7 +284,8 @@ export default function Detail() {
                   name="size" /* onChange={handleChange} */
                 >
                   <option className={styles.option}>None</option>
-                  {sizesArr &&
+                  {
+                  sizesArr ?
                     sizesArr.map((e) => (
                       <option
                         className={styles.option}
@@ -248,7 +294,15 @@ export default function Detail() {
                       >
                         {e.SizeName}
                       </option>
-                    ))}
+                    )):
+                    <option
+                        className={styles.option}
+                        name="default"
+                        key="default"
+                      >
+                        One size
+                      </option>
+                    }
                 </select>
               </div>
             </div>

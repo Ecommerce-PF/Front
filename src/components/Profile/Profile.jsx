@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
@@ -10,18 +9,8 @@ import { useState } from "react";
 const Profile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
-  const profileImages = userId ? userId.profileImage : null;
 
   const [url, setUrl] = useState("");
-
-  const handleUpload = async (error, result) => {
-    if (result && result.event === "success") {
-      setUrl(result.info.secure_url);
-      await axios.put(`/users/1`, { profileImage: result.info.secure_url });
-      console.log({ profileImage: url });
-    }
-  };
-
   const id = useSelector((state) => state.idUsuario);
 
   if (id.length === 0) {
@@ -29,13 +18,18 @@ const Profile = () => {
   } else {
     localStorage.setItem("ids", id);
   }
+  const profileImages = userId.profileImage;
 
   const idUser = localStorage.getItem("ids");
 
   useEffect(() => {
+    setUrl(userId.profileImage);
+  }, [userId.profileImage]);
+
+  useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getUserAll());
-      await dispatch(getUserById(idUser));
+      dispatch(getUserAll());
+      dispatch(getUserById(idUser));
     };
 
     fetchData();
@@ -55,14 +49,16 @@ const Profile = () => {
       <p className={styles.info}>Phone: </p>
       <h2>{phone}</h2>
 
-      {profileImages !== null && (
-        <img className={styles.img_profile} src={profileImages} alt={name} />
-      )}
+      <img className={styles.img_profile} src={url} alt={name} />
 
       <h3 className={styles.subtitle}>Address {address}</h3>
       <p className={styles.address}></p>
 
-      <h3 className={styles.subtitle}>Purchase History </h3>
+      <h3 className={styles.subtitle}>
+        <Link to={`/ListUser/${idUser}`} className={styles.purchaseLink}>
+          Purchase History
+        </Link>
+      </h3>
       <ul className={styles.purchaseList}>
         {purchaseHistory &&
           purchaseHistory.map((purchase) => (

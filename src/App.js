@@ -17,6 +17,12 @@ import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado"
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
 import FavoritesView from "./components/FavoritesView/FavoritesView";
 import EditProfile from "./components/Profile/EditProfile";
+<<<<<<< HEAD
+=======
+import OrderList from "./components/DashBoardAdmin/OrderList";
+import ListUser from "./components/DashBoardAdmin/ListUser";
+import Stock from "./components/DashBoardAdmin/Stock";
+>>>>>>> 974c1073c642f333cfa2c0470c747c4543aa554c
 
 function App() {
   return (
@@ -41,6 +47,8 @@ function App() {
         <Route path="/success" element={<MercadoPagoAceptado />} />
         <Route path="/failure" element={<MercadoPagoRechazado />} />
         <Route path="/favorites/:id" element={<FavoritesView />} />
+        <Route path="/OrderList" element={<OrderList />} />
+        <Route path="/ListUser/:id" element={<ListUser />} />
       </Routes>
     </div>
   );

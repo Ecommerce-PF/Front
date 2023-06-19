@@ -16,7 +16,7 @@ const Admin = () => {
 
   const userAdmin = localStorage.getItem("userId");
 
-  return userAdmin === "true" ? (
+  return (
    
    
    <div className={style.container}>
@@ -38,6 +38,19 @@ const Admin = () => {
                 Order Users
               </Link>
             </div>
+<<<<<<< HEAD
+=======
+
+            <div className={style.buton_container}>
+              <Link to="/OrderList" className={style.link}>
+                Order List
+                </Link> 
+                </div> <div className={style.buton_container}>
+              <Link to="/Stock" className={style.link}>
+                Stock
+              </Link>
+            </div>
+>>>>>>> 974c1073c642f333cfa2c0470c747c4543aa554c
           
             <div className={style.buton_container}>
               <Link to="/home">
@@ -49,10 +62,7 @@ const Admin = () => {
         
     </div>
   ) 
-  : 
-  <div>
-    <h1>USTED NO TIENE PERMISOS </h1>
-  </div>
+ 
 };
 
 export default Admin;

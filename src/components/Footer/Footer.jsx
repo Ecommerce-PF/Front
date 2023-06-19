@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div class={s.piepagina}>
-      <div class={s.grupo2}>
-        <div class={s.box}>
+    <div className={s.piepagina}>
+      <div className={s.grupo2}>
+        <div className={s.box}>
           <figure className={s.figure}>
             {/* <a className={s.a} href="#"></a> */}
           </figure>
         </div>
-        <div class={s.box}>
+        <div className={s.box}>
           <h2 className={s.h2}>SOBRE NOSOTROS</h2>
           <p className={s.p}>
             ClotheStore es apasionada por la moda y comprometida con la calidad.
@@ -20,9 +20,9 @@ export default function Footer() {
             nuestra comunidad y descubrir un estilo único con ClotheStore.
           </p>
         </div>
-        <div class={s.box}>
+        <div className={s.box}>
           <h2 className={s.h2}>SIGUENOS</h2>
-          <div class={s.redsocial}>
+          <div className={s.redsocial}>
             <Link to="https://www.instagram.com/f21argentina/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,13 +37,13 @@ export default function Footer() {
                   r="44.899"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop offset="0" stop-color="#fd5" />
-                  <stop offset=".328" stop-color="#ff543f" />
-                  <stop offset=".348" stop-color="#fc5245" />
-                  <stop offset=".504" stop-color="#e64771" />
-                  <stop offset=".643" stop-color="#d53e91" />
-                  <stop offset=".761" stop-color="#cc39a4" />
-                  <stop offset=".841" stop-color="#c837ab" />
+                  <stop offset="0" stopColor="#fd5" />
+                  <stop offset=".328" stopColor="#ff543f" />
+                  <stop offset=".348" stopColor="#fc5245" />
+                  <stop offset=".504" stopColor="#e64771" />
+                  <stop offset=".643" stopColor="#d53e91" />
+                  <stop offset=".761" stopColor="#cc39a4" />
+                  <stop offset=".841" stopColor="#c837ab" />
                 </radialGradient>
                 <path
                   fill="url(#yOrnnhliCrdS2gy~4tD8ma)"
@@ -57,8 +57,8 @@ export default function Footer() {
                   gradientTransform="matrix(1 0 0 .6663 0 1.849)"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop offset="0" stop-color="#4168c9" />
-                  <stop offset=".999" stop-color="#4168c9" stop-opacity="0" />
+                  <stop offset="0" stopColor="#4168c9" />
+                  <stop offset=".999" stopColor="#4168c9" stopOpacity="0" />
                 </radialGradient>
                 <path
                   fill="url(#yOrnnhliCrdS2gy~4tD8mb)"
@@ -104,8 +104,8 @@ export default function Footer() {
                 y2="43.432"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0" stop-color="#0d61a9" />
-                <stop offset="1" stop-color="#16528c" />
+                <stop offset="0" stopColor="#0d61a9" />
+                <stop offset="1" stopColor="#16528c" />
               </linearGradient>
               <path
                 fill="url(#awSgIinfw5_FS5MLHI~A9a)"
@@ -128,8 +128,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div class={s.grupo2}>
-        <small class={s.small}>
+      <div className={s.grupo2}>
+        <small className={s.small}>
           &copy; 2023 <b>Henry PF</b> - Todos los Derechos Reservados. ®
         </small>
       </div>

@@ -125,7 +125,6 @@ const SignUp = () => {
       const token = credential.accessToken;
       const users = result.user;
 
-      setUser({
       setGoogleUser({
 
         name: users.displayName,

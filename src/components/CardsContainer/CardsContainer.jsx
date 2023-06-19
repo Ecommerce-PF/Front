@@ -10,6 +10,7 @@ const CardsContainer = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
   const id = userId.id;
+
   const dispatch = useDispatch();
 
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);

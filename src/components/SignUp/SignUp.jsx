@@ -42,7 +42,6 @@ const SignUp = () => {
   });
 
   const [google, setGoogle] = useState(false);
-  console.log(google)
   // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
 

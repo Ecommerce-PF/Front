@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,9 +10,10 @@ import UploadFile from "../UploadFile/UploadFile";
 import Swal from "sweetalert2";
 
 export default function CreatePost() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const idUsed = products.map((product) => product.id);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -44,18 +46,25 @@ export default function CreatePost() {
     description: "",
   });
 
-  const idGenerator = () => {
-    setInput((prevInput) => ({
-      ...prevInput,
-      id: prevInput.id + 1,
-    }));
-
-    console.log(input.id);
-  };
   useEffect(() => {
+    function generarNumeroAleatorio() {
+      let numerosDisponibles = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      let numeroGenerado = "";
+
+      for (let i = 0; i < 4; i++) {
+        const indiceAleatorio = Math.floor(
+          Math.random() * numerosDisponibles.length
+        );
+        const digito = numerosDisponibles.splice(indiceAleatorio, 1)[0];
+        numeroGenerado += digito.toString();
+      }
+
+      return numeroGenerado;
+    }
+
     setInput((prevInput) => ({
       ...prevInput,
-      id: prevInput.id + 1,
+      id: generarNumeroAleatorio(),
     }));
   }, []);
 
@@ -87,7 +96,7 @@ export default function CreatePost() {
     }
     setInput((prevInput) => ({
       ...prevInput,
-      [name]: name === "id" || name === "price" ? parseInt(value) : value,
+      [name]: name === "id" ? parseInt(value) : value,
     }));
     setError((prevError) => ({
       ...prevError,
@@ -98,7 +107,6 @@ export default function CreatePost() {
   const submitHandler = useCallback(
     (e) => {
       e.preventDefault();
-      idGenerator();
       axios
         .post("/products", input)
         .then(() =>
@@ -112,7 +120,7 @@ export default function CreatePost() {
         )
         .then(() => navigate(`/detail/${input.id}`))
         .catch((error) => alert(error));
-    },  //eslint-disable-next-line react-hooks/exhaustive-deps
+    },
     [input]
   );
 
@@ -124,6 +132,30 @@ export default function CreatePost() {
       }));
     }
   }, []);
+
+
+
+  
+const validate = (input) => {
+  let error = {};
+  if (!input.name) {
+    error.name = "Name is required";
+  }
+  if (!input.color) {
+    error.color = "Color is required";
+  }
+  if (!input.price) {
+    error.price = "Price is required";
+  }
+  if (!input.category) {
+    error.category = "Category is required";
+  }
+  if (!input.description) {
+    error.description = "Description is required";
+  }
+  return error;
+};
+
 
   return (
     <div className={styles.body_container}>

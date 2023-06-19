@@ -12,6 +12,8 @@ const Profile = () => {
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
 
+  console.log(userId, "userId")
+
 
   const id = useSelector((state) => state.idUsuario);
 

@@ -116,6 +116,7 @@ const SignUp = () => {
       const token = credential.accessToken;
       // The signed-in user info.
       const users = result.user;
+      console.log(users, 'aaaaaaaaaa')
       // IdP data available using getAdditionalUserInfo(result)
       // ...
       setUser({

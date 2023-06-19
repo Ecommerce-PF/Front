@@ -166,7 +166,6 @@ const SignUp = () => {
               timer: 1500,
             });
             navigate("/login");
-            window.location.reload();
           })
           .catch((res) => {
                     Swal.fire({

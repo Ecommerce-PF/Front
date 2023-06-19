@@ -1,15 +1,15 @@
 .mainContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  border-radius: 20px;
-  background-color: rgb(255, 255, 255);
-  height: 700px;
-  width: 460px;
-  margin: 10px;
-  padding-bottom: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: rgb(255, 255, 255);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(252, 218, 255, 1) 100%);
+      color: #af1cc2;
 }
 
 .mainContainer:hover {
@@ -19,13 +19,19 @@
 }
 
 .card {
-  width: 75%;
-  border-radius: 3%;
+  height:250px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .title {
   text-align: center;
-  height: 30px;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  height: 50px;
+  width: 200px;
   color: #434343;
 }
 
@@ -33,10 +39,8 @@
   text-decoration: none;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 20px;
   color: #434343;
-  margin-top: 30px;
-  margin-bottom: -5px;
 }
 
 .link {
@@ -76,4 +80,13 @@
 .svg2:hover {
   transition: 0.4s;
   transform: scale(1.5);
+}
+
+.price_and_fav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  width: 100%;
 }

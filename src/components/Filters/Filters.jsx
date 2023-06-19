@@ -11,6 +11,7 @@ import styles from "./Filters.module.css";
 const Filters = ({ setprice }) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const [orderBy, setOrderBy] = useState("asc");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [uniqueCategories, setUniqueCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -43,14 +44,16 @@ const Filters = ({ setprice }) => {
     setPriceRange([priceRange[0], maxPrice]);
   };
 
-  const handleFilterByPrice = () => {
-    dispatch(filterByPrice(priceRange));
-  };
+const handleFilterByPrice = () => {
+  dispatch(filterByPrice(priceRange, orderBy));
+  dispatch(filterByCategory(selectedCategory));
+};
 
-  function handleOderByPrice(e) {
-    dispatch(orderByPrice(e.target.value));
-    setprice(e.target.value);
-  }
+  const handleOrderByPrice = (event) => {
+    const selectedOrder = event.target.value;
+    setOrderBy(selectedOrder);
+    dispatch(orderByPrice(selectedOrder));
+  };
 
   return (
     <div className={styles["filter-container"]}>
@@ -81,17 +84,16 @@ const Filters = ({ setprice }) => {
         </select>
       </div>
 
-
       <select
         className={styles["select2"]}
-        onChange={handleOderByPrice}
+        value={orderBy}
+        onChange={handleOrderByPrice}
         name="price"
         id="price"
       >
         <option value="asc">Lower</option>
         <option value="des">Higher</option>
       </select>
-
 
       <div className={styles["filter-section"]}>
         <div className={styles["price-input"]}>

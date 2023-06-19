@@ -1,57 +1,84 @@
-/* hacer un grid con 3 columnas y 3 filas */
-/* cada elemento del grid debe tener un tamaño de 300px */
-/* cada elemento del grid debe tener un margen de 10px */
-/* cada elemento del grid debe tener un padding de 10px */
-
-.container_fav{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
-    color: #af1cc2;
+.favorite_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(252, 218, 255, 1) 100%
+  );
+  color: #af1cc2;
 }
+.container_fav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+  padding: 20px 0;
+  margin: 20px 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(252, 218, 255, 1) 100%
+  );
+  color: #af1cc2;
+}
+
 .title_fav {
-    font-size: 2rem;
-    margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #af1cc2;
 }
 .button_fav {
-    width: 200px;
-    height: 50px;
-    border-radius: 20px;
-    border: none;
-    background-color: #af1cc2;
-    color: white;
-    font-size: 1.2rem;
-    margin-top: 20px;
-    cursor: pointer;
+  width: 200px;
+  height: 50px;
+  border-radius: 20px;
+  border: none;
+  background-color: #af1cc2;
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
 /******************************************************************************/
 
-.button {
-    width: 150px;
-    height: 50px;
-    font-size: 14px;
-    color: #ffffff;
-    background-color: #1d1f24;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #434343;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
-    color: #fff;
-    transform: translateY(-2px);
-  }
-  
-  .button:active {
-    transform: translateY(-1px);
-  }
+.back_button {
+  width: 100px;
+  height: 40px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #1d1f24;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.back_button:hover {
+  background-color: #434343;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.back_button:active {
+  transform: translateY(-1px);
+}
+
+.fav_back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  color: #af1cc2;
+}

@@ -143,10 +143,11 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
                 />
               </svg>
             </Link>
-          )}
+            )}
         </Link>
       </div>
     </div>
+            
   );
 };
 

@@ -40,30 +40,29 @@ const FavoritesView = () => {
   // dar etiqutas de estilos para style.module.css
   return (
     <div className={styles.favorite_container}>
-      <div>
+          <div>
         <h1 className={styles.title_fav}>Productos Favoritos</h1>
       </div>
-      <div className={styles.container_fav}>
-        {myFavorites.map((favorite) => {
-          return (
-            <Card
-              key={favorite.id}
-              id={favorite.id}
-              name={favorite.name}
-              image={favorite.image}
-              price={favorite.price}
-            >
-              <button onClick={() => handleDeleteFavorite(favorite.id)}>
-                Eliminar
-              </button>
-            </Card>
-          );
-        })}
+    <div className={styles.container_fav}>
+      {myFavorites.map((favorite) => {
+        return (
+          <Card
+            key={favorite.id}
+            id={favorite.id}
+            name={favorite.name}
+            image={favorite.image}
+            price={favorite.price}
+          >
+            <button onClick={() => handleDeleteFavorite(favorite.id)}>
+              Eliminar
+            </button>
+          </Card>
+        );
+      })}
+      <NavLink to="/home" className={styles.navlink}>
+        <button>Back</button>
+      </NavLink>
       </div>
-        <NavLink to="/home" className={styles.fav_back}>
-          <button className={styles.back_button}
-          >Back</button>
-        </NavLink>
     </div>
   );
 };

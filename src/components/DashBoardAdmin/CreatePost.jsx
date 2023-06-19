@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { getAllProducts } from "../../redux/actions/actions.js";
 import axios from "axios";
 import styles from "./CreatePost.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 import UploadFile from "../UploadFile/UploadFile";
+import Swal from "sweetalert2";
+
+
 
 export default function CreatePost() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
 
@@ -20,6 +24,7 @@ export default function CreatePost() {
   );
 
   const [allCategories, setAllCategories] = useState("All categories");
+  
 
   const [error, setError] = useState({
     name: "",
@@ -35,52 +40,50 @@ export default function CreatePost() {
     name: "",
     color: [],
     price: 0,
-    image:"",
+    image: "https://marketplace.canva.com/EAFBKs7K_lE/1/0/1600w/canva-colorful-variety-of-clothes-hanging-on-rack-new-arrival-instagram-post-wBkgRMEh93E.jpg",
     category: "",
     parentCategory: "",
     description: "",
   });
+  
+  
+ const idGenerator = ()=> {
+    setInput(prevInput => ({
+      ...prevInput,
+      id: prevInput.id + 1,
+     }));
 
+ console.log(input.id)
+  }
+  useEffect(() => {
+    setInput(prevInput => ({
+      ...prevInput,
+      id: prevInput.id + 1,
+     }));
+   }, []);
+  
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
-
+  
     if (name === "color") {
       const colorsArray = value.split(",").map((color) => ({
         name: color.trim(),
         // otros atributos que necesites para el color
       }));
-
-      setInput((prevInput) => ({
+  
+      setInput(prevInput => ({
         ...prevInput,
         [name]: colorsArray,
       }));
     } else {
-      setInput((prevInput) => ({
+      setInput(prevInput => ({
         ...prevInput,
         [name]: value,
       }));
     }
   }, []);
+  
 
-  const [colors, setColors] = useState([]);
-  const addColors = useCallback(
-    (event) => {
-      event.preventDefault();
-      const newColor = { number: colors.length + 1, color: "" };
-      setColors((prevColors) => [...prevColors, newColor]);
-      setInput((prevInput) => ({ ...prevInput, color: [...colors, newColor] }));
-    },
-    [colors]
-  );
-
-  const [count, setCount] = useState("");
-
-  useEffect(() => {
-    const lastNumber = colors[colors.length - 1]?.number;
-    if (lastNumber) {
-      setCount(lastNumber);
-    }
-  }, [colors]);
 
   const changeHandler = useCallback((event) => {
     const { name, value } = event.target;
@@ -100,9 +103,20 @@ export default function CreatePost() {
   const submitHandler = useCallback(
     (e) => {
       e.preventDefault();
+      idGenerator();
       axios
         .post("/products", input)
-        .then(() => alert("The clothe was created successfully"));
+        .then(() =>
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Your clothe has been saved successfully',
+          showConfirmButton: false,
+          timer: 1500
+        }))
+        .then(() => navigate(`/detail/${input.id}`)) 
+        .catch(error => alert(error));
+
     },
     [input]
   );
@@ -117,31 +131,21 @@ export default function CreatePost() {
   }, []);
 
   return (
-    <div className={styles.body}>
+    
+    <div className={styles.body_container}>
+     
+     
       <form className={styles.form} onSubmit={submitHandler}>
+        
         <div className={styles.statsAndTypes}>
+          
           <div className={styles.stats}>
-            <h3>Characteristics</h3>
+            
+            <h1>Create New Clothe </h1>
 
-            <div className={styles.centralize}>
+{/* /********************************************************************************* */} 
               <div className={styles.inputBlock}>
-                <input
-                  className={styles.input}
-                  type="number"
-                  name="id"
-                  id="input-text"
-                  required
-                  spellCheck="false"
-                  value={input.id}
-                  onChange={changeHandler}
-                />
-                {error.name && <p>{error.name}</p>}
-                <span className={styles.placeholder}>Id</span>
-              </div>
-            </div>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
+                <label className={styles.label_name}>Name Clothe:</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -153,49 +157,27 @@ export default function CreatePost() {
                   onChange={changeHandler}
                 />
                 {error.name && <p>{error.name}</p>}
-                <span className={styles.placeholder}>Name</span>
               </div>
+            
+{/* /********************************************************************************* */}
+            
+            <div  className={styles.felx_container}>
+            
+            <div  >
+              <UploadFile
+                handleUpload={handleUpload}
+                folder={"product"}
+              ></UploadFile>  
             </div>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="parentCategory"
-                  id="input-text"
-                  required
-                  spellCheck="false"
-                  value={input.parentCategory}
-                  onChange={changeHandler}
-                />
-                {error.name && <p>{error.name}</p>}
-                <span className={styles.placeholder}>Parent Category</span>
-              </div>
-            </div>
-
-            <form onSubmit={addColors}>
-              <div>
-                <label className="name">Colors: {count + 1} </label>
-                <label htmlFor="color">Color</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="color"
-                  id="color"
-                  onChange={handleChange}
-                  value={input.color.map((color) => color.name).join(", ")}
-                />
-              </div>
-              <div>
-                <button className="enviar2" type="submit">
-                  Add{" "}
-                </button>
-              </div>
-            </form>
-
-            <div className={styles.centralize}>
-              <div className={styles.inputBlock}>
+            
+            <img
+                src={input.image}
+                className={styles.imgPreview}
+                alt={input.name}
+                width="250"
+                height="250"/>
+              <div >
+              <label className={styles.label_name}>Price</label>
                 <input
                   className={styles.input}
                   type="number"
@@ -206,25 +188,30 @@ export default function CreatePost() {
                   value={input.price}
                   onChange={changeHandler}
                 />
-                <span className={styles.placeholder}>Price</span>
-              </div>
-            </div>
-            <div>
-              <img
-                src={input.image}
-                alt="productImage"
-                width="90"
-                height="110"
-              ></img>
-              <p></p>
-              <UploadFile
-                handleUpload={handleUpload}
-                folder={"product"}
-              ></UploadFile>
+                {error.price && <p>{error.price}</p>} 
             </div>
 
-            <div className={styles.centralize}>
+            </div>
+           
+
+{/* /********************************************************************************* */}
               <div className={styles.inputBlock}>
+                <label htmlFor="color" className={styles.label_name} >Color:</label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="color"
+                  id="color"
+                  onChange={handleChange}
+                  value={input.color.map((color) => color.name).join(", ")}
+                />
+              </div>
+
+
+{/* /********************************************************************************* */}
+           
+              <div className={styles.inputBlock}>
+              <label className={styles.label_name}>Description :</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -235,18 +222,23 @@ export default function CreatePost() {
                   value={input.description}
                   onChange={changeHandler}
                 />
-                <span className={styles.placeholder}>Description</span>
+                
               </div>
-            </div>
-          </div>
+            
+         
+ {/* /********************************************************************************* */}
+ 
+ 
+        <div className={styles.inputBlock}>
 
+         <label htmlFor=""  className={styles.label_name}>Category: </label>
           <select
             className={styles.select}
             value={input.category}
             name="category"
             onChange={changeHandler}
           >
-            <option className={styles.all} value="">
+            <option value="">
               {allCategories}
             </option>
             {uniqueCategories.map((category) => {
@@ -264,21 +256,51 @@ export default function CreatePost() {
               );
             })}
           </select>
+
+          </div>
+
+          {/* /*********************************************************************************       */}
+          <div className={styles.inputBlock}>
+
+          <label className={styles.label_name}>Parent Category:</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="parentCategory"
+              id="input-text"
+              required
+              spellCheck="false"
+              value={input.category}
+              onChange={changeHandler}
+            />
+            {error.name && <p>{error.name}</p>}
+
+          </div>
+       
+       
         </div>
-        <button className="enviar" type="submit">
-          ENVIAR
+
+      </div>
+      <br /><br />
+        <button className={styles.enviar} type="submit">
+          Create
         </button>
        
       </form>
 
-
-
+{/* /********************  BOTON BACK  ****************************** * */}
+      <br />
+      <br />
+      <br />
       
-<Link to="/DashBoardAdmin">
-<button className={styles.button}>
-  Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-</button>
-</Link>
+      <div>
+      <Link to="/DashBoardAdmin">
+        <button className={styles.button}>
+        Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+      </button>
+      </Link>
+      </div>
+
     </div>
   );
 }

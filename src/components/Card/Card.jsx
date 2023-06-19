@@ -56,7 +56,6 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
       alert(error);
     }
   };
-
   return (
     <div className={style.mainContainer}>
       {userId.admin && sesions === "si" ? (

@@ -17,6 +17,7 @@ import MercadoPagoRechazado from "./components/MercadoPago/MercadoPagoRechazado"
 import EditProduct from "./components/DashBoardAdmin/EditProduct";
 import FavoritesView from "./components/FavoritesView/FavoritesView";
 import EditProfile from "./components/Profile/EditProfile";
+import Stock from "./components/DashBoardAdmin/Stock";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/DashBoardAdmin/*" element={<DashBoardAdmin />} />
         <Route path="/CreatePost" element={<CreatePost />} />
+        <Route path="/Stock" element={<Stock />} />
         <Route path="/Delete" element={<Delete />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editProfile" element={<EditProfile />} />

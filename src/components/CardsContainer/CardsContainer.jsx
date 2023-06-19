@@ -35,6 +35,8 @@ const CardsContainer = () => {
   const porPagina = 6;
   const maximo = products.length / porPagina;
 
+  console.log(products);
+
   return (
     <div>
       <div>
@@ -49,7 +51,18 @@ const CardsContainer = () => {
           .map((product) => {
             if (product.isAvaible === false) {
               return null; // No renderizar nada cuando isAvaible es true
-            } else {
+            } else if (product.stock === 0) {
+              return (
+                <Card
+                  key={product.id}
+                  name={product.name}
+                  image={product.image}
+                  price="Sin stock"
+                  id={product.id}
+                />
+              );
+            }
+            
               return (
                 <Card
                   name={product.name}
@@ -59,7 +72,7 @@ const CardsContainer = () => {
                   key={product.id}
                 ></Card>
               );
-            }
+            
           })}
       </div>
     </div>

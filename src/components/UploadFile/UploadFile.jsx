@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styles from "../DashBoardAdmin/CreatePost.module.css"
 
 const UploadFile = ({ handleUpload, folder }) => {
   const cloudinaryRef = useRef();
@@ -21,9 +22,13 @@ const UploadFile = ({ handleUpload, folder }) => {
     event.preventDefault();
     widgetRef.current.open();
   };
-
-  /*****************************************************   */
-  return <button onClick={handleClick}>Upload Image</button>;
+  return (
+    <button 
+    className={styles.enviar}
+    onClick={handleClick}>
+      Upload Image
+    </button>
+  );
 };
 
 export default UploadFile;

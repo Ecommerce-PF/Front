@@ -109,15 +109,10 @@ const SignUp = () => {
   async function callLoginGoogle() {
     try {
       const result = await signInWithPopup(auth, provider);
-
-      // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = await GoogleAuthProvider.credentialFromResult(result);
-      // eslint-disable-next-line no-unused-vars
       const token = credential.accessToken;
-      // The signed-in user info.
       const users = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
+   
       setUser({
         name: users.displayName,
         userName: users.displayName,
@@ -128,14 +123,12 @@ const SignUp = () => {
       });
       setGoogle(true);
     } catch (error) {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // // The email of the user's account used.
-      // const email = error.customData.email;
-      // // The AuthCredential type that was used.
-      // const credential = await GoogleAuthProvider.credentialFromError(error);
-
-      alert("Error al procesar la solicitud");
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong!',
+        text: error,
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
     }
   }
 
@@ -158,7 +151,7 @@ const SignUp = () => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: error,
           footer: '<a href="">Why do I have this issue?</a>'
         })
       }

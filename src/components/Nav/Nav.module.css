@@ -2,7 +2,7 @@
 
 .mainContainer {
   display: flex;
-  position: relative;
+  position: sticky;
   top: 0;
   z-index: 100;
   justify-content: space-between;
@@ -20,13 +20,13 @@
 }
 
 .carrito{
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 .carrito1{
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 
 .link:hover {
@@ -78,7 +78,7 @@ margin-right: 40px;
 }
 
 .titleLogin{
-  margin: 0px 10px;
+  margin: 45px;
   color: rgba(41, 41, 41, 0.844);
 }.mainContainer {
   display: flex;
@@ -200,8 +200,8 @@ margin-right: 40px;
 
 
 .button {
-  width: 86px;
-  height: 35px;
+  width: 150px;
+  height: 50px;
   font-size: 14px;
   color: #383838;
   background-color: #ffffff;
@@ -222,20 +222,35 @@ margin-right: 40px;
   transform: translateY(-1px);
 }
 
-.svg{
+.svg {
+  width: 50px;
+  margin: 10px;
+
+}
+
+.svg2 {
   width: 50px;
   margin: 10px;
 }
 
-.svg:hover{
+.svg2:hover {
   cursor: pointer;
   transform: scale(1.2);
   transition: transform 0.2s;
 }
 
-/* cambios de tamaño de pantalla eve */
-
-.contenedor_singup_back{
-  display: flex;
-  flex-direction: row;
+.svg:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform 0.2s;
 }
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

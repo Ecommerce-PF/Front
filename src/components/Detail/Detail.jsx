@@ -198,6 +198,24 @@ export default function Detail() {
     }
   };
 
+  /* 
+  state?.color &&
+                  state.color.map((e) => (
+                    <option
+                      className={styles.option}
+                      name={e.ColorName}
+                      key={e.ColorName}
+                    >
+                      {e.ColorName}
+                    </option>
+                  ))
+  */
+ console.log(state)
+ const arrayColor = state?.color && state?.color.map((e) => (
+  e.ColorName ? e.ColorName: e.name
+))
+console.log(arrayColor) 
+
   return (
     <div>
       <div className={styles.back}>
@@ -205,7 +223,7 @@ export default function Detail() {
           <div className={styles.productImg}>
             <h3>{state?.name}</h3>
             <div className={styles.img}>
-              {!!coloresPrt.length ? (
+              {coloresPrt && !!coloresPrt.length ? (
                 <div className={styles.divGaleryImg}>
                   <button onClick={changeLeft} className={styles.bttnArrow}>
                     <MdOutlineArrowBackIos />
@@ -240,14 +258,14 @@ export default function Detail() {
                 onChange={handleChange}
               >
                 <option className={styles.option}>None</option>
-                {state?.color &&
-                  state.color.map((e) => (
+                {arrayColor &&
+                  arrayColor.map((e) => (
                     <option
                       className={styles.option}
-                      name={e.ColorName}
-                      key={e.ColorName}
+                      name={e}
+                      key={e}
                     >
-                      {e.ColorName}
+                      {e}
                     </option>
                   ))}
               </select>
@@ -259,7 +277,8 @@ export default function Detail() {
                   name="size" /* onChange={handleChange} */
                 >
                   <option className={styles.option}>None</option>
-                  {sizesArr &&
+                  {
+                  sizesArr ?
                     sizesArr.map((e) => (
                       <option
                         className={styles.option}
@@ -268,7 +287,15 @@ export default function Detail() {
                       >
                         {e.SizeName}
                       </option>
-                    ))}
+                    )):
+                    <option
+                        className={styles.option}
+                        name="default"
+                        key="default"
+                      >
+                        One size
+                      </option>
+                    }
                 </select>
               </div>
             </div>

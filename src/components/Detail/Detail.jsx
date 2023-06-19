@@ -119,8 +119,6 @@ export default function Detail() {
     });
   };
 
-  const image = state.image;
-
   useEffect(() => {
     const timer = setTimeout(() => {
       const stock = state.stock;
@@ -145,7 +143,7 @@ export default function Detail() {
     }, 1000); // Retraso de 1 segundo (1000 milisegundos)
 
     return () => clearTimeout(timer); // Limpiar el temporizador al desmontar el componente
-  }, []);
+  }, [state.stock]);
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -153,7 +151,6 @@ export default function Detail() {
   }, [dispatch, id, idUsers]);
 
   //Logica de galeria img
-  const [colorProductImg, setColorProductImg] = useState("");
   const [coloresPrt, setColoresPrt] = useState([]);
   const [sizesArr, setSizeArr] = useState([]);
   const [numberImg, setNumberImg] = useState(0);
@@ -162,7 +159,6 @@ export default function Detail() {
     if (e.target.value === "None") {
       setColoresPrt([]);
     } else {
-      setColorProductImg(e.target.value);
       setColoresPrt(clrPrdct(e.target.value));
       setSizeArr(findArrSize(e.target.value));
     }
@@ -201,10 +197,6 @@ export default function Detail() {
       setNumberImg(0);
     }
   };
-
-  useEffect(() => {
-    // setColorProductImg()
-  }, []);
 
   return (
     <div>

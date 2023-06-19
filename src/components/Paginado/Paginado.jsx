@@ -40,7 +40,7 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
       setPagina(1);
       setInput(1);
     }
-  }, [maximo]);
+  }, [maximo, pagina, setPagina]);
 
   return (
     <div className={style.container}>

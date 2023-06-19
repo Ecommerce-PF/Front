@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Stock.module.css";
 import axios from "axios";
-import { getDetail, getAllProducts } from "../../redux/actions/actions";
+import { getAllProducts } from "../../redux/actions/actions";
 
 export default function Stock() {
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.productDetail);
+  //const product = useSelector((state) => state.productDetail);
   const products = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, []);
+  }, [dispatch]);
 
   const handlerButtonMore = async (event) => {
     const id = event.target.value;
@@ -23,7 +23,7 @@ export default function Stock() {
     }
 
     try {
-      const response = await axios.put(`/products/${id}`, productToUpdate);
+      await axios.put(`/products/${id}`, productToUpdate);
       // Realizar acciones adicionales después de una respuesta exitosa aquí
 
       dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
@@ -42,7 +42,7 @@ export default function Stock() {
     }
 
     try {
-      const response = await axios.put(`/products/${id}`, productToUpdate);
+      await axios.put(`/products/${id}`, productToUpdate);
       // Realizar acciones adicionales después de una respuesta exitosa aquí
 
       dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
@@ -53,7 +53,7 @@ export default function Stock() {
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [products]);
+  }, [dispatch,products]);
 
   return (
     <>

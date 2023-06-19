@@ -12,17 +12,15 @@ const Profile = () => {
   const [url, setUrl] = useState("");
   const userId = useSelector((state) => state.userId);
 
-
   const id = useSelector((state) => state.idUsuario);
-
 
   if (id.length === 0) {
     // No hacer nada
   } else {
     localStorage.setItem("ids", id);
   }
-  const profileImages= userId.profileImage
-  
+  const profileImages = userId.profileImage;
+
   const idUser = localStorage.getItem("ids");
 
   useEffect(() => {
@@ -57,7 +55,11 @@ const Profile = () => {
       <h3 className={styles.subtitle}>Address {address}</h3>
       <p className={styles.address}></p>
 
-      <h3 className={styles.subtitle}>Purchase History </h3>
+      <h3 className={styles.subtitle}>
+        <Link to={`/ListUser/${idUser}`} className={styles.purchaseLink}>
+          Purchase History
+        </Link>
+      </h3>
       <ul className={styles.purchaseList}>
         {purchaseHistory &&
           purchaseHistory.map((purchase) => (

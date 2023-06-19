@@ -33,7 +33,10 @@ export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
 export const SET_FAVORITES = "SET_FAVORITES";
-export const GET_ORDERS = "GET_ORDERS";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const CREATE_ORDER = "CREATE_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {
@@ -282,15 +285,25 @@ export const google = (e) => {
   };
 };
 
-export function getOrders(request) {
-  return function(dispatch) {
-      return axios.get(`http://localhost:3001/order`)
-      .then(res => 
-          dispatch({
-              type: GET_ORDERS,
-              payload: res.data
-          })
-      );
-        
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("/orders");
+      dispatch({ type: GET_ALL_ORDERS, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
   };
-}
+};
+
+export const getOrderById = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/orders/${id}`);
+      dispatch({ type: GET_ORDER_BY_ID, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+

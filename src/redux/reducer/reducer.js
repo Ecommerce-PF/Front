@@ -20,6 +20,9 @@ import {
   ADD_FAVORITE,
   DELETE_FAVORITE,
   SET_FAVORITES,
+  GET_ALL_ORDERS,
+  GET_ORDER_BY_ID,
+  
 } from "../actions/actions";
 
 const initialState = {
@@ -37,6 +40,8 @@ const initialState = {
   iniciado: [],
   google: {},
   myFavorites: [],
+  orders: [],
+  order: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -225,6 +230,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         favorites: action.payload,
       };
+
+      case GET_ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload
+      };
+    case GET_ORDER_BY_ID:
+      return {
+        ...state,
+        order: action.payload
+      };
+   
+
 
     default:
       return state;

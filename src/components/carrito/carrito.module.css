@@ -1,6 +1,6 @@
 .cart{
-    width: 10px;
-    height:10px;
+    width: 100px;
+    height:100px;
     background-image: url('../../assets/cart.png');
     background-position: center;
     background-size: contain;

@@ -254,3 +254,16 @@ margin-right: 40px;
   }
 }
 
+.contadorCarrito{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.078);
+  color: rgb(47, 47, 47);
+  border-radius: 50%;
+  height: 23%;
+  width: 23%;
+  margin-top: 70%;
+  margin-left: 75%;
+}

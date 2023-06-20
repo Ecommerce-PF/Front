@@ -5,17 +5,17 @@ import { getUserAll, getUserById, getOrderById, getAllOrders, getAllProducts } f
 import styles from "./OrderList.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 
-
 const OrderList = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const orders = useSelector((state) => state.orders);
   const products = useSelector((state) => state.products);
 
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedOrderId, setSelectedOrderId] = useState("");
   const [userOrders, setUserOrders] = useState([]);
-  const [form, setForm] = useState({ id: null });
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [isAscending, setIsAscending] = useState(true);
 
   useEffect(() => {
     dispatch(getUserAll());
@@ -23,27 +23,25 @@ const OrderList = () => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  const handleUserChange = (userId) => {
-    setSelectedUser(userId);
-    setSelectedOrder(null);
-
-    if (userId) {
-      dispatch(getUserById(userId));
-      setForm({ ...form, id: userId });
-      const userOrders = orders.filter((order) => order.userId === userId);
+  useEffect(() => {
+    if (selectedUserId) {
+      dispatch(getUserById(selectedUserId));
+      const userOrders = orders.filter((order) => order.userId === selectedUserId);
       setUserOrders(userOrders);
+      setFilteredOrders(userOrders);
     } else {
-      setForm({ ...form, id: null });
       setUserOrders([]);
+      setFilteredOrders(orders);
     }
+  }, [dispatch, orders, selectedUserId]);
+
+  const handleUserChange = (event) => {
+    setSelectedUserId(event.target.value);
+    setSelectedOrderId("");
   };
 
-  const handleOrderChange = async (orderId) => {
-    setSelectedOrder(orderId);
-
-    if (orderId) {
-      dispatch(getOrderById(orderId));
-    }
+  const handleOrderChange = (event) => {
+    setSelectedOrderId(event.target.value);
   };
 
   const getUserData = (userId) => {
@@ -60,7 +58,7 @@ const OrderList = () => {
     return userOrders.length > 0 ? (
       <div>
         <h3>Orders</h3>
-        <select onChange={(e) => handleOrderChange(e.target.value)}>
+        <select onChange={handleOrderChange}>
           <option value="">Select an order</option>
           {userOrders.map((order) => (
             <option key={order.id} value={order.id}>
@@ -73,7 +71,7 @@ const OrderList = () => {
   };
 
   const getOrderDetails = () => {
-    const order = orders.find((order) => order.id === selectedOrder);
+    const order = orders.find((order) => order.id === selectedOrderId);
     if (order) {
       return (
         <div>
@@ -107,69 +105,98 @@ const OrderList = () => {
     }
   };
 
+  const handleFilterByDate = () => {
+    setIsAscending((prevState) => !prevState);
+  
+    const sortedOrders = [...filteredOrders].sort((a, b) => {
+      if (isAscending) {
+        return new Date(a.date) - new Date(b.date);
+      } else {
+        return new Date(b.date) - new Date(a.date);
+      }
+    });
+  
+    setFilteredOrders(sortedOrders);
+  };
+
   const handleViewAllOrders = () => {
-    setSelectedUser(null);
-    setSelectedOrder(null);
-    setUserOrders([]);
+    setSelectedUserId("");
+    setSelectedOrderId("");
+    setUserOrders(orders);
+    setFilteredOrders(orders);
   };
 
   return (
     <>
-    <div style={{ textAlign: "center" }}>
-      <h2>Order List</h2>
-      <select onChange={(e) => handleUserChange(e.target.value)}>
-        <option value="">Select a user</option>
-        {users.map((user) => (
-          <option key={user.id} value={user.id}>
-            User ID: {user.id}
-          </option>
-        ))}
-      </select>
-      {selectedUser && (
-        <div>
-          {getUserData(selectedUser)}
-          {getUserOrders(selectedUser)}
-        </div>
-      )}
-      {selectedOrder && getOrderDetails()}
-      {!selectedUser && (
-        <div>
-          <h3>All Orders</h3>
-          {orders.map((order) => (
-            <div key={order.id} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
-              <h1>{order.status}</h1>
-              <h3>{order.paymentMethod}</h3>
-              <h3>{order.total}</h3>
-              <h3>{order.date}</h3>
-              <h1>Clothes:</h1>
-              <ul style={{ listStyleType: "none", padding: 0 }}>
-                {order.products.map((product) => {
-                  //const foundProduct = products.find((p) => p.id === product.id);
-                  return (
-                    <li key={product.id} style={{ marginBottom: "10px" }}>
-                      <h4>{product.title}</h4>
-                      <p>Quantity: {product.quantity}</p>
-                      <p>Price: {product.price}</p>
-                      <p>Currency ID: {product.currencyId}</p>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p>User ID: {order.userId}</p>
-            </div>
-          ))}
-        </div>
-      )}
-      <button onClick={handleViewAllOrders}>View All Orders</button>
-    </div>
+      <div style={{ textAlign: "center" }}>
+        <h2>Order List</h2>
+        <form className="m-5">
+          <select
+            name="userId"
+            className="btn btn-light dropdown-toggle m-3"
+            value={selectedUserId}
+            onChange={handleUserChange}
+          >
+            <option value="" disabled>
+              SELECT USER
+            </option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+        </form>
+        {selectedUserId && (
+          <div>
+            {getUserData(selectedUserId)}
+            {getUserOrders(selectedUserId)}
+          </div>
+        )}
+        {selectedOrderId && getOrderDetails()}
+        {!selectedUserId && (
+          <div>
+            <h3>All Orders</h3>
+            <button onClick={handleFilterByDate}>Filter by Date</button>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
+                <div key={order.id} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
+                  <h1>{order.status}</h1>
+                  <h3>{order.paymentMethod}</h3>
+                  <h3>{order.total}</h3>
+                  <h3>{order.date}</h3>
+                  <h1>Clothes:</h1>
+                  <ul style={{ listStyleType: "none", padding: 0 }}>
+                    {order.products.map((product) => {
+                      const foundProduct = products.find((p) => p.id === product.id);
+                      return (
+                        <li key={product.id} style={{ marginBottom: "10px" }}>
+                          <img src={foundProduct ? foundProduct.image : ""} alt={foundProduct ? foundProduct.title : ""} />
+                          <h4>{product.title}</h4>
+                          <p>Quantity: {product.quantity}</p>
+                          <p>Price: {product.price}</p>
+                          <p>Currency ID: {product.currencyId}</p>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p>User ID: {order.userId}</p>
+                </div>
+              ))
+            ) : (
+              <p>No orders found.</p>
+            )}
+          </div>
+        )}
+        <button onClick={handleViewAllOrders}>View All Orders</button>
+      </div>
 
-              <Link to="/DashBoardAdmin">
-                <button className={styles.button_back}>
-                Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
-                </button>
-              </Link>
-
-      </>
+      <Link to="/DashBoardAdmin">
+        <button className={styles.button_back}>
+          Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
+        </button>
+      </Link>
+    </>
   );
 };
 

@@ -144,7 +144,7 @@ const OrderList = () => {
               <h1>Clothes:</h1>
               <ul style={{ listStyleType: "none", padding: 0 }}>
                 {order.products.map((product) => {
-                  const foundProduct = products.find((p) => p.id === product.id);
+                  //const foundProduct = products.find((p) => p.id === product.id);
                   return (
                     <li key={product.id} style={{ marginBottom: "10px" }}>
                       <h4>{product.title}</h4>

@@ -121,8 +121,6 @@ const SignUp = () => {
   async function callLoginGoogle() {
     try {
       const result = await signInWithPopup(auth, provider);
-      const credential = await GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
       const users = result.user;
 
       setGoogleUser({
@@ -148,8 +146,7 @@ const SignUp = () => {
   useEffect(() => {
     if (google) {
       try {
-        const repo = axios
-          .post("/users/signup", googleUser)
+        axios.post("/users/signup", googleUser)
 
           .then((res) => {
             Swal.fire({
@@ -179,6 +176,7 @@ const SignUp = () => {
 
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, user, google]);
 
   return (

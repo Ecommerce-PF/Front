@@ -48,7 +48,7 @@ const OrdersUsers = () => {
         const newBanButtonMap = { ...banButtonMap, [id]: !banButtonMap[id] };
         setBanButtonMap(newBanButtonMap);
   
-        const res = await axios.put(`/users/${id}`, { active: !banButtonMap[id] });
+        await axios.put(`/users/${id}`, { active: !banButtonMap[id] });
         Swal.fire("Already!", "The user status has been changed!", "success");
       }
     } catch (error) {

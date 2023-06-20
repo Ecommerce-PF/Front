@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
@@ -20,11 +20,11 @@ const Nav = () => {
   const sesions = localStorage.getItem("sesions");
 
 
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  //const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    //setIsLoggedIn(false);
     navigate("/");
     window.location.reload();
   };

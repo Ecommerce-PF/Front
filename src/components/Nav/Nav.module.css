@@ -260,10 +260,11 @@
   position: absolute;
   color: rgb(0, 0, 0);
   border-radius: 50%;
-  height: 23%;
-  width: 23%;
-  margin-top: 15%;
-  margin-left: 38%;
+  height: 25%;
+  width: 25%;
+  margin-top: 55%;
+  margin-left: 55%;
+  background-color: rgb(255, 252, 56);
 }
 
 .containerNumberSvg:hover {

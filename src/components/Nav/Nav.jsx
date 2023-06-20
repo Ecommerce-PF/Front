@@ -11,12 +11,17 @@ const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
   const carritoState = useSelector((state) => state.cart);
+  
+  // console.log(userId.Clothes, "asdasd")
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCart());
+    // dispatch(getUser(userId.id))
   }, [dispatch]);
+
+
 
   const id = userId.id;
 

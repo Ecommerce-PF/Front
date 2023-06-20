@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+//import {  useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import styles from "./ListUser.module.css";
@@ -40,16 +41,16 @@ return (
           <p>Order Date: {order.date}</p>
           <p>Status : {order.status}</p>
           <p>Total de la compra: 💲{order.total}</p>
-          <p>Payment Method: {order.paymentMethod} 💰</p>
-          <p>Products: </p>
+          <p>Payment Method: {order.paymentMetod} </p>
+          <h3>Clothes: </h3>
           <ul>
             {order.products.map((product, index) => (
-              <li key={index} className={styles.li_elements_inside}>
-                <p>Product ID: {product.id}</p>
-                <p>Product Title: {product.title}</p>
-                <p>Product Price: {product.unit_price}</p>
+              <li  key={index} className={styles.li_elements_inside}> 
+                <p>Product :</p> 
+                <h3>{product.title}</h3>
+                <p>Product Price: {product.unit_price}💲 </p>
                 <p>Product Quantity: {product.quantity}</p>
-                <p>Product Currency: {product.currency_id}💲</p>
+                <p>Product Currency: {product.currency_id}</p>
               </li>
             ))}
           </ul>

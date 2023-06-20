@@ -22,8 +22,6 @@ export default function Detail() {
   const idUser = useSelector((state) => state.idUsuario);
   const user = useSelector((state) => state.userId);
 
-  console.log(state.stock, "caca");
-
   if (user.length === 0) {
     // No hacer nada
   } else {
@@ -89,35 +87,43 @@ export default function Detail() {
       alert(err);
     }
   };
-
+  
   const handleAddCart = () => {
     dispatch(addCart(state));
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
     let isProductInCart = false;
-
+  
     for (var i = 0; i < listaCart.length; i++) {
       if (listaCart[i].id === state.id) {
-        listaCart[i].quantity += 1;
         isProductInCart = true;
         break;
       }
     }
-
-    if (!isProductInCart) {
+  
+    if (isProductInCart) {
+      Swal.fire({
+        text: "This product is already in the cart!",
+        icon: "info",
+        footer: '<a href="/carrito">Would you like see yout cart?</a>',
+      });
+    
+    } else {
       listaCart.push({
         ...state,
         quantity: 1,
       });
+  
+      localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+      Swal.fire({
+        icon: "success",
+        title: "¡Su producto se ha agregado al carrito!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
-
-    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
-    Swal.fire({
-      icon: "success",
-      title: "Su producto se ha agregado al carrito!!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
   };
+  
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -210,12 +216,9 @@ export default function Detail() {
                     </option>
                   ))
   */
- console.log(state)
  const arrayColor = state?.color && state?.color.map((e) => (
   e.ColorName ? e.ColorName: e.name
 ))
-console.log(arrayColor) 
-
   return (
     <div>
       <div className={styles.back}>

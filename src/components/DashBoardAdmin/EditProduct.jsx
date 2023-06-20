@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate , Link} from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 
 import { getDetail } from "../../redux/actions/actions.js";
 import { FaArrowLeft } from "react-icons/fa";
@@ -14,37 +13,48 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const EditProduct = () => {
-
   const navigate = useNavigate();
 
   /*************************ESTO ES PARA MONTAR LA CARTA*********************************************** */
   const dispatch = useDispatch();
   const { id } = useParams();
-  const state = useSelector((state) => state.productDetail);
-  const { name, color, price, image, category, parentCategory, description } =
-    state;
-
+  
   useEffect(() => {
     dispatch(getDetail(id));
-  }, [dispatch,id]);
-
-  /*****************************ESTO ES DEL FORMULARIO************************************************ */
-  const [url, setUrl] = useState('');
-  useEffect(() => {
-    setUrl(state?.image);
-    // eslint-disable-next-line
-  }, []);
-  const [form, setForm] = useState({
-    id: id,
+  }, [dispatch, id]);
+  const state = useSelector((state) => state.productDetail);
+  const {
     name,
-    color ,
-    price ,
+    color,
+    price,
     image,
     category,
     parentCategory,
     description,
-    // stock,
-  });
+    stock,
+  } = state;
+
+  /*****************************ESTO ES DEL FORMULARIO************************************************ */
+  const [url, setUrl] = useState("");
+  const [form, setForm] = useState({});
+  useEffect(() => {
+    setForm({
+      ...form,
+      id: id,
+      name,
+      color,
+      price,
+      image,
+      category,
+      parentCategory,
+      description,
+      stock,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+  useEffect(() => {
+    setUrl(state?.image);
+  }, [setUrl, state.image]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,28 +80,24 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios
-        .put(`/products/${id}`, form)
-        .then((res) => {
-
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Your work has been saved',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          .then(() => {
-            navigate(`/detail/${id}`);
-          });
+      await axios.put(`/products/${id}`, form).then((res) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          navigate(`/detail/${id}`);
         });
+      });
     } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<a href="">Why do I have this issue?</a>'
-})
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   };
 
@@ -120,8 +126,7 @@ const EditProduct = () => {
             {state?.color &&
               state.color.map((e) => (
                 <option name={e.ColorName} key={e.ColorName}>
-                  {" "}
-                  {e.ColorName}{" "}
+                  {e.ColorName}
                 </option>
               ))}
           </select>
@@ -131,10 +136,10 @@ const EditProduct = () => {
           <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
 
           <Link to="/home">
-        <button className={styles.button}>
-          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-        </button>
-      </Link>
+            <button className={styles.button}>
+              Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+            </button>
+          </Link>
         </div>
 
         {/* /**************************************************************************************** */}
@@ -162,7 +167,6 @@ const EditProduct = () => {
               placeholder="Could copy from URL"
             />
             <UploadFile handleUpload={handleUpload} folder={"product"} />
-             
 
             <label htmlFor="price">Price</label>
             <input
@@ -172,14 +176,14 @@ const EditProduct = () => {
               onChange={handleChange}
               value={form.price}
             />
-            
+
             {/* <label htmlFor="color">Colors</label>
-            <input 
-            type="text"
-            name="color"
-            id="color"
-            onChange={handleChange}
-            value={form.color} /> */}
+              <input 
+              type="text"
+              name="color"
+              id="color"
+              onChange={handleChange}
+              value={form.color} /> */}
 
             <label htmlFor="category">Category</label>
             <input
@@ -217,9 +221,9 @@ const EditProduct = () => {
               value={form.stock}
             />
 
-            <button type="submit" className={styles.button}>Save Changes</button>
-            
-
+            <button type="submit" className={styles.button}>
+              Save Changes
+            </button>
           </form>
         </div>
       </div>

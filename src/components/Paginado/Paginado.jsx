@@ -19,14 +19,17 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
     if (nextPage <= Math.ceil(maximo)) {
       setPagina(nextPage);
       setInput(nextPage);
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Desplazamiento al principio de la página
     }
   };
+  
 
   const previousPage = () => {
     const previousPage = pagina - 1;
     if (previousPage >= 1) {
       setPagina(previousPage);
       setInput(previousPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 

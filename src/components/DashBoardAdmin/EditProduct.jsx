@@ -111,8 +111,7 @@ const EditProduct = () => {
             {state?.color &&
               state.color.map((e) => (
                 <option name={e.ColorName} key={e.ColorName}>
-                  {" "}
-                  {e.ColorName}{" "}
+                  {e.ColorName}
                 </option>
               ))}
           </select>

@@ -3,15 +3,24 @@ import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../redux/actions/actions";
+import { useEffect } from "react";
 
 const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
+  const carritoState = useSelector((state) => state.cart);
 
-  console.log(userId)
+  const dispatch = useDispatch();
 
-  const id = userId.id
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
+  console.log(userId);
+
+  const id = userId.id;
 
   if (iniciado?.length === 0) {
     // No hacer nada
@@ -21,16 +30,10 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesions")
+  console.log(sesions, "sesions");
 
   //const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    //setIsLoggedIn(false);
-    navigate("/");
-    window.location.reload();
-  };
 
   return (
     <div className={style.mainContainer}>
@@ -81,10 +84,7 @@ const Nav = () => {
             </div>
           ) : (
             <div className={style.contenedor_imagen}>
-              <button
-                className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
-                onClick={handleLogout}
-              >
+              <Link to="/">
                 <svg
                   className={style.svg}
                   width="80px"
@@ -104,7 +104,7 @@ const Nav = () => {
                     strokeWidth="1.2"
                   />
                 </svg>
-              </button>
+              </Link>
             </div>
           )}
 
@@ -135,6 +135,7 @@ const Nav = () => {
           </div>
 
           <div className={style.contenedor_imagen}>
+            <p className={style.contadorCarrito}>{carritoState.length}</p>
             <Link to="/carrito">
               <svg
                 className={style.svg}
@@ -156,8 +157,8 @@ const Nav = () => {
             <div className={style.nav_fav}>
               <svg
                 className={style.svg}
-                width="47px"
-                height="47px"
+                width="75px"
+                height="75px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

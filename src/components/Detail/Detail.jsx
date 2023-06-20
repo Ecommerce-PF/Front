@@ -208,7 +208,6 @@ export default function Detail() {
                     </option>
                   ))
   */
- console.log(state)
  const arrayColor = state?.color && state?.color.map((e) => (
   e.ColorName ? e.ColorName: e.name
 ))

@@ -18,7 +18,7 @@ const Profile = () => {
   } else {
     localStorage.setItem("ids", id);
   }
-  const profileImages = userId.profileImage;
+  //const profileImages = userId.profileImage;
 
   const idUser = localStorage.getItem("ids");
 
@@ -35,7 +35,7 @@ const Profile = () => {
     fetchData();
   }, [dispatch, idUser]);
 
-  const { name, email, phone, address, purchaseHistory } = userId;
+  const { name, email, phone } = userId;
 
   return (
     <>

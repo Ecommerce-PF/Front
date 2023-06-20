@@ -5,7 +5,6 @@
   flex-wrap: wrap;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
-  height: 60%;
   width: 25%;
   margin: 10px;
   padding-bottom: 10px;
@@ -31,7 +30,7 @@
 
 .title {
   text-align: center;
-  font-size: 110%;
+  font-size: 130%;
   height: 30px;
   color: #434343;
 }
@@ -73,10 +72,10 @@
 }
 
 .svg {
-  margin-left: 30%;
-  margin-top: 144%;
   position: absolute;
-  width: 34px;
+  width: 8%;
+  margin-left: 80%;
+  margin-top: 137%;
 }
 
 .svg:hover {

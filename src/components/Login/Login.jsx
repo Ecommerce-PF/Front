@@ -74,7 +74,6 @@ const handleSubmit = async (e) => {
       setPassword("");
       setError("");
       navigate("/home");
-      window.location.reload();
     } else {
       setError("Invalid username or password");
     }

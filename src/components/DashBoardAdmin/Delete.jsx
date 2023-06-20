@@ -74,7 +74,7 @@ export default function Delete() {
     setInputs2({ id: productIds });
     setSelectedProductNames2(productNames);
     try {
-      const response = await axios.put(`/products/${input2.id}`,pausado);
+      await axios.put(`/products/${input2.id}`,pausado);
       // Realiza acciones adicionales después de la respuesta exitosa aquí
     } catch (error) {
       // Maneja el error aquí

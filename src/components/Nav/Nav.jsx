@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Nav.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +16,7 @@ const Nav = () => {
 
   useEffect(() => {
     dispatch(getCart());
-  }, []);
-
-  console.log(userId);
+  }, [dispatch]);
 
   const id = userId.id;
 
@@ -30,10 +28,7 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  console.log(sesions, "sesions");
-
   //const [isLoggedIn, setIsLoggedIn] = useState();
-  const navigate = useNavigate();
 
   return (
     <div className={style.mainContainer}>

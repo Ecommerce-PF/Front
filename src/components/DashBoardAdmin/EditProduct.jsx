@@ -18,19 +18,12 @@ const EditProduct = () => {
   /*************************ESTO ES PARA MONTAR LA CARTA*********************************************** */
   const dispatch = useDispatch();
   const { id } = useParams();
+  
   useEffect(() => {
     dispatch(getDetail(id));
   }, [dispatch, id]);
   const state = useSelector((state) => state.productDetail);
-  const { name, color, price, image, category, parentCategory, description } =
-    state;
-  /*****************************ESTO ES DEL FORMULARIO************************************************ */
-  const [url, setUrl] = useState("");
-  useEffect(() => {
-    setUrl(state?.image);
-  }, [setUrl,state.image]);
-  const [form, setForm] = useState({
-    id: id,
+  const {
     name,
     color,
     price,
@@ -38,8 +31,30 @@ const EditProduct = () => {
     category,
     parentCategory,
     description,
-    // stock,
-  });
+    stock,
+  } = state;
+
+  /*****************************ESTO ES DEL FORMULARIO************************************************ */
+  const [url, setUrl] = useState("");
+  const [form, setForm] = useState({});
+  useEffect(() => {
+    setForm({
+      ...form,
+      id: id,
+      name,
+      color,
+      price,
+      image,
+      category,
+      parentCategory,
+      description,
+      stock,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+  useEffect(() => {
+    setUrl(state?.image);
+  }, [setUrl, state.image]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -163,12 +178,12 @@ const EditProduct = () => {
             />
 
             {/* <label htmlFor="color">Colors</label>
-            <input 
-            type="text"
-            name="color"
-            id="color"
-            onChange={handleChange}
-            value={form.color} /> */}
+              <input 
+              type="text"
+              name="color"
+              id="color"
+              onChange={handleChange}
+              value={form.color} /> */}
 
             <label htmlFor="category">Category</label>
             <input

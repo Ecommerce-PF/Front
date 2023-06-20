@@ -123,12 +123,44 @@
 
 }
 
-.loginGoogle{
+
+.loginGoogle {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:  #c8c8c8;
-  border-radius: 5px;
-  width: 400px;
-  height: 80px;
+  margin-bottom: 20px;
+}
+
+.googleSil {
+  display: flex;
+  align-items: center;
+  width: 420px;
+  height: 60px;
+  border-radius: 15px;
+  border: 1px solid rgb(209, 209, 209);
+  text-decoration: none;
+  color: #1d1f24;
+  background-color: rgba(159, 159, 159, 0.56);
+}
+
+.svgGoogle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+margin-left: 20px;
+  height: 50px;
+}
+
+.textGoogle{
+margin-left: 15%;
+}
+
+
+
+
+.containerGoogleBack{
+  display: flex;
+  grid-row: auto;
+  align-items: center;
+  justify-content: center;
 }

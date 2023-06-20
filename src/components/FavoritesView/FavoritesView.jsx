@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Card from "../Card/Card";
 import styles from "./favorite.module.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFavorites, deleteFavorite } from "../../redux/actions/actions";
 
 const FavoritesView = () => {
@@ -13,7 +13,6 @@ const FavoritesView = () => {
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
   const [isFav, setIsFav] = useState(false);
-const favorites = useSelector((state) => state.favorites);
   const updateFavoritesList = (productId) => {
     setFavoriteProducts((prevFavorites) =>
       prevFavorites.filter((product) => product.id !== productId)

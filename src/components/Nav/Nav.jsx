@@ -46,9 +46,9 @@ const Nav = () => {
       <div className={style.loginSing}>
         <React.Fragment>
           {sesions === "no" ? (
-            <div>
+            <div className={style.buttonsContainer}>
               <Link to="/login">
-                <button className={style.button}>Login</button>
+                <button className={style.buttons}>Login</button>
               </Link>
             </div>
           ) : (
@@ -73,9 +73,9 @@ const Nav = () => {
           )}
 
           {sesions === "no" ? (
-            <div>
+            <div className={style.buttonsContainer}>
               <Link to="/signup">
-                <button className={style.button}>SingUp</button>
+                <button className={style.buttons}>SingUp</button>
               </Link>
 
               <Link to="/">

@@ -77,3 +77,10 @@
   transition: 0.4s;
   transform: scale(1.5);
 }
+
+
+.buttonFav{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}

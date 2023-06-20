@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import axios from "axios";
 
-const Card = ({ name, image, id, price, onUpdateFavorites }) => {
+
+const Card = ({ name, image, id, price, onUpdateFavorites, onDeleteFavorite }) => {
   const dispatch = useDispatch();
+ ;
   const [isFav, setIsFav] = useState(false);
   const { iniciado, userId, favorites } = useSelector((state) => ({
     iniciado: state.iniciado,
@@ -32,13 +33,6 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
     try {
       await axios.post("/whishListProduct", form);
       setIsFav(!isFav);
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "You add to favorites",
-        showConfirmButton: false,
-        timer: 800,
-      });
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +47,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
       setIsFav(!isFav);
       onUpdateFavorites(id); // Llama a la función de actualización para eliminar la carta de la lista de favoritos en FavoritesView
     } catch (error) {
-      alert(error);
+     
     }
   };
   return (
@@ -83,7 +77,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
         </Link>
         <p className={style.price}>${price}</p>
         {isFav ? (
-          <div value={id} onClick={handleDeleteFavorite}>
+          <button className={style.buttonFav} value={id} onClick={handleDeleteFavorite} >
             <svg
               className={style.svg2}
               width="47px"
@@ -99,9 +93,9 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
                 strokeWidth="1.2"
               />
             </svg>
-          </div>
+          </button>
         ) : (
-          <div className={style.buttonFav} onClick={handleAddFavorite}>
+          <button className={style.buttonFav} onClick={handleAddFavorite}>
             <svg
               className={style.svg2}
               width="47px"
@@ -116,7 +110,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
                 strokeWidth="1.2"
               />
             </svg>
-          </div>
+          </button>
         )}
       </div>
     </div>

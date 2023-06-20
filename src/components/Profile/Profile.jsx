@@ -58,7 +58,7 @@ const Profile = () => {
         <p className={styles.info}>Phone: </p>
           <h2  className={styles.h_container2}>{phone}</h2>
 
-      <img className={styles.img_profile} src={url} alt={name} />
+      <img className={styles.img_profile} src={userId.profileImage} alt={name} />
 
        
       </div>

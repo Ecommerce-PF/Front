@@ -46,13 +46,12 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setGoogle(false)
+    setGoogle(false);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const validationErrors = validateUser(user);
     if (Object.keys(validationErrors).length === 0) {
@@ -122,9 +121,8 @@ const SignUp = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const users = result.user;
-
+      
       setGoogleUser({
-
         name: users.displayName,
         userName: users.displayName,
         phone: "12212",
@@ -135,18 +133,19 @@ const SignUp = () => {
       setGoogle(true);
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Something went wrong!',
+        icon: "error",
+        title: "Something went wrong!",
         text: error,
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
+        footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   }
 
   useEffect(() => {
     if (google) {
       try {
-        axios.post("/users/signup", googleUser)
+        axios
+          .post("/users/signup", googleUser)
 
           .then((res) => {
             Swal.fire({
@@ -159,21 +158,20 @@ const SignUp = () => {
             navigate("/login");
           })
           .catch((res) => {
-                    Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Al parecer tu cuenta ya se encuentra registrada...",
-          footer: '<a href="">Why do I have this issue?</a>',
-        });
-          })
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Al parecer tu cuenta ya se encuentra registrada...",
+              footer: '<a href="">Why do I have this issue?</a>',
+            });
+          });
       } catch (error) {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
+          icon: "error",
+          title: "Oops...",
           text: error,
-          footer: '<a href="">Why do I have this issue?</a>'
-        })
-
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

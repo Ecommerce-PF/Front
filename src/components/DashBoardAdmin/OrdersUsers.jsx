@@ -9,10 +9,9 @@ import Swal from 'sweetalert2'
 
 const OrdersUsers = () => {
   const dispatch = useDispatch();
-  const { users, id } = useSelector((state) => {
+  const { users } = useSelector((state) => {
     return {
       users: state.users,
-      id: state.idUsuario,
     };
   });
   const [banButtonMap, setBanButtonMap] = useState({}); // Mapa para almacenar el estado de los botones de banear
@@ -30,8 +29,7 @@ const OrdersUsers = () => {
     setBanButtonMap(initialButtonMap);
   }, [users]);
 
-  if (id) localStorage.setItem("ids", id);
-
+  
   const handleBanUser = async (id) => {
     try {
       const result = await Swal.fire({
@@ -48,7 +46,7 @@ const OrdersUsers = () => {
         const newBanButtonMap = { ...banButtonMap, [id]: !banButtonMap[id] };
         setBanButtonMap(newBanButtonMap);
   
-        const res = await axios.put(`/users/${id}`, { active: !banButtonMap[id] });
+        await axios.put(`/users/${id}`, { active: !banButtonMap[id] });
         Swal.fire("Already!", "The user status has been changed!", "success");
       }
     } catch (error) {

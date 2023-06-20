@@ -19,10 +19,9 @@ export default function Delete() {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = function (e) {
-    const productId = e?.target.value;
+    const productId = e.target.value;
     const product = getProductById(productId);
-
-    const productName = product?.name;
+    const productName = product.name;
     setErrors(validate({ ...input, id: productId }));
     setInputs({ id: productId });
     setSelectedProductName(productName);
@@ -76,8 +75,6 @@ export default function Delete() {
     setSelectedProductNames2(productNames);
     try {
       const response = await axios.put(`/products/${input2.id}`,pausado);
-
-      console.log(response);
       // Realiza acciones adicionales después de la respuesta exitosa aquí
     } catch (error) {
       // Maneja el error aquí
@@ -116,7 +113,7 @@ export default function Delete() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deletee();
+        deletee(input);
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
         window.location.reload();
       }

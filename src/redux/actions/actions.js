@@ -246,15 +246,15 @@ export const updatedCart = (array) => {
     type: UPDATE_CART,
     payload: array,
   };
-}
+};
 
 export const getCart = () => {
   const producto = JSON.parse(localStorage.getItem("carritoLS"));
   return {
     type: GET_CART,
     payload: producto,
-  }
-}
+  };
+};
 
 export const deleteProduct = (id) => {
   return async (dispatch) => {
@@ -286,7 +286,6 @@ export const deleteUser = (id) => {
 };
 
 export const loginWithGoogle = (e) => {
-  console.log("esto es en action");
   return {
     type: LOGIN_WITH_GOOGLE,
     payload: e,
@@ -326,4 +325,3 @@ export const getOrderById = (id) => {
     }
   };
 };
-

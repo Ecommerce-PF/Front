@@ -74,7 +74,6 @@ const handleSubmit = async (e) => {
       setPassword("");
       setError("");
       navigate("/home");
-      window.location.reload();
     } else {
       setError("Invalid username or password");
     }
@@ -109,25 +108,24 @@ const handleSubmit = async (e) => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "Your count hasn't been registered yet!",
-              footer: '<a href="/signup">Do you want to register to this Webpage?</a>',
+              text: "Your account hasn't been registered yet!",
+              footer: '<a href="/signup">Do you want to register on this Webpage?</a>',
             });
           }
         } catch (error) {
-          setError( 
-            Swal.fire({
+          Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Your count hasn't been registered yet!",
-            footer: '<a href="/signup">Do you want to register to this Webpage?</a>',
-          }));
+            text: "Your account hasn't been registered yet!",
+            footer: '<a href="/signup">Do you want to register on this Webpage?</a>',
+          });
         }
       })
       .catch((error) => {
-        console.log(error);
+        // Manejar el error aquí si es necesario
       });
   }
-
+  
   return (
     <section className={styles.back}>
       <div className={styles.body}>

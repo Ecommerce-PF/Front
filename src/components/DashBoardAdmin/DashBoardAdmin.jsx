@@ -25,7 +25,7 @@ const Admin = () => {
         <Link to="/OrderList" className={style.link}>
           Order List
         </Link>
-      </div>{" "}
+      </div>
       <div className={style.buton_container}>
         <Link to="/Stock" className={style.link}>
           Stock

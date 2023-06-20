@@ -13,7 +13,6 @@ import styles from "./carrito.module.css";
 export default function Carrito() {
 
   const dispatch = useDispatch();
-  //hola
 
   const id = useSelector((state) => state.idUsuario);
   if (!id.length === 0) localStorage.setItem("ids", id);
@@ -66,8 +65,10 @@ export default function Carrito() {
         <Nav />
         {carritoState === null || carritoState.length > 0 ?
           <div className={styles.containerCart}>
+
             {carritoState.map(product => {
-              return (<CartProduct key={product.id} product={product} />)
+              return (<CartProduct key={product.id} product={product} stock={product.stock}  />)
+              
             })}
 
             <div className={styles.carritoTotalPrecio} >

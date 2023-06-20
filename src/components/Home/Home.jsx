@@ -14,7 +14,7 @@ const Home = () => {
     idBan: state.userId,
   }));
 
-  
+
 
   if (id.length !== 0) localStorage.setItem("ids", id);
 

@@ -131,6 +131,7 @@ const SignUp = () => {
   };
   useEffect(() => {
     setErrors(validateUser(user));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // --------------------------------------------------------------------------------------------------------------

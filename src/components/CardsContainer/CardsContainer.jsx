@@ -36,8 +36,6 @@ const CardsContainer = () => {
   const porPagina = 6;
   const maximo = products.length / porPagina;
 
-  console.log(products);
-
   return (
     <div>
       <div className={style.container}>

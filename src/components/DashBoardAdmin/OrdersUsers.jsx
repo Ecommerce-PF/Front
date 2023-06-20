@@ -30,6 +30,7 @@ const OrdersUsers = () => {
     setBanButtonMap(initialButtonMap);
   }, [users]);
 
+  
   const handleBanUser = async (id) => {
     try {
       const result = await Swal.fire({

@@ -1,7 +1,8 @@
 .container {
     background-size: cover;
     background-position: center;
-    padding: 20px;
+    
+    width: 100vh;
   }
   
   .title {
@@ -69,7 +70,17 @@
     color: rgba(41, 41, 41, 0.844);
     margin-top: 5px;
   }
-  
+
+
+  .block_containers{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 10%;
+  }
+
+  /* /******************************************************************* */
   .button {
     width: 200px;
     height: 50px;
@@ -97,7 +108,7 @@
 
   .back{
     width: 100%;
-    height: 100vh;
+    height: 110vh;
     display: flex;
     justify-content: center;
     align-items: center;

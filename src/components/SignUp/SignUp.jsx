@@ -43,7 +43,13 @@ const SignUp = () => {
 
   const [google, setGoogle] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    name: "",
+    userName: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     setGoogle(false);
@@ -70,48 +76,94 @@ const SignUp = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Al parecer tu cuenta ya se encuentra registrada...",
-          footer: '<a href="">Why do I have this issue?</a>',
+          text: "The UserName or Email is already register...",
+          footer: '<a href="/login">You have account?</a>',
         });
       }
     }
   };
 
+  /***************************************************************************************************** */
+
   const validateUser = (user) => {
     const errors = {};
-
-    if (!user.name.trim()) {
+// ----------------------------------------------------------------
+    if(!user.name){
       errors.name = "Name is required";
     }
-
-    if (!user.userName.trim()) {
+    else if (!user.name.trim()) {
+      errors.name = "Name is required";
+    }
+    else if(user.name.length < 3 || user.name.length > 20){
+      errors.name = "Name should be at least 3 at 20 characters long";
+    }else if (!validateName(user.name)) {
+      errors.name = "Name should not contain special characters";
+    }
+// -------------------------------------------------------------
+ if (!user.userName.trim()) {
       errors.userName = "Username is required";
     }
-
-    if (!user.phone.trim()) {
+// -------------------------------------------------------------
+ if (!user.phone.trim()) {
       errors.phone = "Phone is required";
     }
-
-    if (!user.email.trim()) {
+    else if (isNaN(user.phone)) {
+      errors.phone = "Phone should be a number";
+    }
+    else if (user.phone.length < 8 || user.phone.length > 12) {
+      errors.phone = "Phone should be at least 8 at 12 characters long";
+    }
+// -------------------------------------------------------------
+ if (!user.email.trim()) {
       errors.email = "Email is required";
     } else if (!isValidEmail(user.email)) {
       errors.email = "Invalid email format";
     }
-
-    if (!user.password.trim()) {
+// -------------------------------------------------------------
+ if(!user.password.trim()) {
       errors.password = "Password is required";
     } else if (user.password.length < 6) {
       errors.password = "Password should be at least 6 characters long";
     }
+    // else if(!isValidPassword(user.password)) {
+    //   errors.password =
+    //     "Password should contain at least one uppercase letter, one lowercase letter and one number";
+    // }
+
 
     return errors;
   };
+  useEffect(()=>{
+    setErrors(validateUser(user))
+  }, [user])
 
+  // --------------------------------------------------------------------------------------------------------------
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
+//  const isValidPassword = (password) => {
+//   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@/$%#?])[a-zA-Z\d@/$%#?]{8,}$/;
+//   return passwordRegex.test(password);
+// };
+
+  const validateName = (name) => {
+    const nameRegex = /^(?=.{3,25}$)[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    return nameRegex.test(name);
+  };
+  
+
+  /****************************************************** */
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  /***************************************************************************************************** */
+  
   const provider = new GoogleAuthProvider();
   provider.addScope("profile");
   provider.addScope("email");
@@ -181,23 +233,38 @@ const SignUp = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>Sign Up</h2>
         <form onSubmit={handleSubmit}>
+
+{/* /******************************************************************************************************** * */}
+         
           <div>
-            <label htmlFor="name" className={styles.label}>
-              Name:
-            </label>
+            <label htmlFor="name" className={styles.label}>  Name: </label>
+    
             <div className={styles.inputBlock}>
               <input
                 type="text"
                 id="name"
                 name="name"
                 value={user.name}
-                onChange={handleChange}
-                required
-              />
+                onChange={handleChange}     
+                />
             </div>
 
-            {errors.name && <p className={styles.error}>{errors.name}</p>}
+            { errors.name 
+            ? <span className={styles.error}>❌ <span>{errors.name}</span> </span>
+            : <span >✅</span> } 
+
+              {errors.name && (
+                        <div>
+                            <span class="input-group-text">
+                                <i title={errors.name}>❗❗</i>
+                            </span>
+                        </div>
+                    )}
+           
           </div>
+
+{/* /******************************************************************************************************** * */}
+
           <div>
             <label htmlFor="userName" className={styles.label}>
               Username:
@@ -213,10 +280,12 @@ const SignUp = () => {
               />
             </div>
 
-            {errors.userName && (
-              <p className={styles.error}>{errors.userName}</p>
-            )}
+            { errors.userName 
+            ? <span className={styles.error}>❌{errors.userName}</span>
+            : <span >✅</span> } 
           </div>
+
+{/* /* ******************************************************************************************************** * * * */}
           <div>
             <label htmlFor="phone" className={styles.label}>
               Phone:
@@ -233,8 +302,14 @@ const SignUp = () => {
               />
             </div>
 
-            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
-          </div>
+            { errors.phone 
+            ? <span className={styles.error}>❌{errors.phone}</span>
+            : <span >✅</span> } 
+            
+            </div>
+         
+ {/* /* ******************************************************************************************************** * * */}
+          
           <div>
             <label htmlFor="email" className={styles.label}>
               Email:
@@ -251,27 +326,39 @@ const SignUp = () => {
               />
             </div>
 
-            {errors.email && <p className={styles.error}>{errors.email}</p>}
+            { errors.email
+            ? <span className={styles.error}>❌{errors.email}</span>
+            : <span >✅</span> } 
+          
           </div>
+
+ {/* /* /* ******************************************************************************************************** * *       */}
           <div>
             <label htmlFor="password" className={styles.label}>
               Password:
             </label>
             <div className={styles.inputBlock}>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 name="password"
                 value={user.password}
                 onChange={handleChange}
                 required
               />
-            </div>
-
-            {errors.password && (
-              <p className={styles.error}>{errors.password}</p>
-            )}
+                <button onClick={toggleShowPassword}>
+          {showPassword ? 'Hide' : 'Show'}
+          </button>
           </div>
+
+            { errors.password 
+            ? <span className={styles.error}>❌{errors.password}</span>
+            : <span >✅</span> } 
+            
+          </div>
+
+       
+ {/* /************************************************************************************************************* * *       */}    
           <button type="submit" className={styles.button}>
             Sign Up
           </button>
@@ -279,8 +366,14 @@ const SignUp = () => {
           <Link to="/">
             <button className={styles.button}>Back</button>
           </Link>
+   
+   
         </form>
       </div>
+ 
+ {/* /************************************************************************************************************* * *       */}
+      
+      
       <div className={styles.loginGoogle}>
         <Link onClick={callLoginGoogle}>
           <svg

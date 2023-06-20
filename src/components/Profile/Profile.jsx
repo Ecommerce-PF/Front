@@ -38,48 +38,61 @@ const Profile = () => {
   const { name, email, phone, address, purchaseHistory } = userId;
 
   return (
-    <div>
+    <>
+    <div className={styles.main_container}>
+
+      <div className={styles.main_container2}>
+
+    
+
+      <div className={styles.data_container}>
+
       <h2 className={styles.title}>Profile</h2>
-      <p className={styles.info}>Name: </p>
-      <h1>{name}</h1>
-      <p className={styles.info}>Username: </p>
-      <h1>{userId.userName}</h1>
-      <p className={styles.info}>Email: </p>
-      <h2>{email}</h2>
-      <p className={styles.info}>Phone: </p>
-      <h2>{phone}</h2>
+        
+        <p className={styles.info}>Name: </p>
+          <h1 className={styles.h_container}>{name}</h1>
+        <p className={styles.info}>Username: </p>
+          <h1  className={styles.h_container}>{userId.userName}</h1>
+        <p className={styles.info}>Email: </p>
+          <h2  className={styles.h_container2}>{email}</h2>
+        <p className={styles.info}>Phone: </p>
+          <h2  className={styles.h_container2}>{phone}</h2>
 
       <img className={styles.img_profile} src={url} alt={name} />
 
-      <h3 className={styles.subtitle}>Address {address}</h3>
-      <p className={styles.address}></p>
+       
+      </div>
 
-      <h3 className={styles.subtitle}>
-        <Link to={`/ListUser/${idUser}`} className={styles.purchaseLink}>
-          Purchase History
-        </Link>
-      </h3>
-      <ul className={styles.purchaseList}>
-        {purchaseHistory &&
-          purchaseHistory.map((purchase) => (
-            <li key={purchase.id}>
-              <p className={styles.purchaseInfo}>Product: {purchase.product}</p>
-              <p className={styles.purchaseInfo}>Price: {purchase.price}</p>
-              <p className={styles.purchaseInfo}>Date: {purchase.date}</p>
-            </li>
-          ))}
-      </ul>
+      {/* /***************************************************************************** * */}
 
-      <Link to="/home">
-        <button className={styles.button}>
-          Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-        </button>
+      <div className={styles.buttons_containers}>
+      
+      <div  >  
+      <Link to={`/ListUser/${idUser}`} className={styles.purchaseLink}>
+          <button className={styles.button_data}> Purchase History </button>
       </Link>
-
-      <Link to={`/editProfile`}>
-        <button className={styles.button}>Edit Profile</button>
+      </div>
+      
+      <div  >
+      <Link to={`/editProfile`} className={styles.purchaseLink}>
+        <button className={styles.button_data}>Edit Profile</button>
       </Link>
+      </div>
+
+      </div>
+
     </div>
+    
+      <div className={styles.button_back}>
+      <Link to="/home">
+        <button className={styles.button}> Back <FaArrowLeft className={styles.icon}></FaArrowLeft> </button>
+      </Link>
+      </div>
+    
+
+    </div>
+
+    </>
   );
 };
 

@@ -61,6 +61,10 @@
   
   .li_elements_inside {
     margin-bottom: 10px;
+    background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
+    border-radius: 15px;
+    padding: 10px;
+    border: 1px solid #090909;
   }
   
   .button {

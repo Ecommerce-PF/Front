@@ -3,12 +3,21 @@ import style from "./Nav.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../redux/actions/actions";
+import { useEffect } from "react";
 
 const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
+  const carritoState = useSelector((state) => state.cart)
 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+      
   console.log(userId)
 
   const id = userId.id
@@ -135,6 +144,7 @@ const Nav = () => {
           </div>
 
           <div className={style.contenedor_imagen}>
+            <p className={style.contadorCarrito}>{carritoState.length}</p>
             <Link to="/carrito">
               <svg
                 className={style.svg}

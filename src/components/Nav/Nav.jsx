@@ -9,6 +9,8 @@ const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
 
+  console.log(userId)
+
   const id = userId.id
 
   if (iniciado?.length === 0) {
@@ -19,6 +21,7 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
+  console.log(sesions, "sesions")
 
   //const [isLoggedIn, setIsLoggedIn] = useState();
   const navigate = useNavigate();

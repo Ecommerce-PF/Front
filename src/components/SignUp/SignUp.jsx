@@ -121,7 +121,6 @@ const SignUp = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const users = result.user;
-      
       setGoogleUser({
         name: users.displayName,
         userName: users.displayName,

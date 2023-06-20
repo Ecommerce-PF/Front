@@ -9,6 +9,7 @@ import { getCart } from "../../redux/actions/actions.js";
 import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
+
 export default function Carrito() {
   const dispatch = useDispatch();
 
@@ -87,9 +88,9 @@ export default function Carrito() {
             <div className={styles.carritoTotalPrecio}>
               <h3>Total del carrito: {precioTotal?.toFixed(2)}</h3>
               {id.length === 0 ? (
-                <button onClick={Login}>Proceder al pago</button>
+                  <button className={styles.button_confirm} onClick={Login}>Proceder al pago</button>
               ) : (
-                <button onClick={funcionPago}>Proceder al pago</button>
+                <button className={styles.button_confirm} onClick={funcionPago}>Proceder al pago</button>
               )}
             </div>
           </div>

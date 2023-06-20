@@ -5,8 +5,8 @@
   flex-wrap: wrap;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
-  height: 700px;
-  width: 460px;
+  height: 60%;
+  width: 25%;
   margin: 10px;
   padding-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
@@ -31,6 +31,7 @@
 
 .title {
   text-align: center;
+  font-size: 110%;
   height: 30px;
   color: #434343;
 }
@@ -72,8 +73,8 @@
 }
 
 .svg {
-  margin-left: 400px;
-  margin-top: 644px;
+  margin-left: 30%;
+  margin-top: 144%;
   position: absolute;
   width: 34px;
 }
@@ -94,6 +95,12 @@
   transform: scale(1.5);
 }
 
+
+.buttonFav{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}
 
 .svgSinStock{
   width: 200px;

@@ -6,21 +6,46 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+
+
+.componentCart{
+  background-image: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+  height: 100vh;
+}
+.imgSuma{
+    width: 20px;
+    height: 20px;
+    background-color: none;
+   
+  
+    
+}
+
+
 .crtPrdct{
-    background-color: rgba(0, 0, 0, 0.059);;
-    width: 90vw;
+    background-color: rgba(242, 234, 234, 0.5);;
+    width: 65vw;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 10px;
     border-radius: 20px;
     position: relative;
+    border: 1px solid rgb(219, 174, 240);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
 }
 
 .trash{
+ 
+  cursor: pointer;
     position: absolute;
-    top: 20px;
+    top: 40px;
     right: 20px;
+    background-color: transparent;
+    border: none;
+    color: #000; /* Color del texto del botón */
+   
 }
 
 .cantidadProducto{
@@ -31,17 +56,15 @@
 }
 
 .bttnAdd{
-    border-radius: 0 20px 20px 0;
-    border: none;
-    height: 20px;
+ 
+   border: none;
+   cursor: pointer;
+   background-color: transparent;
+   border: none;
+   color: #000; /* Color del texto del botón */
+   opacity: 1; /* Opacidad del botón (0.0 - 1.0) */
+  }
 
-}
-
-.bttnSub{
-    border-radius: 20px 0 0 20px;
-    border: none;
-    height: 20px;
-}
 
 .emptyCart{
     width: 100%;
@@ -50,16 +73,29 @@
     justify-content: center;
     align-items: center;
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(252,218,255,1) 100%);
+    background-image: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
     color: #af1cc2;
 }
 
-.productAmout{
-    text-align: center;
-    width: 100px;
-    border: 1px solid black;
-    border-radius: 20px;
+.productAmount {
+  display: inline-block;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  padding: 4px 8px;
 }
+
+.productAmountValue {
+  font-weight: bold;
+  color: #333;
+}
+.h2_name{
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
 
 .containerCart{
     width: 100%;
@@ -72,6 +108,11 @@
 
 .imgCarrito{
     height: 150px;
+    width: 100px;
+    border-radius: 20px;
+    margin: 10px;
+    
+
 }
 
 
@@ -82,58 +123,35 @@
     justify-content: space-around;
     width: 90vw;
     border-radius: 20px;
-    position: fixed;
+   margin: 10px auto;
     bottom: 50px;
-    background-color: rgba(0, 0, 0, 0.059);;
+    /* background-color: rgba(0, 0, 0, 0.9); */
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
 }
 
 
-/* .button {
-    width: 150px;
-    height: 50px;
-    font-size: 14px;
-    color: #383838;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #eeeeee;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
-    color: #000000;
-    transform: translateY(-1px);
-  }
-  
-  .button:active {
-    transform: translateY(-1px);
-  }
+.button_confirm{
+  width: 150px;
+  height: 50px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #1d1f24;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
 
-  .buttonReload {
-    width: 50px;
-    height: 50px;
-    font-size: 14px;
-    color: #383838;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-  
-  .buttonReload:hover {
-    background-color: #eeeeee;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.467);
-    color: #000000;
-    transform: translateY(-1px);
-  }
-  
-  .buttonReload:active {
-    transform: translateY(-1px);
-  } */
+.button_confirm:hover {
+  background-color: #434343;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
+  color: #fff;
+  transform: translateY(-2px);
+}
 
+.button_confirm:active {
+  transform: translateY(-1px);
+}
   /*********************************************************************************/
 
   .button {

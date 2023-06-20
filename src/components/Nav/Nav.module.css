@@ -161,7 +161,7 @@
 .contenedor_imagen {
   position: relative;
   display: inline-block;
-
+  margin: 0px -18px 0px 0px;
 }
 
 

@@ -35,7 +35,10 @@ export const DELETE_FAVORITE = "DELETE_FAVORITE";
 export const GET_CART = "GET_CART";
 export const UPDATE_CART = "UPDATE_CART";
 export const SET_FAVORITES = "SET_FAVORITES";
-
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const CREATE_ORDER = "CREATE_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {
@@ -243,15 +246,15 @@ export const updatedCart = (array) => {
     type: UPDATE_CART,
     payload: array,
   };
-}
+};
 
 export const getCart = () => {
   const producto = JSON.parse(localStorage.getItem("carritoLS"));
   return {
     type: GET_CART,
     payload: producto,
-  }
-}
+  };
+};
 
 export const deleteProduct = (id) => {
   return async (dispatch) => {
@@ -283,7 +286,6 @@ export const deleteUser = (id) => {
 };
 
 export const loginWithGoogle = (e) => {
-  console.log("esto es en action");
   return {
     type: LOGIN_WITH_GOOGLE,
     payload: e,
@@ -299,5 +301,27 @@ export const google = (e) => {
   return {
     type: GOOGLE,
     payload: e,
+  };
+};
+
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("/orders");
+      dispatch({ type: GET_ALL_ORDERS, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getOrderById = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/orders/${id}`);
+      dispatch({ type: GET_ORDER_BY_ID, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

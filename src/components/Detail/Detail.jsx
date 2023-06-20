@@ -22,8 +22,6 @@ export default function Detail() {
   const idUser = useSelector((state) => state.idUsuario);
   const user = useSelector((state) => state.userId);
 
-  console.log(state.stock, "caca");
-
   if (user.length === 0) {
     // No hacer nada
   } else {
@@ -89,35 +87,43 @@ export default function Detail() {
       alert(err);
     }
   };
-
+  
   const handleAddCart = () => {
     dispatch(addCart(state));
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
     let isProductInCart = false;
-
+  
     for (var i = 0; i < listaCart.length; i++) {
       if (listaCart[i].id === state.id) {
-        listaCart[i].quantity += 1;
         isProductInCart = true;
         break;
       }
     }
-
-    if (!isProductInCart) {
+  
+    if (isProductInCart) {
+      Swal.fire({
+        text: "This product is already in the cart!",
+        icon: "info",
+        footer: '<a href="/carrito">Would you like see yout cart?</a>',
+      });
+    
+    } else {
       listaCart.push({
         ...state,
         quantity: 1,
       });
+  
+      localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+      Swal.fire({
+        icon: "success",
+        title: "¡Su producto se ha agregado al carrito!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
-
-    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
-    Swal.fire({
-      icon: "success",
-      title: "Su producto se ha agregado al carrito!!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
   };
+  
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -198,6 +204,21 @@ export default function Detail() {
     }
   };
 
+  /* 
+  state?.color &&
+                  state.color.map((e) => (
+                    <option
+                      className={styles.option}
+                      name={e.ColorName}
+                      key={e.ColorName}
+                    >
+                      {e.ColorName}
+                    </option>
+                  ))
+  */
+ const arrayColor = state?.color && state?.color.map((e) => (
+  e.ColorName ? e.ColorName: e.name
+))
   return (
     <div>
       <div className={styles.back}>
@@ -205,7 +226,7 @@ export default function Detail() {
           <div className={styles.productImg}>
             <h3>{state?.name}</h3>
             <div className={styles.img}>
-              {!!coloresPrt.length ? (
+              {coloresPrt && !!coloresPrt.length ? (
                 <div className={styles.divGaleryImg}>
                   <button onClick={changeLeft} className={styles.bttnArrow}>
                     <MdOutlineArrowBackIos />
@@ -240,14 +261,14 @@ export default function Detail() {
                 onChange={handleChange}
               >
                 <option className={styles.option}>None</option>
-                {state?.color &&
-                  state.color.map((e) => (
+                {arrayColor &&
+                  arrayColor.map((e) => (
                     <option
                       className={styles.option}
-                      name={e.ColorName}
-                      key={e.ColorName}
+                      name={e}
+                      key={e}
                     >
-                      {e.ColorName}
+                      {e}
                     </option>
                   ))}
               </select>
@@ -259,7 +280,8 @@ export default function Detail() {
                   name="size" /* onChange={handleChange} */
                 >
                   <option className={styles.option}>None</option>
-                  {sizesArr &&
+                  {
+                  sizesArr ?
                     sizesArr.map((e) => (
                       <option
                         className={styles.option}
@@ -268,7 +290,15 @@ export default function Detail() {
                       >
                         {e.SizeName}
                       </option>
-                    ))}
+                    )):
+                    <option
+                        className={styles.option}
+                        name="default"
+                        key="default"
+                      >
+                        One size
+                      </option>
+                    }
                 </select>
               </div>
             </div>

@@ -1,15 +1,14 @@
 .mainContainer {
-    display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      background: rgb(255, 255, 255);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(252, 218, 255, 1) 100%);
-      color: #af1cc2;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  width: 25%;
+  margin: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
 }
 
 .mainContainer:hover {
@@ -19,19 +18,20 @@
 }
 
 .card {
-  height:250px;
-  margin: 0 auto;
-  padding: 10px;
-  border-radius: 20px;
+  width: 75%;
+  border-radius: 3%;
+}
+
+.card2 {
+  width: 75%;
+  border-radius: 3%;
+  filter: brightness(40%);
 }
 
 .title {
   text-align: center;
-  font-size: 18px;
-  margin-top: 10px;
-  margin-bottom: 10px; 
-  height: 50px;
-  width: 200px;
+  font-size: 130%;
+  height: 30px;
   color: #434343;
 }
 
@@ -39,8 +39,21 @@
   text-decoration: none;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 25px;
   color: #434343;
+  margin-top: 30px;
+  margin-bottom: -5px;
+}
+
+.price2 {
+  z-index: 1;
+  display: flex;
+  position: absolute;
+  margin-top: 60%;
+  margin-left: 14%;
+  font-size: 40px;
+  width: 50%;
+  color: #dadada8d;
 }
 
 .link {
@@ -59,10 +72,10 @@
 }
 
 .svg {
-  margin-left: 400px;
-  margin-top: 644px;
   position: absolute;
-  width: 34px;
+  width: 8%;
+  margin-left: 80%;
+  margin-top: 137%;
 }
 
 .svg:hover {
@@ -76,17 +89,18 @@
   padding: 0px;
 }
 
-
 .svg2:hover {
   transition: 0.4s;
   transform: scale(1.5);
 }
 
-.price_and_fav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  text-align: center;
-  align-items: center;
-  width: 100%;
+
+.buttonFav{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}
+
+.svgSinStock{
+  width: 200px;
 }

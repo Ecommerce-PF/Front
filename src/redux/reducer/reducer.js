@@ -24,6 +24,9 @@ import {
   GET_CART,
   UPDATE_CART,
   SET_FAVORITES,
+  GET_ALL_ORDERS,
+  GET_ORDER_BY_ID,
+  
 } from "../actions/actions";
 
 const initialState = {
@@ -41,6 +44,8 @@ const initialState = {
   iniciado: [],
   google: {},
   myFavorites: [],
+  orders: [],
+  order: null,
   filters: {
     category: "",
     priceRange: [0, 1000],
@@ -312,9 +317,23 @@ const rootReducer = (state = initialState, action) => {
         favorites: action.payload,
       };
 
+      case GET_ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload
+      };
+    case GET_ORDER_BY_ID:
+      return {
+        ...state,
+        order: action.payload
+      };
+   
+
+
     default:
       return state;
   }
 };
+
 
 export default rootReducer;

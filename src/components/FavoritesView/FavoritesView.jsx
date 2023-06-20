@@ -4,17 +4,21 @@ import Card from "../Card/Card";
 import styles from "./favorite.module.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setFavorites } from "../../redux/actions/actions";
+import { setFavorites, deleteFavorite } from "../../redux/actions/actions";
 
 const FavoritesView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const [favoriteProducts, setFavoriteProducts] = useState([]);
+
+  const [isFav, setIsFav] = useState(false);
   const updateFavoritesList = (productId) => {
     setFavoriteProducts((prevFavorites) =>
       prevFavorites.filter((product) => product.id !== productId)
     );
   };
+
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
@@ -26,25 +30,55 @@ const FavoritesView = () => {
       }
     };
     fetchFavoriteProducts();
-  }, [dispatch,id]);
+  }, [dispatch, id]);
+
+  
+
+  const handleDeleteFavorite = async (productId) => {
+
+    const form = {
+      id: productId, //esta garcha no quiere andar
+      UserId: id, //esto me lo traje de params
+    };
+    dispatch(deleteFavorite(productId));
+    try {
+      await axios.delete('/whishListProduct', {
+        data: form,
+      });
+      setIsFav(!isFav);
+      updateFavoritesList(productId);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  };
+  
 
   return (
-    <div className={styles.container_fav}>
-      <h1 className={styles.title_fav}>Productos Favoritos</h1>
-      {favoriteProducts.map((favorite) => (
-        <Card
-          key={favorite.id}
-          id={favorite.id}
-          name={favorite.name}
-          image={favorite.image}
-          price={favorite.price}
-          onUpdateFavorites={updateFavoritesList} // Pasa la función de actualización como prop al componente Card
-        />
-      ))}
-      <Link to="/home" className={styles.navlink}>
-        <button className={styles.button}>Back</button>
-      </Link>
-    </div>
+    <>
+      <div className={styles.container_fav}>
+        <h1 className={styles.title_fav}>Productos Favoritos</h1>
+        <div>
+          {favoriteProducts.map((favorite) => (
+            <Card
+              key={favorite.id}
+              id={favorite.id}
+              name={favorite.name}
+              image={favorite.image}
+              price={favorite.price}
+              onUpdateFavorites={updateFavoritesList} // Pasa la función de actualización como prop al componente Card
+              onClick={()=> handleDeleteFavorite(favorite.id)} // Pasa la función de eliminar como prop al componente Card
+            />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <Link to="/home" className={styles.navlink}>
+          <button className={styles.back_button}>Back</button>
+        </Link>
+      </div>
+    </>
   );
 };
 

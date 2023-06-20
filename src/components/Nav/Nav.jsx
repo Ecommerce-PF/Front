@@ -1,26 +1,34 @@
 import React from "react";
 import style from "./Nav.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../redux/actions/actions";
+import { useEffect } from "react";
 
 const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
+  const carritoState = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
 
   const id = userId.id;
 
-  if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);
+  if (iniciado?.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("sesions", iniciado);
+  }
 
   const sesions = localStorage.getItem("sesions");
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/");
-    window.location.reload();
-  };
+  //const [isLoggedIn, setIsLoggedIn] = useState();
 
   return (
     <div className={style.mainContainer}>
@@ -33,9 +41,9 @@ const Nav = () => {
       <div className={style.loginSing}>
         <React.Fragment>
           {sesions === "no" ? (
-            <div>
+            <div className={style.buttonsContainer}>
               <Link to="/login">
-                <button className={style.button}>Login</button>
+                <button className={style.buttons}>Login</button>
               </Link>
             </div>
           ) : (
@@ -43,8 +51,8 @@ const Nav = () => {
               <Link to="/profile">
                 <svg
                   className={style.svg}
-                  width="30px"
-                  height="30px"
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -60,24 +68,22 @@ const Nav = () => {
           )}
 
           {sesions === "no" ? (
-            <div className={style.contenedor_singup_back}>
+            <div className={style.buttonsContainer}>
               <Link to="/signup">
-                <button className={style.button}>SingUp</button>
-              </Link>              
+                <button className={style.buttons}>SingUp</button>
+              </Link>
+
               <Link to="/">
-                <button className={style.button}>Back</button>
+                <button className={style.buttonLanding}>Back</button>
               </Link>
             </div>
           ) : (
             <div className={style.contenedor_imagen}>
-              <button
-                className={`${style.link} ${style.profileTitle} ${style.logoutButton}`}
-                onClick={handleLogout}
-              >
+              <Link to="/">
                 <svg
                   className={style.svg}
-                  width="30px"
-                  height="30px"
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +99,7 @@ const Nav = () => {
                     strokeWidth="1.2"
                   />
                 </svg>
-              </button>
+              </Link>
             </div>
           )}
 
@@ -101,9 +107,9 @@ const Nav = () => {
             {userId.admin === true && sesions === "si" ? (
               <Link to="/DashBoardAdmin">
                 <svg
-                  className={style.svg}
-                  width="30px"
-                  height="30px"
+                  className={style.svg2}
+                  width="80px"
+                  height="80px"
                   viewBox="0 0 25 25"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,11 +130,12 @@ const Nav = () => {
           </div>
 
           <div className={style.contenedor_imagen}>
+            <p className={style.contadorCarrito}>{carritoState.length}</p>
             <Link to="/carrito">
               <svg
                 className={style.svg}
-                width="30px"
-                height="30px"
+                width="80px"
+                height="80px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -145,8 +152,8 @@ const Nav = () => {
             <div className={style.nav_fav}>
               <svg
                 className={style.svg}
-                width="30px"
-                height="30px"
+                width="75px"
+                height="75px"
                 viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

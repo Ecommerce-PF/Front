@@ -10,6 +10,7 @@ const CardsContainer = () => {
   const iniciado = useSelector((state) => state.iniciado);
   const userId = useSelector((state) => state.userId);
   const id = userId.id;
+
   const dispatch = useDispatch();
 
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);
@@ -24,56 +25,41 @@ const CardsContainer = () => {
       }
     };
     fetchFavoriteProducts();
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const { products } = useSelector((state) => {
     return {
       products: state.products,
     };
   });
+
   const [pagina, setPagina] = useState(1);
   const porPagina = 6;
-  const maximo = products.length / porPagina;
 
-  console.log(products);
+  // Move the declaration of filteredProducts here
+  const filteredProducts = products.filter(
+    (product) => product.isAvaible !== false 
+  );
 
+  const maximo = Math.ceil(filteredProducts.length / porPagina);
   return (
     <div>
+      <div className={style.container}>
+        {filteredProducts
+          .slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
+          .map((product) => (
+            <Card
+              name={product.name}
+              image={product.image}
+              price={product.price}
+              id={product.id}
+              stock={product.stock}
+              key={product.id}
+            />
+          ))}
+      </div>
       <div>
         <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo} />
-      </div>
-      <div className={style.container}>
-        {products
-          ?.slice(
-            (pagina - 1) * porPagina,
-            (pagina - 1) * porPagina + porPagina
-          )
-          .map((product) => {
-            if (product.isAvaible === false) {
-              return null; // No renderizar nada cuando isAvaible es true
-            } else if (product.stock === 0) {
-              return (
-                <Card
-                  key={product.id}
-                  name={product.name}
-                  image={product.image}
-                  price="Sin stock"
-                  id={product.id}
-                />
-              );
-            }
-            
-              return (
-                <Card
-                  name={product.name}
-                  image={product.image}
-                  price={product.price}
-                  id={product.id}
-                  key={product.id}
-                ></Card>
-              );
-            
-          })}
       </div>
     </div>
   );

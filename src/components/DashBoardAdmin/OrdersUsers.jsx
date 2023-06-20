@@ -5,13 +5,13 @@ import axios from "axios";
 import style from "../DashBoardAdmin/OrdersUsers.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { getUserAll, deleteUser } from "../../redux/actions/actions.js";
+import Swal from 'sweetalert2'
 
 const OrdersUsers = () => {
   const dispatch = useDispatch();
-  const { users, id } = useSelector((state) => {
+  const { users } = useSelector((state) => {
     return {
       users: state.users,
-      id: state.idUsuario,
     };
   });
   const [banButtonMap, setBanButtonMap] = useState({}); // Mapa para almacenar el estado de los botones de banear
@@ -29,90 +29,103 @@ const OrdersUsers = () => {
     setBanButtonMap(initialButtonMap);
   }, [users]);
 
-  if (id) localStorage.setItem("ids", id);
-
+  
   const handleBanUser = async (id) => {
-    // Actualizar el estado del botón correspondiente
-    await setBanButtonMap({
-      ...banButtonMap,
-      [id]: !banButtonMap[id], // Invertir el estado del botón al que se le hizo clic
-    });
     try {
-      axios.put(`/users/${id}`, { active: !banButtonMap[id] }).then((res) => {
-        if (!banButtonMap[id]) {
-          alert("Usuario desbaneado correctamente");
-        } else {
-          alert("Usuario baneado correctamente");
-        }
+      const result = await Swal.fire({
+        title: "Are you sure ?",
+        text: "YOU CAN CHANGE THIS LATER!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, I want!"
       });
+  
+      if (result.isConfirmed) {
+        const newBanButtonMap = { ...banButtonMap, [id]: !banButtonMap[id] };
+        setBanButtonMap(newBanButtonMap);
+  
+        await axios.put(`/users/${id}`, { active: !banButtonMap[id] });
+        Swal.fire("Already!", "The user status has been changed!", "success");
+      }
     } catch (error) {
-      alert("No se pudo editar el usuario");
+      Swal.fire("Error", "Failed to update user", "error");
     }
   };
+  
 
   const handleDeleteUser = (id) => {
-    // Mostrar ventana emergente de confirmación antes de eliminar al usuario
-    if (
-      window.confirm(
-        "¿Estás seguro de que quieres eliminar a este usuario definitivamente?"
-      )
-    ) {
-      dispatch(deleteUser(id));
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: 'warning',  
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it´s User Permanently!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUser(id));
+        Swal.fire(
+          'Deleted!',
+          'The User has been deleted.',
+          'success'
+        )
+      }
+    })
   };
+
+
   return (
     <>
-      <div className={style.container}>
-        <h1>Usuarios registrados</h1>
-        {users && users.length === 0 ? (
-          <div className="alert alert-warning" role="alert">
-            No hay usuarios registrados.
-          </div>
-        ) : (
+    <div className={style.container}>
+
+      <div>
+        <h1 className={style.hTitle}>Usuarios registrados</h1>
           <table className={style.table}>
             <thead className={style.arriba}>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Acciones</th>
+              <tr className={style.tr_container}>
+                <th>ID</th><th></th> <th>Nombre</th> <th></th> <th>Email</th> <th></th> <th>Bann</th> <th></th> <th>Delete</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={style.tbody_container}>
               {users.map((user) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
+                  <td></td>
                   <td>{user.name}</td>
+                  <td></td>
                   <td>{user.email}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteUser(user.id)}
-                    >
-                      Eliminar
-                    </button>
-                    <button
-                      className={`btn ${
-                        banButtonMap[user.id] ? "btn-success" : "btn-warning"
-                      }`}
-                      onClick={() => handleBanUser(user.id)}
-                    >
+                  <td></td>
+                    <td>
+                    {/* <button className={`btn ${banButtonMap[user.id] ? "btn-success" : "btn-warning"}`} onClick={() => handleBanUser(user.id)}> */}
+                    <button className={style.buton_bann} onClick={() => handleBanUser(user.id)}>
                       {banButtonMap[user.id] ? "Ban" : "Unban"}
                     </button>
                   </td>
+                  <td></td>
+                  <td>
+                    <button className={style.buttonDanger}onClick={() => handleDeleteUser(user.id)} > Delete User </button>
+                  </td>
+
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
-      </div>
-
+        </div>
+ {/* /*************************************************************************************** * */}
+      
+      <div className={style.button_container} >
       <Link to="/DashBoardAdmin">
         <button className={style.button}>
           Back <FaArrowLeft className={style.icon}></FaArrowLeft>
         </button>
       </Link>
-    </>
+      </div>
+
+  </div>
+  </>
   );
 };
 

@@ -38,11 +38,10 @@ const CardsContainer = () => {
 
   // Move the declaration of filteredProducts here
   const filteredProducts = products.filter(
-    (product) => product.isAvaible !== false && product.stock !== 0
+    (product) => product.isAvaible !== false 
   );
 
   const maximo = Math.ceil(filteredProducts.length / porPagina);
-
   return (
     <div>
       <div className={style.container}>
@@ -54,6 +53,7 @@ const CardsContainer = () => {
               image={product.image}
               price={product.price}
               id={product.id}
+              stock={product.stock}
               key={product.id}
             />
           ))}

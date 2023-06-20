@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const Card = ({ name, image, id, price, onUpdateFavorites }) => {
+const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
   const dispatch = useDispatch();
   const [isFav, setIsFav] = useState(false);
   const { iniciado, userId, favorites } = useSelector((state) => ({
@@ -58,6 +58,8 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
   };
   return (
     <div className={style.mainContainer}>
+      {stock === 0 && <p className={style.price2}>Sin stock</p>}
+
       {userId.admin && sesions === "si" ? (
         <Link to={`/edit/${id}`}>
           <svg
@@ -78,10 +80,20 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
       ) : null}
       <div className={style.link}>
         <h2 className={style.title}>{name}</h2>
-        <Link to={`/detail/${id}`}>
-          <img className={style.card} src={image} alt="" />
-        </Link>
-        <p className={style.price}>${price}</p>
+        {stock === 0 ? (
+          <div>
+            <Link to={`/detail/${id}`}>
+              <img className={style.card2} src={image} alt="" />
+            </Link>
+          </div>
+        ) : (
+          <Link to={`/detail/${id}`}>
+            <img className={style.card} src={image} alt="" />
+          </Link>
+        )}
+
+        {stock === 0 ? null : <p className={style.price}>${price}</p>}
+
         {isFav ? (
           <div value={id} onClick={handleDeleteFavorite}>
             <svg
@@ -120,7 +132,6 @@ const Card = ({ name, image, id, price, onUpdateFavorites }) => {
         )}
       </div>
     </div>
-            
   );
 };
 

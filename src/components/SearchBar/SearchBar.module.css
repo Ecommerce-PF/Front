@@ -1,10 +1,10 @@
 .centralize {
 	width: 210px;
 	display: flex;
-	margin-top: 20px;
 	justify-content: center;
 	align-items: center;
 	border-radius: 3%;
+	margin-right: 23%;
 }
 
 div.inputBlock {
@@ -18,7 +18,7 @@ div.inputBlock input {
 	font-weight: 500;
 	font-size: 1rem;
 	color: #020101;
-	width: 700px;
+	width: 2570%;
 	height: 10px;
 	padding: 15px 15px;
 	border-radius: 1rem;

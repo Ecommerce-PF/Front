@@ -13,6 +13,7 @@ import styles from "./carrito.module.css";
 export default function Carrito() {
 
   const dispatch = useDispatch();
+  //hola
 
   const id = useSelector((state) => state.idUsuario);
   if (!id.length === 0) localStorage.setItem("ids", id);

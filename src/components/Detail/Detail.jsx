@@ -22,8 +22,6 @@ export default function Detail() {
   const idUser = useSelector((state) => state.idUsuario);
   const user = useSelector((state) => state.userId);
 
-  console.log(state.stock, "caca");
-
   if (user.length === 0) {
     // No hacer nada
   } else {
@@ -214,8 +212,6 @@ export default function Detail() {
  const arrayColor = state?.color && state?.color.map((e) => (
   e.ColorName ? e.ColorName: e.name
 ))
-console.log(arrayColor) 
-
   return (
     <div>
       <div className={styles.back}>

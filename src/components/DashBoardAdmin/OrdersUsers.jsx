@@ -30,8 +30,7 @@ const OrdersUsers = () => {
     setBanButtonMap(initialButtonMap);
   }, [users]);
 
-  if (id) localStorage.setItem("ids", id);
-
+  
   const handleBanUser = async (id) => {
     try {
       const result = await Swal.fire({

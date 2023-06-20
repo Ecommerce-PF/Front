@@ -130,7 +130,9 @@ const Nav = () => {
           </div>
 
           <div className={style.contenedor_imagen}>
-            <p className={style.contadorCarrito}>{carritoState.length}</p>
+          {carritoState === null ? <p>0</p> : <p>{carritoState.length}</p>}
+ 
+          
             <Link to="/carrito">
               <svg
                 className={style.svg}

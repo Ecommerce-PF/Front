@@ -14,7 +14,7 @@ const Admin = () => {
     localStorage.setItem("userId", userId.admin);
   }
 
-  const userAdmin = localStorage.getItem("userId");
+  //const userAdmin = localStorage.getItem("userId");
 
   return (
    

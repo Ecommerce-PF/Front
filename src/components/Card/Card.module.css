@@ -96,6 +96,12 @@
 }
 
 
+.buttonFav{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+}
+
 .svgSinStock{
   width: 200px;
 }

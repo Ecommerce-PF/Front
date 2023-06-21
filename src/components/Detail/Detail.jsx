@@ -19,22 +19,27 @@ import styles from "./detail.module.css";
 export default function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const state = useSelector((state) => state.productDetail);
-  const idUser = useSelector((state) => state.idUsuario);
-  const user = useSelector((state) => state.userId);
-  const carritoState = useSelector((state) => state.cart);
+  const { state, idUser, user, carritoState } = useSelector((state) => {
+    return {
+      state: state.productDetail,
+      idUser: state.idUsuario,
+      user: state.userId,
+      carritoState: state.cart,
+    };
+  });
 
-  console.log(carritoState);
-
-  const [card, setCard] = useState();
-  const [card2, setCard2] = useState();
+  const [card, setCard] = useState(false);
+  const [card2, setCard2] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
+    setCard2(true);
     if (Array.isArray(carritoState)) {
       const foundItem = carritoState.some((item) => item.id === id);
       setCard2(foundItem);
     }
-  }, [carritoState, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carritoState]);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -45,20 +50,9 @@ export default function Detail() {
     fetchCart();
   }, [dispatch]);
 
-  if (user.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("users", user.name);
-  }
-  // const userOnline = localStorage.getItem("users");
+  if (user.length !== 0) localStorage.setItem("users", user.name);
+  if (idUser.length !== 0) localStorage.setItem("idUsers", idUser);
 
-  const [comments, setComments] = useState([]);
-
-  if (idUser.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("idUsers", idUser);
-  }
   const idUsers = localStorage.getItem("ids");
 
   const fecha = {
@@ -74,9 +68,7 @@ export default function Detail() {
   });
 
   const hanleChange = (event) => {
-    const value = event.target.value; // Corregir 'targer' a 'target'
-    const name = event.target.name; // Corregir 'targer' a 'target'
-
+    const { value, name } = event.target;
     setForm({
       ...form,
       [name]: value,
@@ -113,13 +105,8 @@ export default function Detail() {
 
   const handleAddCart = () => {
     dispatch(addCart(state));
-    console.log(state, "state");
-
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
-    console.log(listaCart, "listaCart");
-
     setCard(false);
-
     for (let i = 0; i < listaCart.length; i++) {
       if (
         listaCart[i].id === state.id &&
@@ -129,7 +116,6 @@ export default function Detail() {
         break;
       }
     }
-
     if (card) {
       Swal.fire({
         text: "There is no more stock of this product!",
@@ -162,7 +148,6 @@ export default function Detail() {
         showConfirmButton: false,
         timer: 1500,
       });
-      
     }
   };
 

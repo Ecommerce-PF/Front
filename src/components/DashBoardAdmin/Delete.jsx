@@ -196,12 +196,20 @@ export default function Delete() {
                 alt="Product"
                 className={styles.imgen}
                 style={imgStyle}
-              />
-               {/* <p className={styles.p_text}>
-                You would like to delte this product permanently?
-              </p> */}
+              />          
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}>Price:</span> {getProductById(input.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button
@@ -270,11 +278,19 @@ export default function Delete() {
                 className={styles.imgen}
                 style={imgStyle}
               />
-               {/* <p className={styles.p_text}>
-                This Clothe will be take out of stock, Are you sure?
-              </p> */}
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input2.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}></span> ${ getProductById(input2.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button
@@ -344,6 +360,17 @@ export default function Delete() {
               
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input3.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}></span> ${ getProductById(input3.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button

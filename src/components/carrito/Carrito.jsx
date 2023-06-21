@@ -14,16 +14,12 @@ export default function Carrito() {
   const id = useSelector((state) => state.idUsuario);
   const iniciado = useSelector((state) => state.iniciado);
 
-  console.log(iniciado, "esto es el global");
-
   if (iniciado.length === 0) {
   } else {
     localStorage.setItem("iniciado", iniciado);
   }
 
   const iniciados = localStorage.getItem("iniciado");
-
-  console.log(iniciados, "esto es el store");
 
   if (!id.length === 0) localStorage.setItem("ids", id);
   const idUser = localStorage.getItem("ids");
@@ -64,8 +60,8 @@ export default function Carrito() {
   const Login = () => {
     Swal.fire({
       icon: "error",
-      title: "Sesion no iniciada",
-      text: "Debe iniciar sesion o registrarse para continuar con la compra!",
+      title: "Session not started",
+      text: "You must log in or register to continue with the purchase!",
       footer: '<a href="./login">Inicia sesion aquí</a>',
     });
   };
@@ -80,7 +76,7 @@ export default function Carrito() {
   }, [defaultCart, dispatch]);
 
   return (
-    <section>
+    <section className={styles.componentCart2}>
       <section className={styles.componentCart}>
         <Nav />
         {carritoState === null || carritoState.length > 0 ? (
@@ -96,14 +92,54 @@ export default function Carrito() {
             })}
 
             <div className={styles.carritoTotalPrecio}>
-              <h3>Total del carrito: {precioTotal?.toFixed(2)}</h3>
+              <div className={styles.containerTotalpays}>
+                <p className={styles.totalPay}>Total Cart: </p>
+                <div className={styles.containerPrice}>
+                  $ {precioTotal?.toFixed(2)}
+                </div>
+              </div>
               {iniciados === "no" ? (
                 <button className={styles.button_confirm} onClick={Login}>
-                  Inicie sesion
+                  Log in
                 </button>
               ) : (
                 <button className={styles.button_confirm} onClick={funcionPago}>
-                  Proceder al pago
+                  Proceed to payment
+                  <svg
+                    className={styles.svgcarrito}
+                    width="40px"
+                    height="40px"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.5 10.5H5L6.5 19.5H18.5L20 10.5H16.5M8.5 10.5L10.2721 5.18377C10.4082 4.77543 10.7903 4.5 11.2208 4.5H13.7792C14.2097 4.5 14.5918 4.77543 14.7279 5.18377L16.5 10.5M8.5 10.5H16.5"
+                      stroke="#121923"
+                      stroke-width="1.2"
+                    />
+                    <path
+                      d="M12.5 10.5V19.5"
+                      stroke="#121923"
+                      stroke-width="1.2"
+                    />
+                    <path
+                      d="M9.5 19.5L8.5 10.5"
+                      stroke="#121923"
+                      stroke-width="1.2"
+                    />
+                    <path
+                      d="M15.5 19.5L16.5 10.5"
+                      stroke="#121923"
+                      stroke-width="1.2"
+                    />
+                    <path
+                      d="M19.5 13.5H5.5"
+                      stroke="#121923"
+                      stroke-width="1.2"
+                    />
+                    <path d="M19 16.5H6" stroke="#121923" stroke-width="1.2" />
+                  </svg>
                 </button>
               )}
             </div>
@@ -113,21 +149,37 @@ export default function Carrito() {
             <div className={styles.cart}></div>
             <div className={styles.cartDescription}>
               <h2>
-                Tu carrito de compras está vacio! <FaSadTear></FaSadTear>
+                Your shopping cart is empty! <FaSadTear></FaSadTear>
               </h2>
               <NavLink to="/home">
-                <button className={styles.button}>Buscar articulos</button>
+                <button className={styles.button}>Search for articles</button>
               </NavLink>
             </div>
           </section>
         )}
+        
+      </section>
+      <div className={styles.containerButton}> 
+          <Link className={styles.types} to="/home">
+            <button className={styles.button}>
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.5 17L10 12.5L14.5 8"
+                  stroke="#121923"
+                  stroke-width="1.2"
+                />
+              </svg>
 
-        <div className={styles.types}>
-          <Link to="/home">
-            <button className={styles.button}>Back</button>
+              <p className={styles.divA}>Back</p>
+            </button>
           </Link>
         </div>
-      </section>
     </section>
   );
 }

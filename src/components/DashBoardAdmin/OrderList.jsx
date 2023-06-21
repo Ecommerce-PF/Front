@@ -125,7 +125,7 @@ return (
           <p>User ID: {order.userId}</p>
         </div>
       ))
-    ) : ( <h1>Hola mundo</h1> )
+    ) : (  <h1 className={styles.no_orders}>⚠️ You haven´t Purchases yet ⚠️</h1> )
     }
   </div>
 ):(

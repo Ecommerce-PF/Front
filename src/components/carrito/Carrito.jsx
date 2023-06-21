@@ -80,7 +80,7 @@ export default function Carrito() {
         <Nav />
         {carritoState === null || carritoState.length > 0 ? (
           <div className={styles.containerCart}>
-            {carritoState.map((product) => {
+            {carritoState?.map((product) => {
               return (
                 <CartProduct
                   key={product.id}

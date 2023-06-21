@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Nav from "../Nav/Nav.jsx";
 import axios from "axios";
-import { FaSadTear } from "react-icons/fa";
 import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink, Link } from "react-router-dom";
 import { getCart } from "../../redux/actions/actions.js";
@@ -81,7 +80,7 @@ export default function Carrito() {
         <Nav />
         {carritoState === null || carritoState.length > 0 ? (
           <div className={styles.containerCart}>
-            {carritoState.map((product) => {
+            {carritoState?.map((product) => {
               return (
                 <CartProduct
                   key={product.id}

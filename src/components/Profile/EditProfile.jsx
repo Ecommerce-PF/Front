@@ -110,10 +110,12 @@ const EditProfile = () => {
     <>
       <div className={styles.main_container}>
         <div className={styles.form}>
-          <h2 className={styles.form__group}>Profile</h2>
 
+          <h2 className={styles.form__group}>Profile</h2>
+      <div className={styles.div_1}>
           <div>
-            <img src={url} alt="profilePicture" width="190" height="200" />
+            {/* <img src={url} alt="profilePicture" className={styles.imagen_profile} /> */}
+            <img src={profileImage} alt="profilePicture" className={styles.imagen_profile} />
             <p></p>
           </div>
 
@@ -126,12 +128,12 @@ const EditProfile = () => {
           <p className={styles.info}>Phone:</p>
           <h3>{phone}</h3>
 
-          <p className={styles.subtitle}>Address {address}</p>
-          <h3 className={styles.address}>Voy caminando por el mundo</h3>
-        </div>
+      </div>
+      </div>
 
         <div className={styles.form__container}>
           <h1 className={styles.form__title}>Editar Perfil</h1>
+        <div className={styles.div_1}>
           <form action="" onSubmit={handleSubmit} className={styles.form}>
             <Link className={styles.linkButton} onClick={() => change("name")}>Name</Link>
 
@@ -235,13 +237,14 @@ const EditProfile = () => {
             </button>
           </form>
         </div>
-      </div>
+       </div>
 
       <Link to="/profile">
         <button className={styles.button}>
           Back <FaArrowLeft className={styles.icon} />
         </button>
       </Link>
+      </div>
     </>
   );
 };

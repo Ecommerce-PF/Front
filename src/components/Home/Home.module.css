@@ -18,3 +18,32 @@
   align-items: center;
   height: 100vh;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bannedMessage {
+  font-size: 40px;
+  text-align: center;
+}
+
+.containerP{
+  position: relative;
+}
+
+.pp{
+  position: absolute;
+  margin-left: 30%;
+  bottom: 150px;
+}
+
+
+.pp2{
+  position: absolute;
+  margin-left: 43%;
+  bottom: 120px;
+}

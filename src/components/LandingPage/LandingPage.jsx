@@ -25,13 +25,13 @@ export default function LandingPage() {
         <div className={s.divTextBtn}>
           <div className={s.btnContainer}>
             <Link className={s.btnS} to="/login">
-              <button className={s.btn}>Iniciar sesión</button>
+              <button className={s.btn}>Log in</button>
             </Link>
             <Link className={s.btnS} to="/signup">
-              <button className={s.btn}>Registrarse</button>
+              <button className={s.btn}>Sign In</button>
             </Link>
             <button onClick={handleSinIniciar} className={s.btn}>
-              Inicio
+            Home
             </button>
           </div>
         </div>

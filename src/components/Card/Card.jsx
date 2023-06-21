@@ -83,7 +83,7 @@ const Card = ({
           <div>
             <Link to={`/detail/${id}`}>
               <div>
-                <img className={style.card2} src={image} alt="" />
+                <img className={style.card} src={image} alt="" />
               </div>
             </Link>
           </div>

@@ -82,7 +82,7 @@ const Card = ({
         {stock === 0 ? (
           <div>
             <Link to={`/detail/${id}`}>
-              <div style={style.imgContainer}>
+              <div>
                 <img className={style.card2} src={image} alt="" />
               </div>
             </Link>

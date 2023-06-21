@@ -9,11 +9,21 @@ import { getCart } from "../../redux/actions/actions.js";
 import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
 
-
 export default function Carrito() {
   const dispatch = useDispatch();
-
   const id = useSelector((state) => state.idUsuario);
+  const iniciado = useSelector((state) => state.iniciado);
+
+  console.log(iniciado, "esto es el global");
+
+  if (iniciado.length === 0) {
+  } else {
+    localStorage.setItem("iniciado", iniciado);
+  }
+
+  const iniciados = localStorage.getItem("iniciado");
+
+  console.log(iniciados, "esto es el store");
 
   if (!id.length === 0) localStorage.setItem("ids", id);
   const idUser = localStorage.getItem("ids");
@@ -58,7 +68,7 @@ export default function Carrito() {
       text: "Debe iniciar sesion o registrarse para continuar con la compra!",
       footer: '<a href="./login">Inicia sesion aquí</a>',
     });
-  }
+  };
 
   const [defaultCart, setDefaultCart] = useState(true);
 
@@ -87,10 +97,14 @@ export default function Carrito() {
 
             <div className={styles.carritoTotalPrecio}>
               <h3>Total del carrito: {precioTotal?.toFixed(2)}</h3>
-              {id.length === 0 ? (
-                  <button className={styles.button_confirm} onClick={Login}>Proceder al pago</button>
+              {iniciados === "no" ? (
+                <button className={styles.button_confirm} onClick={Login}>
+                  Inicie sesion
+                </button>
               ) : (
-                <button className={styles.button_confirm} onClick={funcionPago}>Proceder al pago</button>
+                <button className={styles.button_confirm} onClick={funcionPago}>
+                  Proceder al pago
+                </button>
               )}
             </div>
           </div>

@@ -94,8 +94,8 @@ const Login = () => {
             const data = response.data;
             dispatch(idUser(data.user.id));
             dispatch(consultaSiIniciado("si"));
+            console.log("pase por aca")
             navigate("/home");
-            window.location.reload();
           } else {
             Swal.fire({
               icon: "error",

@@ -80,13 +80,9 @@ const Card = ({
       <div className={style.link}>
         <h2 className={style.title}>{name}</h2>
         {stock === 0 ? (
-          <div>
-            <Link to={`/detail/${id}`}>
-              <div>
-                <img className={style.card} src={image} alt="" />
-              </div>
-            </Link>
-          </div>
+          <Link to={`/detail/${id}`}>
+            <img className={style.card} src={image} alt="" />
+          </Link>
         ) : (
           <Link to={`/detail/${id}`}>
             <img className={style.card} src={image} alt="" />

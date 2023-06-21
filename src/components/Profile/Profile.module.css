@@ -8,6 +8,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  height: 100vh;
   background-image: linear-gradient(to top, #e1aee9 0%, #b0a0b9 100%);
 }
 

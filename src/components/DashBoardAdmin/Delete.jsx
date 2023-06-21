@@ -114,7 +114,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         deletee(input);
         Swal.fire("Deleted!", "The Clothe has been deleted.", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -136,7 +136,7 @@ export default function Delete() {
           "The Clothe have been pick out from estock",
           "Success"
         );
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -154,7 +154,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         handleDespausarProducto();
         Swal.fire("Activated!", "Your Clothe is Active Again", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }

@@ -88,19 +88,6 @@ export default function Delete() {
     return products.find((product) => product.id === productId);
   }
 
-  var danger = {
-    marginTop: "7px",
-    display: "block",
-    color: "red",
-    fontSize: "13px",
-  };
-
-  var imgStyle = {
-    width: "200px",
-    height: "auto",
-    margin: "10px",
-  };
-
   function confirmDelete() {
     Swal.fire({
       title: "Are you sure?",
@@ -114,7 +101,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         deletee(input);
         Swal.fire("Deleted!", "The Clothe has been deleted.", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -136,7 +123,7 @@ export default function Delete() {
           "The Clothe have been pick out from estock",
           "Success"
         );
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -154,7 +141,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         handleDespausarProducto();
         Swal.fire("Activated!", "Your Clothe is Active Again", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -193,7 +180,7 @@ export default function Delete() {
                 );
               })}
             </select>
-            {errors.id && <p style={danger}>{errors.id}</p>}
+            {errors.id && <p>{errors.id}</p>}
 
             {selectedProductName && (
               <div className={styles.card_body}>
@@ -201,7 +188,6 @@ export default function Delete() {
                   src={getProductById(input.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
               </div>
             )}
@@ -297,7 +283,6 @@ export default function Delete() {
                   src={getProductById(input2.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
               </div>
             )}
@@ -373,7 +358,6 @@ export default function Delete() {
                   src={getProductById(input3.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
                 <span>{}</span>
               </div>

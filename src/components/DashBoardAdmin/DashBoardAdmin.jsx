@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa";
 const Admin = () => {
   return (
     <div className={style.container}>
+     
       <div className={style.containerDashboard}>
         <h1 className={style.dashboard}>Dashboard Admin</h1>
       </div>

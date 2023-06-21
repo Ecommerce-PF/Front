@@ -88,19 +88,6 @@ export default function Delete() {
     return products.find((product) => product.id === productId);
   }
 
-  var danger = {
-    marginTop: "7px",
-    display: "block",
-    color: "red",
-    fontSize: "13px",
-  };
-
-  var imgStyle = {
-    width: "200px",
-    height: "auto",
-    margin: "10px",
-  };
-
   function confirmDelete() {
     Swal.fire({
       title: "Are you sure?",

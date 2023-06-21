@@ -9,9 +9,21 @@ import { useState } from "react";
 const Profile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
+  const google = useSelector((state) => state.google);
 
   const [url, setUrl] = useState("");
   const id = useSelector((state) => state.idUsuario);
+
+  if (google.length === 0) {
+    // No hacer nada
+  } else {
+    localStorage.setItem("google", google);
+  }
+  //const profileImages = userId.profileImage;
+
+  const googles = localStorage.getItem("google");
+
+  console.log(googles);
 
   if (id.length === 0) {
     // No hacer nada
@@ -53,11 +65,7 @@ const Profile = () => {
             <p className={styles.info}>Phone: </p>
             <h2 className={styles.h_container2}>{phone}</h2>
 
-            <img
-              className={styles.img_profile}
-              src={url}
-              alt={name}
-            />
+            <img className={styles.img_profile} src={url} alt={name} />
           </div>
 
           {/* /***************************************************************************** * */}
@@ -65,26 +73,24 @@ const Profile = () => {
           <div className={styles.buttons_containers}>
             <div>
               <Link to={`/ListUser/${idUser}`} className={styles.purchaseLink}>
-                <button className={styles.button_data}>
-                  {" "}
-                  Purchase History{" "}
-                </button>
+                <button className={styles.button_data}>Purchase History</button>
               </Link>
             </div>
 
-            <div>
-              <Link to={`/editProfile`} className={styles.purchaseLink}>
-                <button className={styles.button_data}>Edit Profile</button>
-              </Link>
-            </div>
+            {google === "no" ? (
+              <div>
+                <Link to={`/editProfile`} className={styles.purchaseLink}>
+                  <button className={styles.button_data}>Edit Profile</button>
+                </Link>
+              </div>
+            ) : null}
           </div>
         </div>
 
         <div className={styles.button_back}>
           <Link to="/home">
             <button className={styles.button}>
-              {" "}
-              Back <FaArrowLeft className={styles.icon}></FaArrowLeft>{" "}
+              Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
             </button>
           </Link>
         </div>

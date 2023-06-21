@@ -43,7 +43,7 @@ export default function Detail() {
       } catch (error) {}
     };
     fetchCart();
-  }, []);
+  }, [dispatch]);
 
   if (user.length === 0) {
     // No hacer nada

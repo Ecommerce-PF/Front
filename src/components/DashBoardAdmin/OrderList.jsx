@@ -10,10 +10,8 @@ const OrderList = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const orders = useSelector((state) => state.orders);
-  const products = useSelector((state) => state.products);
 
   const [selectedUserId, setSelectedUserId] = useState("");
-  const [selectedOrderId, setSelectedOrderId] = useState("");
   const [userOrders, setUserOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [isAscending, setIsAscending] = useState(true);
@@ -38,7 +36,6 @@ const OrderList = () => {
 
   const handleUserChange = (event) => {
     setSelectedUserId(event.target.value);
-    setSelectedOrderId("");
   };
 /******************************************************************* */
 
@@ -130,7 +127,7 @@ return (
   </div>
 ):(
 
-  userOrders.length == 0 ?
+  userOrders.length === 0 ?
     <h1 className={styles.no_orders}>⚠️There are no orders for this user⚠️</h1>
 
  :(

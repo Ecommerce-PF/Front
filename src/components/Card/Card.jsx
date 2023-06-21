@@ -82,7 +82,9 @@ const Card = ({
         {stock === 0 ? (
           <div>
             <Link to={`/detail/${id}`}>
-              <img className={style.card2} src={image} alt="" />
+              <div style={style.imgContainer}>
+                <img className={style.card2} src={image} alt="" />
+              </div>
             </Link>
           </div>
         ) : (
@@ -99,7 +101,6 @@ const Card = ({
             value={id}
             onClick={handleDeleteFavorite}
           >
-            
             <svg
               className={style.svg2}
               width="47px"
@@ -129,10 +130,8 @@ const Card = ({
             </svg>
           </button>
         ) : (
-          <button
-            className={style.buttonFav}
-            onClick={handleAddFavorite}
-          ><svg
+          <button className={style.buttonFav} onClick={handleAddFavorite}>
+            <svg
               className={style.svg3}
               width="47px"
               height="47px"
@@ -145,7 +144,8 @@ const Card = ({
                 stroke="#121923"
                 stroke-width="1.2"
               />
-            </svg></button>
+            </svg>
+          </button>
         )}
       </div>
     </div>

@@ -13,6 +13,8 @@ export default function Carrito() {
   const id = useSelector((state) => state.idUsuario);
   const iniciado = useSelector((state) => state.iniciado);
 
+
+
   if (iniciado.length === 0) {
   } else {
     localStorage.setItem("iniciado", iniciado);

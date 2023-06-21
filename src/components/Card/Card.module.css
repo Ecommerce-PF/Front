@@ -94,6 +94,17 @@
   transform: scale(1.5);
 }
 
+.svg3 {
+  width: 30px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.svg3:hover {
+  transition: 0.4s;
+  transform: scale(1.5);
+}
+
 
 .buttonFav{
   background-color: rgb(255, 255, 255);

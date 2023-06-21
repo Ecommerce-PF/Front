@@ -5,7 +5,6 @@ import axios from "axios";
 import { FaSadTear } from "react-icons/fa";
 import CartProduct from "./cartProduct/CartProduct.jsx";
 import { NavLink, Link } from "react-router-dom";
-import { TfiReload } from "react-icons/tfi";
 import { getCart } from "../../redux/actions/actions.js";
 import Swal from "sweetalert2";
 import styles from "./carrito.module.css";
@@ -103,11 +102,8 @@ export default function Carrito() {
                 Tu carrito de compras está vacio! <FaSadTear></FaSadTear>
               </h2>
               <NavLink to="/home">
-                <button>Buscar articulos</button>
+                <button className={styles.button}>Buscar articulos</button>
               </NavLink>
-              <button onClick={() => window.location.reload()}>
-                <TfiReload />
-              </button>
             </div>
           </section>
         )}

@@ -214,8 +214,8 @@ useEffect(()=>{
               />
 
               { error.name 
-            ? <span className={styles.error}>❌{error.name}</span>
-            : <span >✅</span> } 
+            ? <span className={styles.error}>{error.name}</span>
+            : <span ></span> } 
 
 
             </div>
@@ -257,8 +257,8 @@ useEffect(()=>{
                   </div>
                 <div>
                   { error.price
-                  ? <span className={styles.error}>❌{error.price}</span>
-                  : <span >✅</span> }
+                  ? <span className={styles.error}>{error.price}</span>
+                  : <span ></span> }
                 </div>
 
               </div>
@@ -281,8 +281,8 @@ useEffect(()=>{
               {/* <span>Must use "," for separate each color</span> */}
               <br />
               { error.color
-              ? <span className={styles.error}>❌{error.color}</span>
-              : <span >✅</span> }
+              ? <span className={styles.error}>{error.color}</span>
+              : <span ></span> }
             </div>
 
             {/* /********************************************************************************* */}
@@ -301,8 +301,8 @@ useEffect(()=>{
               />
 
               { error.description
-              ? <span className={styles.error}>❌{error.description}</span>
-              : <span >✅</span> }
+              ? <span className={styles.error}>{error.description}</span>
+              : <span ></span> }
 
             </div>
 
@@ -336,8 +336,8 @@ useEffect(()=>{
               </select>
 
               { error.category
-              ? <span className={styles.error}>❌{error.category}</span>
-              : <span >✅</span> }
+              ? <span className={styles.error}>{error.category}</span>
+              : <span ></span> }
 
             </div>
 
@@ -357,8 +357,8 @@ useEffect(()=>{
 
               {/* {error.category && <p>{error.category}</p>} */}
               { error.category
-              ? <span className={styles.error}>❌{error.category}</span>
-              : <span >✅</span> }
+              ? <p className={styles.error}>{error.category}</p>
+              : <span ></span> }
 
             </div>
 
@@ -376,7 +376,7 @@ useEffect(()=>{
                   : null
                 }
                 {
-                  Object.keys(error).length === 0 && <p>The Form has been validate ✅</p>
+                  Object.keys(error).length === 0 && <p>The Form has been validate </p>
                 } 
          
       </form>

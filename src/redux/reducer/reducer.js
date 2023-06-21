@@ -19,6 +19,7 @@ import {
   LOGIN_WITH_GOOGLE,
   ADD_FAVORITE,
   DELETE_FAVORITE,
+  GET_FAVORITE,
   ADD_CART,
   DELETE_CART,
   GET_CART,
@@ -26,7 +27,7 @@ import {
   SET_FAVORITES,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
-  
+
 } from "../actions/actions";
 
 const initialState = {
@@ -317,7 +318,13 @@ const rootReducer = (state = initialState, action) => {
         favorites: action.payload,
       };
 
-      case GET_ALL_ORDERS:
+    case GET_FAVORITE:
+      return {
+        ...state,
+        myFavorites: action.payload,
+      };
+
+    case GET_ALL_ORDERS:
       return {
         ...state,
         orders: action.payload
@@ -327,7 +334,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         order: action.payload
       };
-   
+
 
 
     default:

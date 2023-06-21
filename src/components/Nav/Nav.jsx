@@ -34,7 +34,7 @@ const Nav = () => {
 
   return (
     <div className={style.mainContainer}>
-      <Link className={style.link} to="/">
+      <Link className={style.link} to="/home">
         <h1 className={style.titleEspecial}>ClotheStore</h1>
       </Link>
 

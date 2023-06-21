@@ -75,7 +75,6 @@ export default function Delete() {
     setSelectedProductNames2(productNames);
     try {
       await axios.put(`/products/${input2.id}`,pausado);
-      // Realiza acciones adicionales después de la respuesta exitosa aquí
     } catch (error) {
       // Maneja el error aquí
     }
@@ -97,7 +96,7 @@ export default function Delete() {
   };
 
   var imgStyle = {
-    width: "200px", // Ajusta el tamaño según lo necesario
+    width: "200px", 
     height: "auto",
     margin: "10px",
   };
@@ -114,13 +113,11 @@ export default function Delete() {
     }).then((result) => {
       if (result.isConfirmed) {
         deletee(input);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "The Clothe has been deleted.", "Success");
         window.location.reload();
       }
     });
   }
-
-  
 
   function confirmPause() {
     Swal.fire({
@@ -133,8 +130,8 @@ export default function Delete() {
       confirmButtonText: "Yes, I want to do!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Desactivada!", "The Clothe have been pick out from estock", "success");
         handlePausarProducto();
+        Swal.fire("Desactive!", "The Clothe have been pick out from estock", "Success");
         window.location.reload();
       }
     });
@@ -151,8 +148,8 @@ export default function Delete() {
       confirmButtonText: "Yes, Active Again!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Active!", "Your Clothe is Active Again", "Success");
         handleDespausarProducto();
+        Swal.fire("Activated!", "Your Clothe is Active Again", "Success");
         window.location.reload();
       }
     });
@@ -161,25 +158,30 @@ export default function Delete() {
 
   return (
     <>
+    <div className={styles.main_container}>
+
+    {/* <h1 className={styles.title_h1}>Management of Products</h1> */}
     
     <div className={styles.container}>
       {/* ================================================================================ */}
       {/* BORRAR PRODUCTO */}
 
-      <div className={styles.delete}>
-        <form className="m-5">
+      <div className={styles.containerPause}>
+        <h1 className={styles.title_1}>Delete Products</h1>
+        <form className={styles.form_container}>
           <select
             name="id"
-            className="btn btn-light dropdown-toggle m-3"
+            className={styles.select_se}
             value={input.id}
             onChange={handleInputChange}
+           
           >
             <option value="" disabled>
               SELECT PRODUCT
             </option>
             {products.map((product) => {
               return (
-                <option key={product.id} value={product.id}>
+                <option key={product.id} value={product.id} className={styles.options_values}>
                   {product.name}
                 </option>
               );
@@ -188,22 +190,30 @@ export default function Delete() {
           {errors.id && <p style={danger}>{errors.id}</p>}
 
           {selectedProductName && (
-            <div className="card-body">
+             <div className={styles.card_body}>
               <img
                 src={getProductById(input.id)?.image}
                 alt="Product"
-                className="card-img-top"
+                className={styles.imgen}
                 style={imgStyle}
-              />
-              <p className="card-text">
-                You would like to delte this product permanently?
-              </p>
+              />          
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}>Price:</span> {getProductById(input.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button
-          className="btn btn-warning d-print-block p-2"
+           className={styles.button_delete}
           onClick={confirmDelete}
           disabled={isNotEmpty(errors)}>
             
@@ -219,7 +229,7 @@ export default function Delete() {
                     Not
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className={styles.button_delete}
                     onClick={confirmDelete}
                     type="submit"
                   >
@@ -241,8 +251,13 @@ export default function Delete() {
       {/* PAUSAR PRODUCTO */}
 
       <div className={styles.containerPause}>
-        <form className="m-5">
-          <select name="id" value={input2.id} onChange={handlePausarProducto}>
+      <h1 className={styles.title_1}>Take Out</h1>
+        <form className={styles.form_container}>
+          <select 
+          name="id" 
+          className={styles.select_se}
+          value={input2.id} 
+          onChange={handlePausarProducto}>
             <option value="" disabled>
               SELECT PRODUCT
             </option>
@@ -256,38 +271,48 @@ export default function Delete() {
           </select>
 
           {selectedProductNames2 && (
-            <div className="card-body">
+            <div className={styles.card_body}>
               <img
                 src={getProductById(input2.id)?.image}
                 alt="Product"
-                className="card-img-top"
+                className={styles.imgen}
                 style={imgStyle}
               />
-              <p className="card-text">
-                Usted va a desactivar la prenda, ¿está seguro?
-              </p>
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input2.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}></span> ${ getProductById(input2.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button
-          className="btn btn-warning d-print-block p-2"
+          className={styles.button_pause2}
           onClick={confirmPause}
           // disabled={isNotEmpty(errors)}
         >
-          Pick Off
+          Take Off
         </button>
 
-        {false && (
+        {/* {false && (
           <div className="container">
             <div className="row">
               <div className="col align-self-center">
                 <div className="card-body">
-                  <button className="btn btn-danger" onClick={toggle}>
+                  <button 
+                  className={styles.button_despause2} 
+                  onClick={toggle}>
                     Do not
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className={styles.button_despause2}
                     onClick={confirmPause}
                     type="submit"
                   >
@@ -297,15 +322,17 @@ export default function Delete() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* ---------------------------------------------------------------------------- */}
       {/* DESPAUSAR */}
 
-      <div className={styles.containerDespause}>
-        <form className="m-5">
+      <div className={styles.containerPause}>
+      <h1 className={styles.title_1}>Turn Back</h1>
+        <form className={styles.form_container}>
           <select
+           className={styles.select_se}
             name="id"
             value={input3.id}
             onChange={handleDespausarProducto}
@@ -322,22 +349,32 @@ export default function Delete() {
           </select>
 
           {selectedProductNames3 && (
-            <div className="card-body">
+             <div className={styles.card_body}>
               <img
                 src={getProductById(input3.id)?.image}
                 alt="Product"
-                className="card-img-top"
+                className={styles.imgen}
                 style={imgStyle}
               />
-              <p className="card-text">
-                You would like to get this clothe out from your avaiable stock?
-              </p>
+              <span>{}</span>
+              
             </div>
           )}
+           { selectedProductName && (
+                <div className={styles.card_body}>
+                  <p>
+                     {getProductById(input3.id)?.name}
+
+                  </p>
+                  <p>
+                    <span className={styles.span}></span> ${ getProductById(input3.id)?.price}
+                  </p>
+                </div>
+                  ) }
         </form>
 
         <button
-          className="btn btn-warning d-print-block p-2"
+          className={styles.button_despause}
           onClick={confirmDespause}
           // disabled={isNotEmpty(errors)}
         >
@@ -349,11 +386,11 @@ export default function Delete() {
             <div className="row">
               <div className="col align-self-center">
                 <div className="card-body">
-                  <button className="btn btn-danger" onClick={toggle}>
+                  <button className={styles.button_despause} onClick={toggle}>
                     No
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className={styles.button_despause}
                     onClick={confirmDespause}
                     type="submit"
                   >
@@ -374,6 +411,8 @@ export default function Delete() {
           Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
         </button>
       </Link>
+
+      </div>
     </>
   );
 }

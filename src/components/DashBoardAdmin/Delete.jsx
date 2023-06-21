@@ -114,7 +114,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         deletee(input);
         Swal.fire("Deleted!", "The Clothe has been deleted.", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -136,7 +136,7 @@ export default function Delete() {
           "The Clothe have been pick out from estock",
           "Success"
         );
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -154,7 +154,7 @@ export default function Delete() {
       if (result.isConfirmed) {
         handleDespausarProducto();
         Swal.fire("Activated!", "Your Clothe is Active Again", "Success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
@@ -193,7 +193,7 @@ export default function Delete() {
                 );
               })}
             </select>
-            {errors.id && <p style={danger}>{errors.id}</p>}
+            {errors.id && <p>{errors.id}</p>}
 
             {selectedProductName && (
               <div className={styles.card_body}>
@@ -201,7 +201,6 @@ export default function Delete() {
                   src={getProductById(input.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
               </div>
             )}
@@ -235,7 +234,7 @@ export default function Delete() {
                 <path
                   d="M5 6.5H20M10 6.5V4.5C10 3.94772 10.4477 3.5 11 3.5H14C14.5523 3.5 15 3.94772 15 4.5V6.5M12.5 9V17M15.5 9L15 17M9.5 9L10 17M18.5 6.5L17.571 18.5767C17.5309 19.0977 17.0965 19.5 16.574 19.5H8.42603C7.90349 19.5 7.46905 19.0977 7.42898 18.5767L6.5 6.5H18.5Z"
                   stroke="#121923"
-                  strokeWidth="1.2"
+                  stroke-width="1.2"
                 />
               </svg>
             </button>
@@ -297,7 +296,6 @@ export default function Delete() {
                   src={getProductById(input2.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
               </div>
             )}
@@ -373,7 +371,6 @@ export default function Delete() {
                   src={getProductById(input3.id)?.image}
                   alt="Product"
                   className={styles.imgen}
-                  style={imgStyle}
                 />
                 <span>{}</span>
               </div>

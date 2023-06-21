@@ -182,7 +182,7 @@ const rootReducer = (state = initialState, action) => {
 
     case ORDER_BY_PRICE:
       let sortAsc = action.payload === "asc";
-      const sortedPrice = state.allProducts.slice().sort(function (a, b) {
+      const sortedPrice = state.products.sort((a, b) => {
         if (a.price > b.price) {
           return sortAsc ? 1 : -1;
         }
@@ -225,6 +225,7 @@ const rootReducer = (state = initialState, action) => {
     case RESET_FILTERS:
       return {
         ...state,
+        products: state.allProducts,
         filters: {
           ...state.filters,
           category: "",

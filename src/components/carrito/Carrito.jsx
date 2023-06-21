@@ -13,7 +13,7 @@ export default function Carrito() {
   const id = useSelector((state) => state.idUsuario);
   const iniciado = useSelector((state) => state.iniciado);
 
-  console.log(iniciado, "iniciado")
+
 
   if (iniciado.length === 0) {
   } else {

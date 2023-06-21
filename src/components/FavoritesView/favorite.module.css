@@ -3,27 +3,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 10px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(252, 218, 255, 1) 100%
+    rgb(191, 39, 39) 100%
   );
   color: #af1cc2;
 }
 .container_fav {
- 
-  padding: 20px 0;
-  margin: 20px 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(255, 255, 255);
+height: 100vb;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(252, 218, 255, 1) 100%
+    rgba(255, 235, 15, 0.38) 100%
   );
   color: #af1cc2;
 }
@@ -31,7 +26,7 @@
 .title_fav {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #af1cc2;
+  color: #2c2c2c;
 }
 
 .containerCards{
@@ -88,3 +83,5 @@
   height: 100%;
   color: #af1cc2;
 }
+
+

@@ -5,9 +5,16 @@ import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Card = ({ name, image, id, price, onUpdateFavorites, stock, idUserFav }) => {
+const Card = ({
+  name,
+  image,
+  id,
+  price,
+  onUpdateFavorites,
+  stock,
+  idUserFav,
+}) => {
   const dispatch = useDispatch();
- ;
   const [isFav, setIsFav] = useState(false);
   const { iniciado, userId, favorites } = useSelector((state) => ({
     iniciado: state.iniciado,
@@ -46,9 +53,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock, idUserFav }) =
       });
       setIsFav(!isFav);
       onUpdateFavorites(id); // Llama a la función de actualización para eliminar la carta de la lista de favoritos en FavoritesView
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   };
   return (
     <div className={style.mainContainer}>
@@ -89,27 +94,46 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock, idUserFav }) =
         {stock === 0 ? null : <p className={style.price}>${price}</p>}
 
         {isFav ? (
-          <button className={style.buttonFav} value={id} onClick={handleDeleteFavorite} >
+          <button
+            className={style.buttonFav}
+            value={id}
+            onClick={handleDeleteFavorite}
+          >
+            
             <svg
               className={style.svg2}
               width="47px"
               height="47px"
-              viewBox="0 0 25 25"
+              viewBox="0 0 25.00 25.00"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              stroke="#ff0000"
+              transform="matrix(1, 0, 0, 1, 0, 0)"
             >
-              <path
-                d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
-                fill="#121923"
-                stroke="#121923"
-                strokeWidth="1.2"
+              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               />
+
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                  fill="#e20808"
+                  stroke="#e20808"
+                  stroke-width="1.2"
+                />
+              </g>
             </svg>
           </button>
         ) : (
-          <button className={style.buttonFav} onClick={handleAddFavorite}>
-            <svg
-              className={style.svg2}
+          <button
+            className={style.buttonFav}
+            onClick={handleAddFavorite}
+          ><svg
+              className={style.svg3}
               width="47px"
               height="47px"
               viewBox="0 0 25 25"
@@ -119,10 +143,9 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock, idUserFav }) =
               <path
                 d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
                 stroke="#121923"
-                strokeWidth="1.2"
+                stroke-width="1.2"
               />
-            </svg>
-          </button>
+            </svg></button>
         )}
       </div>
     </div>

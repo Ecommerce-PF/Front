@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { deleteCart, updatedCart } from "../../../redux/actions/actions.js";
 
 import styles from "../carrito.module.css";
-import Suma from "../../../assets/suma-signo-mas.png";
-import Resta from "../../../assets/menos (1).png";
 
 export default function CartProduct({ product, stock }) {
   const dispatch = useDispatch();

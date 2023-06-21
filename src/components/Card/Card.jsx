@@ -5,7 +5,7 @@ import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
+const Card = ({ name, image, id, price, onUpdateFavorites, stock, idUserFav }) => {
   const dispatch = useDispatch();
  ;
   const [isFav, setIsFav] = useState(false);
@@ -22,9 +22,10 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);
   const sesions = localStorage.getItem("sesions");
 
+  const idForm = userId.id ? userId.id : idUserFav;
   const form = {
     id: id,
-    UserId: userId.id,
+    UserId: idForm,
   };
 
   const handleAddFavorite = async () => {

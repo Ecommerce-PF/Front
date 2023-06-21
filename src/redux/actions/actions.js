@@ -32,6 +32,7 @@ export const LOGIN_WITH_GOOGLE = "LOGIN_WITH_GOOGLE";
 export const GOOGLE = "GOOGLE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const DELETE_FAVORITE = "DELETE_FAVORITE";
+export const GET_FAVORITE = "GET_FAVORITE";
 export const GET_CART = "GET_CART";
 export const UPDATE_CART = "UPDATE_CART";
 export const SET_FAVORITES = "SET_FAVORITES";
@@ -44,7 +45,7 @@ export const getUser = (userId) => {
     try {
       const user = await axios.get(`/users/${userId}`);
       dispatch({ type: GET_USER, payload: user.data });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 
@@ -53,7 +54,7 @@ export const getAllProducts = () => {
     try {
       const products = await axios.get("/products");
       dispatch({ type: GET_ALL_PRODUCTS, payload: products.data });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 
@@ -62,7 +63,7 @@ export const getAllProductByName = (name) => {
     try {
       const products = await axios.get(`/products?name=${name}`);
       dispatch({ type: GET_BY_NAME, payload: products.data });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 
@@ -71,7 +72,7 @@ export const getCategories = () => {
     try {
       const response = await axios.get(`/types`);
       dispatch({ type: GET_CATEGORIES, payload: response.data });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 
@@ -89,6 +90,20 @@ export const deleteFavorite = (productId) => {
     payload: productId,
   };
 };
+
+export const getFavorites = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`/whishListProduct/${id}`);
+      return dispatch({
+        type: GET_FAVORITE,
+        payload: res.data.Clothes,
+      })
+    } catch (error) {
+
+    }
+  }
+}
 /* ------------------ */
 
 export const orderByName = (payload) => {
@@ -103,7 +118,7 @@ export const getDetail = (id) => {
     try {
       const response = await axios.get(`/products/${id}`);
       dispatch({ type: GET_DETAIL, payload: response.data });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 

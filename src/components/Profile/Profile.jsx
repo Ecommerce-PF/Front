@@ -53,13 +53,13 @@ const Profile = () => {
   return (
     <div className={styles.main_container}>
       <Nav />
-      {/* <div className={styles.button_back}>
+      <div className={styles.button_back}>
         <Link to="/home">
           <button className={styles.button}>
             Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
           </button>
         </Link>
-      </div> */}
+      </div>
 
       <div className={styles.main_container2}>
         <div className={styles.data_container}>

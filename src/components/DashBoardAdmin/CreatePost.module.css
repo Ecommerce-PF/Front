@@ -110,9 +110,9 @@
 
 }
 
-.errorMessage {
+.error {
   color: red;
-  margin-top: 5px;
+  margin-top: 20px;
 }
 
 /* Media Queries */
@@ -172,3 +172,4 @@
 .button:active {
   transform: translateY(-1px);
 }
+

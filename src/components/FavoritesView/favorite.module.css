@@ -33,6 +33,14 @@
   margin-bottom: 20px;
   color: #af1cc2;
 }
+
+.containerCards{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .button_fav {
   width: 200px;
   height: 50px;

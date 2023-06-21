@@ -357,6 +357,7 @@ const SignUp = () => {
                 required
               />
               <button
+                type="button"
                 className={styles.buttonHidden}
                 onClick={toggleShowPassword}
               >

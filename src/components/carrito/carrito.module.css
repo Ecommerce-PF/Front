@@ -7,6 +7,29 @@
   background-repeat: no-repeat;
 }
 
+.cartDescription {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px;
+}
+
+.mainTitle {
+  font-size: 40px;
+  margin: 30px;
+}
+
+.linkButtonnn {
+  margin-left: 40px;
+  text-decoration: none;
+  font-size: 50px;
+}
+
+.pbutton {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
 .componentCart {
   background-color: white;
 
@@ -33,7 +56,6 @@
   margin-top: 10px;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.306);
 }
 
 .trash {
@@ -41,9 +63,10 @@
   position: absolute;
   top: 40px;
   right: 20px;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
   border: none;
-  color: #000; /* Color del texto del botón */
 }
 
 .bttnAdd {
@@ -56,21 +79,20 @@
 }
 
 .emptyCart {
-  width: 100%;
-  height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgb(255, 255, 255);
-  background-image: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
-  color: #af1cc2;
+  background: linear-gradient(to bottom, #fcdaff, #ffffff);
+  color: #1c1c1c;
+  height: 80vh;
 }
 
 .productAmount {
   display: inline-block;
   align-items: center;
   justify-content: center;
-  background-color: #f2f2f2;
+  background-color: rgba(210, 210, 210, 0.287);
   border-radius: 4px;
   padding: 4px 8px;
 }
@@ -78,10 +100,6 @@
 .productAmountValue {
   align-items: center;
   justify-content: center;
-}
-
-.productAmountValue {
-  color: #333;
 }
 
 .h2_name {
@@ -148,7 +166,6 @@
   margin-left: 10px;
 }
 
-
 .button_confirm {
   display: flex;
   align-items: center;
@@ -163,7 +180,6 @@
   border-radius: 7px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-
 }
 
 .button_confirm:hover {
@@ -181,9 +197,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 180px;
+  width: 200px;
   height: 50px;
-  font-size: 14px;
+  font-size: 15px;
   color: rgb(43, 43, 43);
   background-color: #fefefe;
   border: none;
@@ -191,7 +207,6 @@
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.303);
   cursor: pointer;
 }
-
 
 .button:hover {
   background-color: #fefefe;
@@ -216,21 +231,27 @@
   justify-content: center;
   border-radius: 20px;
   width: fit-content;
-  margin-bottom: 20px;
+  margin-left: -20px;
 }
 
-.containerButton{
+.containerButton {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.divA{
+.divA {
   margin: 20px;
   font-size: 16px;
 }
 
-.types{
+.types {
   text-decoration: none;
   color: rgb(19, 19, 19);
+}
+
+.svgAddorLess {
+  margin: 20px;
+  background-color: rgba(210, 210, 210, 0.287);
+  border-radius: 4px;
 }

@@ -60,11 +60,12 @@ export default function CartProduct({ product, stock }) {
         <p className={styles.h2_name}>{product.name}</p>
       </div>
       <div>
-        <p className={styles.price_data}>Price: ${product.price}</p>
+        <p className={styles.h2_name}> ${product.price}</p>
+      </div>
+      <div className={styles.containerTrash}>
         <button
           className={styles.trash}
           onClick={handleDelete}
-          style={{ width: "30px", height: "30px" }}
         >
           <svg
             width="30px"
@@ -84,6 +85,7 @@ export default function CartProduct({ product, stock }) {
         <div className={styles.cantidadProducto}>
           <button onClick={handleSubtraction} className={styles.bttnAdd}>
             <svg
+            className={styles.svgAddorLess}
               width="30px"
               height="30px"
               viewBox="0 0 25 25"
@@ -105,6 +107,7 @@ export default function CartProduct({ product, stock }) {
             disabled={isMaxStock}
           >
             <svg
+            className={styles.svgAddorLess}
               width="30px"
               height="30px"
               viewBox="0 0 25 25"

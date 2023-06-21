@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import style from "./Paginado.module.css";
 
 export const Paginado2 = ({ pagina, setPagina, maximo }) => {

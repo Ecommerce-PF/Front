@@ -15,7 +15,7 @@ const EditProfile = () => {
   const id = useSelector((state) => state.idUsuario);
   const idUser = localStorage.getItem("ids");
   const userId = useSelector((state) => state.userId);
-  const { name, userName, email, phone, address, password, profileImage } =
+  const { name, userName, email, phone, password, profileImage } =
     userId;
   const [url, setUrl] = useState(profileImage);
 
@@ -115,7 +115,7 @@ const EditProfile = () => {
       <div className={styles.div_1}>
           <div>
             {/* <img src={url} alt="profilePicture" className={styles.imagen_profile} /> */}
-            <img src={profileImage} alt="profilePicture" className={styles.imagen_profile} />
+            <img src={url} alt="profilePicture" className={styles.imagen_profile} />
             <p></p>
           </div>
 

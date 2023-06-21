@@ -6,7 +6,6 @@ import {
   getDetail,
   addCart,
   getUserById,
-  getCart,
 } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 import {
@@ -22,29 +21,8 @@ export default function Detail() {
   const state = useSelector((state) => state.productDetail);
   const idUser = useSelector((state) => state.idUsuario);
   const user = useSelector((state) => state.userId);
-  const carritoState = useSelector((state) => state.cart);
-
-  console.log(carritoState);
-
-  const [card, setCard] = useState();
-  const [card2, setCard2] = useState();
-
-  useEffect(() => {
-    if (Array.isArray(carritoState)) {
-      const foundItem = carritoState.some((item) => item.id === id);
-      setCard2(foundItem);
-    }
-  }, [carritoState, id]);
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        dispatch(getCart());
-      } catch (error) {}
-    };
-    fetchCart();
-  }, []);
-
+  const purchases = useSelector((state) => state.userPurchases);
+  
   if (user.length === 0) {
     // No hacer nada
   } else {
@@ -59,7 +37,7 @@ export default function Detail() {
   } else {
     localStorage.setItem("idUsers", idUser);
   }
-  const idUsers = localStorage.getItem("ids");
+  const idUsers = localStorage.getItem("idUsers");
 
   const fecha = {
     fecha: new Date(),
@@ -92,12 +70,25 @@ export default function Detail() {
         console.error(error);
       }
     };
-
+  
     fetchData();
-  }, [id]);
-
+  }, [id, purchases]); // Agregar 'purchases' como dependencia
   const submitHandler = async (event) => {
     event.preventDefault();
+    if (!idUser) {
+      // No se ha iniciado sesión
+      alert("Debe iniciar sesión para comentar y calificar el producto.");
+      return;
+    }
+
+   // Verificar si el usuario ha comprado el producto
+   const hasPurchased = Array.isArray(purchases) && purchases.some((purchase) => purchase.productId === id);
+   if (!hasPurchased) {
+     // El usuario no ha comprado el producto
+     alert("Debe comprar el producto para poder comentarlo y calificarlo.");
+     return;
+   }
+
     try {
       await axios.post(`/products/${id}/reviews`, JSON.stringify(form), {
         headers: {
@@ -113,57 +104,31 @@ export default function Detail() {
 
   const handleAddCart = () => {
     dispatch(addCart(state));
-    console.log(state, "state");
-
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
-    console.log(listaCart, "listaCart");
+    let isProductInCart = false;
 
-    setCard(false);
-
-    for (let i = 0; i < listaCart.length; i++) {
-      if (
-        listaCart[i].id === state.id &&
-        listaCart[i].quantity === state.stock
-      ) {
-        setCard(true);
+    for (var i = 0; i < listaCart.length; i++) {
+      if (listaCart[i].id === state.id) {
+        listaCart[i].quantity += 1;
+        isProductInCart = true;
         break;
       }
     }
 
-    if (card) {
-      Swal.fire({
-        text: "There is no more stock of this product!",
-        icon: "info",
-        footer: '<a href="/carrito">Would you like to see your cart?</a>',
+    if (!isProductInCart) {
+      listaCart.push({
+        ...state,
+        quantity: 1,
       });
-    } else {
-      let updatedCart = [...listaCart];
-      let productIndex = updatedCart.findIndex((item) => item.id === state.id);
-
-      if (productIndex !== -1) {
-        if (updatedCart[productIndex].quantity < state.stock) {
-          updatedCart[productIndex].quantity += 1;
-        } else {
-          Swal.fire({
-            text: "There is no more stock of this product!",
-            icon: "info",
-            footer: '<a href="/carrito">Would you like to see your cart?</a>',
-          });
-          return;
-        }
-      } else {
-        updatedCart.push({ ...state, quantity: 1 });
-      }
-
-      localStorage.setItem("carritoLS", JSON.stringify(updatedCart));
-      Swal.fire({
-        icon: "success",
-        title: "¡Su producto se ha agregado al carrito!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      
     }
+
+    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
+    Swal.fire({
+      icon: "success",
+      title: "Su producto se ha agregado al carrito!!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   useEffect(() => {
@@ -245,9 +210,21 @@ export default function Detail() {
     }
   };
 
-  const arrayColor =
-    state?.color &&
-    state?.color.map((e) => (e.ColorName ? e.ColorName : e.name));
+  /* 
+  state?.color &&
+                  state.color.map((e) => (
+                    <option
+                      className={styles.option}
+                      name={e.ColorName}
+                      key={e.ColorName}
+                    >
+                      {e.ColorName}
+                    </option>
+                  ))
+  */
+ const arrayColor = state?.color && state?.color.map((e) => (
+  e.ColorName ? e.ColorName: e.name
+))
   return (
     <div>
       <div className={styles.back}>
@@ -292,7 +269,11 @@ export default function Detail() {
                 <option className={styles.option}>None</option>
                 {arrayColor &&
                   arrayColor.map((e) => (
-                    <option className={styles.option} name={e} key={e}>
+                    <option
+                      className={styles.option}
+                      name={e}
+                      key={e}
+                    >
                       {e}
                     </option>
                   ))}
@@ -305,7 +286,8 @@ export default function Detail() {
                   name="size" /* onChange={handleChange} */
                 >
                   <option className={styles.option}>None</option>
-                  {sizesArr ? (
+                  {
+                  sizesArr ?
                     sizesArr.map((e) => (
                       <option
                         className={styles.option}
@@ -314,16 +296,15 @@ export default function Detail() {
                       >
                         {e.SizeName}
                       </option>
-                    ))
-                  ) : (
+                    )):
                     <option
-                      className={styles.option}
-                      name="default"
-                      key="default"
-                    >
-                      One size
-                    </option>
-                  )}
+                        className={styles.option}
+                        name="default"
+                        key="default"
+                      >
+                        One size
+                      </option>
+                    }
                 </select>
               </div>
             </div>
@@ -337,17 +318,12 @@ export default function Detail() {
               ></div>
             </div>
             <div className={styles.cart}>
-              {card === true ? (
+              {state.stock === 0 ? null : (
                 <button className={styles.button} onClick={handleAddCart}>
-                  Out of stock
-                </button>
-              ) : state.stock === 0 ? null : (
-                <button className={styles.button} onClick={handleAddCart}>
-                  {card2 === true ? "Add one more" : "Add to cart"}
+                  Add to Cart
                   <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
                 </button>
               )}
-
               <NavLink to="/home">
                 <button className={styles.button}>
                   Back <FaArrowLeft className={styles.icon}></FaArrowLeft>

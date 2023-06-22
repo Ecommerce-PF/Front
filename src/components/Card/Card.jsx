@@ -1,12 +1,12 @@
 import style from "./Card.module.css";
 import { Link, 
-  // useNavigate 
+  useNavigate 
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 const Card = ({
   name,
@@ -35,6 +35,8 @@ const Card = ({
   //   }
   // });
 
+
+
   useEffect(() => {
     // if (iniciado === "si") {
       const isFavorite = favorites?.some((fav) => fav.id === id);
@@ -46,13 +48,15 @@ const Card = ({
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);
   const sesions = localStorage.getItem("sesions");
 
+  console.log(sesions)
+
   const idForm = userId.id ? userId.id : idUserFav;
   const form = {
     id: id,
     UserId: idForm,
   };
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
@@ -64,11 +68,11 @@ const Card = ({
     }
   };
 
-  // const alertLogin = () => {
-  //   Swal.fire("You need to log in or register.").then(() => {
-  //     navigate("/login");
-  //   });
-  // };
+  const alertLogin = () => {
+    Swal.fire("You need to log in or register.").then(() => {
+      navigate("/login");
+    });
+  };
 
   const handleDeleteFavorite = async () => {
     dispatch(deleteFavorite(id));
@@ -118,7 +122,7 @@ const Card = ({
 
         {stock === 0 ? null : <p className={style.price}>${price}</p>}
 
-        {/* {sesions === "no" ? (
+        {sesions === "no" ? (
           <button onClick={alertLogin} className={style.buttonFav}>
             <svg
               className={style.svg3}
@@ -186,10 +190,10 @@ const Card = ({
               />
             </svg>
           </button>
-        )} */}
+        )}
 
 
-{isFav 
+{/* {isFav 
 ? (
           <button
             className={style.buttonFav}
@@ -242,7 +246,7 @@ const Card = ({
             </svg>
           </button>
         )
-}
+} */}
 
       </div>
     </div>

@@ -44,8 +44,8 @@ const Login = () => {
   };
 
   const inicio = () => {
-    dispatch(consultaSiIniciado("si"));            dispatch(loginWithGoogle("no"))
-
+    dispatch(consultaSiIniciado("si"));
+    dispatch(loginWithGoogle("no"));
   };
 
   const handleSubmit = async (e) => {

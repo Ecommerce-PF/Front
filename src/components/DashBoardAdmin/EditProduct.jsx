@@ -119,10 +119,10 @@ const EditProduct = () => {
           <img src={url} alt={state?.name} className={styles.image_edit} />
 
           <h3>${state?.price}</h3>
-
+        <div  className={styles.color_product}>
           <label htmlFor="color">Color:</label>
-          <select type="select" name="color">
-            <option>None</option>
+          <select type="select" name="color" className={styles.option_edit}>
+            <option> None</option>
             {state?.color &&
               state.color.map((e) => (
                 <option name={e.ColorName} key={e.ColorName}>
@@ -130,10 +130,11 @@ const EditProduct = () => {
                 </option>
               ))}
           </select>
+              </div>
 
-          <label htmlFor="">Descrition:</label>
+          <label htmlFor="">Description:</label>
           {/* <p>{state?.description}</p> */}
-          <div dangerouslySetInnerHTML={{ __html: state?.description }}></div>
+          <div dangerouslySetInnerHTML={{ __html: state?.description }} className={styles.description_edit}></div>
 
           <Link to="/home">
             <button className={styles.button_editprodutcs}>

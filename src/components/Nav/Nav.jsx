@@ -18,7 +18,7 @@ const Nav = () => {
   // console.log(userId.Clothes, "asdasd")
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (sesions === "si") {
@@ -147,11 +147,14 @@ const Nav = () => {
           <div className={style.contenedor_imagen}>
             <div className={style.svg22}>
               <div className={style.containerNumberSvg}>
-                {carritoState === null ? (
-                  <p className={style.numberCarrito}>0</p>
-                ) : (
-                  <p className={style.numberCarrito}>{carritoState.length}</p>
-                )}
+                {sesions === "si" ? (
+                  carritoState === null ? (
+                    <p className={style.numberCarrito}>0</p>
+                  ) : (
+                    <p className={style.numberCarrito}>{carritoState.length}</p>
+                  )
+                ) : null}
+
                 <Link to="/carrito">
                   <svg
                     className={style.svg33}

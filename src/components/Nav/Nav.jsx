@@ -21,6 +21,7 @@ const Nav = () => {
     dispatch(getCart(id));
     dispatch(getFavorites(id));
     // dispatch(getUser(userId.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const id = userId.id;

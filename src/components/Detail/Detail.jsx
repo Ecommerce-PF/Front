@@ -76,13 +76,7 @@ export default function Detail() {
     ClotheId: id,
   });
 
-  const hanleChange = (event) => {
-    const { value, name } = event.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+  console.log(setForm)
 
   useEffect(() => {
     const fetchData = async () => {

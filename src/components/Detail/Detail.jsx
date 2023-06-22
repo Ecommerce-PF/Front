@@ -28,13 +28,19 @@ export default function Detail() {
     };
   });
 
+  if (idUser.length !== 0) localStorage.setItem("idUser", idUser);
+
+  const idUsuarios = localStorage.getItem("idUser");
+
   const [card, setCard] = useState(false);
   const [card2, setCard2] = useState(false);
   const [comments, setComments] = useState([]);
 
+  const yaComento = comments?.some((item) => item.UserId == idUsuarios );
+
   const purchase = user.Orders;
 
-  console.log(purchase);
+  console.log(yaComento);
 
   const hasMatchingId = purchase?.some(
     (item) =>
@@ -76,7 +82,15 @@ export default function Detail() {
     ClotheId: id,
   });
 
-  console.log(setForm)
+  const handleChange2 = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -393,25 +407,29 @@ export default function Detail() {
           </div>
         )}
 
-        {hasMatchingId ? (
+        {hasMatchingId && !yaComento ? (
           <div>
             <h1>Agregue su comentario</h1>
             <form className={styles.formContainer} onSubmit={submitHandler}>
               <div className={styles.enviarBut}>
-                <label className={styles.textRating} htmlFor="review">Review</label>
+                <label className={styles.textRating} htmlFor="review">
+                  Review
+                </label>
                 <input
                   name="review"
                   value={form.review}
-                  onChange={handleChange}
+                  onChange={handleChange2}
                   className={styles.inputC}
                   type="text"
                 />
 
-                <label className={styles.textRating} htmlFor="rating">Rating</label>
+                <label className={styles.textRating} htmlFor="rating">
+                  Rating
+                </label>
                 <input
                   name="rating"
                   value={form.rating}
-                  onChange={handleChange}
+                  onChange={handleChange2}
                   className={styles.inputC}
                   type="range"
                   min="1"

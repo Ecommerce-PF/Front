@@ -171,7 +171,7 @@ const SignUp = () => {
       if (users.phoneNumber === null) {
         var number = "No hay dato"
       } else {
-        var number = users.phoneNumber
+        number = users.phoneNumber
       }
       setGoogleUser({
         name: users.displayName,

@@ -26,7 +26,7 @@ const Card = ({
     if (state.sesions === "si") {
       return state.favorites;
     } else {
-      return null; 
+      return null;
     }
   });
 
@@ -35,6 +35,7 @@ const Card = ({
       const isFavorite = favorites?.some((fav) => fav.id === id);
       setIsFav(isFavorite);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favorites, id]);
 
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);

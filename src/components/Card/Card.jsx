@@ -1,10 +1,12 @@
 import style from "./Card.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, 
+  // useNavigate 
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 const Card = ({
   name,
@@ -50,7 +52,7 @@ const Card = ({
     UserId: idForm,
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleAddFavorite = async () => {
     dispatch(addFavorite({ id, name, image, price }));
@@ -62,11 +64,11 @@ const Card = ({
     }
   };
 
-  const alertLogin = () => {
-    Swal.fire("You need to log in or register.").then(() => {
-      navigate("/login");
-    });
-  };
+  // const alertLogin = () => {
+  //   Swal.fire("You need to log in or register.").then(() => {
+  //     navigate("/login");
+  //   });
+  // };
 
   const handleDeleteFavorite = async () => {
     dispatch(deleteFavorite(id));

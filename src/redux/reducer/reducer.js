@@ -27,6 +27,7 @@ import {
   SET_FAVORITES,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
+  RESET_FAVORITES,
 } from "../actions/actions";
 
 const initialState = {
@@ -142,6 +143,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+
+    case RESET_FAVORITES:
+      console.log("paso");
+      return {
+        ...state,
+        myFavorites: [],
       };
 
     case ADD_FAVORITE:

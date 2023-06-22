@@ -12,7 +12,6 @@ const FavoritesView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const favorites = useSelector((state) => state.myFavorites);
-  console.log(favorites, "assaas")
   const [defaultFavorites, setDefaultFavorites] = useState(true);
 
   const [pagina, setPagina] = useState(1);

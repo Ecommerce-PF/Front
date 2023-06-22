@@ -27,7 +27,6 @@ import {
   SET_FAVORITES,
   GET_ALL_ORDERS,
   GET_ORDER_BY_ID,
-
 } from "../actions/actions";
 
 const initialState = {
@@ -43,7 +42,7 @@ const initialState = {
   adminUser: [],
   priceRange: [0, Infinity],
   iniciado: [],
-  google: {},
+  google: [],
   myFavorites: [],
   orders: [],
   order: null,
@@ -328,20 +327,17 @@ const rootReducer = (state = initialState, action) => {
     case GET_ALL_ORDERS:
       return {
         ...state,
-        orders: action.payload
+        orders: action.payload,
       };
     case GET_ORDER_BY_ID:
       return {
         ...state,
-        order: action.payload
+        order: action.payload,
       };
-
-
 
     default:
       return state;
   }
 };
-
 
 export default rootReducer;

@@ -6,6 +6,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart, getFavorites } from "../../redux/actions/actions";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Nav = () => {
   const iniciado = useSelector((state) => state.iniciado);
@@ -16,10 +18,14 @@ const Nav = () => {
   // console.log(userId.Clothes, "asdasd")
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(getCart(id));
-    dispatch(getFavorites(id));
+    if (sesions === "si") {
+      dispatch(getCart(id));
+      dispatch(getFavorites(id));
+    }
+
     // dispatch(getUser(userId.id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
@@ -34,7 +40,11 @@ const Nav = () => {
 
   const sesions = localStorage.getItem("sesions");
 
-  //const [isLoggedIn, setIsLoggedIn] = useState();
+  const alertLogin = () => {
+    Swal.fire("You need to log in or register.").then(() => {
+      navigate("/login");
+    });
+  };
 
   return (
     <div className={style.mainContainer}>
@@ -162,28 +172,53 @@ const Nav = () => {
             </div>
           </div>
           <div className={style.containerFavoritesSvg}>
-            <NavLink to={`/favorites/${id}`}>
-              <div className={style.nav_fav}>
-                <div className={style.containerFavorites}>
-                  <p className={style.favorites}>{favorites.length}</p>
-                </div>
+            {sesions === "no" ? (
+              <button className={style.buttonAlert} onClick={alertLogin}>
+                <div className={style.nav_fav}>
+                  <div className={style.containerFavorites}>
+                    <p className={style.favorites}>{favorites.length}</p>
+                  </div>
 
-                <svg
-                  className={style.svg}
-                  width="75px"
-                  height="75px"
-                  viewBox="0 0 25 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
-                    stroke="#121923"
-                    strokeWidth="1.2"
-                  />
-                </svg>
-              </div>
-            </NavLink>
+                  <svg
+                    className={style.svg}
+                    width="75px"
+                    height="75px"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                      stroke="#121923"
+                      strokeWidth="1.2"
+                    />
+                  </svg>
+                </div>
+              </button>
+            ) : (
+              <NavLink to={`/favorites/${id}`}>
+                <div className={style.nav_fav}>
+                  <div className={style.containerFavorites}>
+                    <p className={style.favorites}>{favorites.length}</p>
+                  </div>
+
+                  <svg
+                    className={style.svg}
+                    width="75px"
+                    height="75px"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                      stroke="#121923"
+                      strokeWidth="1.2"
+                    />
+                  </svg>
+                </div>
+              </NavLink>
+            )}
           </div>
         </React.Fragment>
       </div>

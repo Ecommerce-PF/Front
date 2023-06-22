@@ -119,7 +119,7 @@ const Profile = () => {
             </Link>
           </div>
 
-          {google === "no" ? (
+          {googles === "no" ? (
             <div>
               <Link to={`/editProfile`} className={styles.purchaseLink}>
                 <button className={styles.button_data}>Edit Profile</button>

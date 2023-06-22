@@ -32,19 +32,24 @@ export default function Detail() {
 
   const idUsuarios = localStorage.getItem("idUser");
 
+  console.log(idUsuarios)
+
   const [card, setCard] = useState(false);
   const [card2, setCard2] = useState(false);
   const [comments, setComments] = useState([]);
 
-  const yaComento = comments?.some((item) => item.UserId == idUsuarios );
+  const yaComento = comments?.some(
+    (item) => item.UserId === Number(idUsuarios)
+  );
 
   const purchase = user.Orders;
 
-  console.log(yaComento);
+  console.log(comments);
 
   const hasMatchingId = purchase?.some(
     (item) =>
-      item.products?.some((item) => item.id === id) && item.status === "approved"
+      item.products?.some((item) => item.id === id) &&
+      item.status === "Pending"
   );
 
   useEffect(() => {

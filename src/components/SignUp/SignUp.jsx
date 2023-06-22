@@ -171,10 +171,10 @@ const SignUp = () => {
       setGoogleUser({
         name: users.displayName,
         userName: users.displayName,
-        phone: number,
+        phone: "213123",
         email: users.email,
         password: users.accessToken,
-        profileImage: "1123813266",
+        profileImage: users.photoURL,
       });
       setGoogle(true);
     } catch (error) {

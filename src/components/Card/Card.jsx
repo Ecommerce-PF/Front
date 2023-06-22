@@ -17,24 +17,27 @@ const Card = ({
 }) => {
   const dispatch = useDispatch();
   const [isFav, setIsFav] = useState(false);
-  const { iniciado, userId } = useSelector((state) => ({
+  const { iniciado, userId ,
+  favorites
+  } = useSelector((state) => ({
     iniciado: state.iniciado,
     userId: state.userId,
+    favorites: state.favorites,
   }));
 
-  const favorites = useSelector((state) => {
-    if (state.sesions === "si") {
-      return state.favorites;
-    } else {
-      return null;
-    }
-  });
+  // const favorites = useSelector((state) => {
+  //   if (state.sesions === "si") {
+  //     return state.favorites;
+  //   } else {
+  //     return null;
+  //   }
+  // });
 
   useEffect(() => {
-    if (iniciado === "si") {
+    // if (iniciado === "si") {
       const isFavorite = favorites?.some((fav) => fav.id === id);
       setIsFav(isFavorite);
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favorites, id]);
 
@@ -113,7 +116,7 @@ const Card = ({
 
         {stock === 0 ? null : <p className={style.price}>${price}</p>}
 
-        {sesions === "no" ? (
+        {/* {sesions === "no" ? (
           <button onClick={alertLogin} className={style.buttonFav}>
             <svg
               className={style.svg3}
@@ -181,7 +184,64 @@ const Card = ({
               />
             </svg>
           </button>
-        )}
+        )} */}
+
+
+{isFav 
+? (
+          <button
+            className={style.buttonFav}
+            value={id}
+            onClick={handleDeleteFavorite}
+          >
+            <svg
+              className={style.svg2}
+              width="47px"
+              height="47px"
+              viewBox="0 0 25.00 25.00"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="#ff0000"
+              transform="matrix(1, 0, 0, 1, 0, 0)"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                  fill="#e20808"
+                  stroke="#e20808"
+                  stroke-width="1.2"
+                />
+              </g>
+            </svg>
+          </button>
+        ) : (
+          <button className={style.buttonFav} onClick={handleAddFavorite}>
+            <svg
+              className={style.svg3}
+              width="47px"
+              height="47px"
+              viewBox="0 0 25 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                stroke="#121923"
+                stroke-width="1.2"
+              />
+            </svg>
+          </button>
+        )
+}
+
       </div>
     </div>
   );

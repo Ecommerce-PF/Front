@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./LandingPage.module.css";
 import { useDispatch } from "react-redux";
-import { consultaSiIniciado, resetFavorites } from "../../redux/actions/actions";
+import {
+  consultaSiIniciado,
+  resetFavorites,
+} from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -15,31 +18,31 @@ export default function LandingPage() {
   const [userName, setUserName] = useState("esteUsuario");
   const [password, setPassword] = useState("Noinisio");
 
+  console.log(setPassword, setUserName);
+
   const handleSinIniciar = async () => {
     dispatch(consultaSiIniciado("no"));
-    dispatch(resetFavorites())
+    dispatch(resetFavorites());
     navigate("/home");
 
-      try {
-        const response = await axios.post("/users/login", {
-          userName,
-          password,
-        });
-  
-        if (response.status === 200) {
-          const data = response.data;
-          const userId = data.user.id;
-  
-          dispatch(loginWithGoogle("no"));
-          dispatch(idUser(userId));
+    try {
+      const response = await axios.post("/users/login", {
+        userName,
+        password,
+      });
 
-          navigate("/home");
-        } else {
-        }
-      } catch (error) {
+      if (response.status === 200) {
+        const data = response.data;
+        const userId = data.user.id;
+
+        dispatch(loginWithGoogle("no"));
+        dispatch(idUser(userId));
+
+        navigate("/home");
+      } else {
       }
-    };
-  
+    } catch (error) {}
+  };
 
   return (
     <section className={s.back}>
@@ -58,7 +61,7 @@ export default function LandingPage() {
               <button className={s.btn}>Sign In</button>
             </Link>
             <button onClick={handleSinIniciar} className={s.btn}>
-            Home
+              Home
             </button>
           </div>
         </div>

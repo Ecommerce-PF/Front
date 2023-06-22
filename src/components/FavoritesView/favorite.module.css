@@ -1,38 +1,43 @@
 .favorite_container {
-
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 10px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(252, 218, 255, 1) 100%
+    rgb(191, 39, 39) 100%
   );
   color: #af1cc2;
 }
+
 .container_fav {
- 
-  padding: 20px 0;
-  margin: 20px 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(255, 255, 255);
+  height: 100vb;
+
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(252, 218, 255, 1) 100%
+    rgba(210, 210, 210, 0.38) 100%
   );
-  color: #af1cc2;
 }
+
+
 
 .title_fav {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #af1cc2;
+  color: #2c2c2c;
 }
+
+.containerCards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .button_fav {
   width: 200px;
   height: 50px;
@@ -48,8 +53,10 @@
 /******************************************************************************/
 
 .back_button {
-  width: 100px;
+  position: absolute;
+  width: 130px;
   height: 40px;
+  left: -68px;
   font-size: 14px;
   color: #ffffff;
   background-color: #1d1f24;
@@ -60,10 +67,11 @@
 }
 
 .back_button:hover {
-  background-color: #434343;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.82);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.391);
   color: #fff;
   transform: translateY(-2px);
+  transition: 0.3s;
+  
 }
 
 .back_button:active {
@@ -79,4 +87,15 @@
   width: 100%;
   height: 100%;
   color: #af1cc2;
+}
+
+.navlink {
+  position: relative;
+}
+
+
+.divContainerH1{
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
 }

@@ -1,64 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import style from "./Paginado.module.css";
 
-export const Paginado = ({ pagina, setPagina, maximo }) => {
-  const [input, setInput] = useState(pagina);
-
-  // useEffect(() => {
-  //   if (pagina < 1) {
-  //     setPagina(1);
-  //     setInput(1);
-  //   } else if (pagina > Math.ceil(maximo)) {
-  //     setPagina(Math.ceil(maximo));
-  //     setInput(Math.ceil(maximo));
-  //   }
-  // }, [maximo, pagina, setPagina]);
+export const Paginado2 = ({ pagina, setPagina, maximo }) => {
 
   const nextPage = () => {
     const nextPage = pagina + 1;
     if (nextPage <= Math.ceil(maximo)) {
       setPagina(nextPage);
-      setInput(nextPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });  // Desplazamiento al principio de la página
     }
   };
-  
 
   const previousPage = () => {
     const previousPage = pagina - 1;
     if (previousPage >= 1) {
       setPagina(previousPage);
-      setInput(previousPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-
-  const onKeyDown = (e) => {
-    if (e.keyCode === 13) {
-      const newPage = parseInt(e.target.value);
-      if (newPage < 1 || newPage > Math.ceil(maximo)) {
-        setPagina(1);
-        setInput(1);
-      } else {
-        setPagina(newPage);
-        setInput(newPage);
-      }
-    }
-  };
-
-  const onChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  useEffect(() => {
-    if (pagina < 1) {
-      setPagina(1);
-      setInput(1);
-    } else if (pagina > Math.ceil(maximo)) {
-      setPagina(Math.ceil(maximo));
-      setInput(Math.ceil(maximo));
-    }
-  }, [maximo, pagina, setPagina]);
 
   return (
     <div className={style.container}>
@@ -80,15 +37,6 @@ export const Paginado = ({ pagina, setPagina, maximo }) => {
           />
         </svg>
       </button>
-      <input
-        onChange={(e) => onChange(e)}
-        onKeyDown={(e) => onKeyDown(e)}
-        className={style.input}
-        name="page"
-        value={input}
-        autoComplete="off"
-      />
-      <p className={style.p}> de {Math.ceil(maximo)}</p>
       <button
         disabled={pagina === Math.ceil(maximo)}
         onClick={nextPage}

@@ -3,27 +3,26 @@ import { Link, useParams } from "react-router-dom";
 import Card from "../Card/Card";
 import styles from "./favorite.module.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setFavorites, deleteFavorite } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { setFavorites, getFavorites } from "../../redux/actions/actions";
+import Nav from "../Nav/Nav";
+import { Paginado2 } from "../Paginado2/Paginado2";
 
 const FavoritesView = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const favorites = useSelector((state) => state.myFavorites);
+  const [defaultFavorites, setDefaultFavorites] = useState(true);
 
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [pagina, setPagina] = useState(1);
+  const porPagina = 3;
 
-  const [isFav, setIsFav] = useState(false);
-  const updateFavoritesList = (productId) => {
-    setFavoriteProducts((prevFavorites) =>
-      prevFavorites.filter((product) => product.id !== productId)
-    );
-  };
+  const maximo = Math.ceil(favorites.length / porPagina);
 
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
         const response = await axios.get(`/whishListProduct/${id}`);
-        setFavoriteProducts(response.data.Clothes);
         dispatch(setFavorites(response.data.Clothes));
       } catch (error) {
         console.error("Error al obtener los productos favoritos", error);
@@ -32,53 +31,62 @@ const FavoritesView = () => {
     fetchFavoriteProducts();
   }, [dispatch, id]);
 
-  
-
-  const handleDeleteFavorite = async (productId) => {
-
-    const form = {
-      id: productId, //esta garcha no quiere andar
-      UserId: id, //esto me lo traje de params
-    };
-    dispatch(deleteFavorite(productId));
-    try {
-      await axios.delete('/whishListProduct', {
-        data: form,
-      });
-      setIsFav(!isFav);
-      updateFavoritesList(productId);
-    } catch (error) {
-      console.error(error);
-      alert(error);
+  useEffect(() => {
+    if (defaultFavorites) {
+      dispatch(getFavorites(id));
+      setDefaultFavorites(false);
     }
-  };
-  
+  }, [dispatch, defaultFavorites, id]);
+
+  console.log(favorites);
 
   return (
-    <>
-      <div className={styles.container_fav}>
+    <div className={styles.container_fav}>
+      <Nav />
+      <div className={styles.containerFAvsmai}>
         <h1 className={styles.title_fav}>Productos Favoritos</h1>
-        <div>
-          {favoriteProducts.map((favorite) => (
-            <Card
-              key={favorite.id}
-              id={favorite.id}
-              name={favorite.name}
-              image={favorite.image}
-              price={favorite.price}
-              onUpdateFavorites={updateFavoritesList} // Pasa la función de actualización como prop al componente Card
-              onClick={()=> handleDeleteFavorite(favorite.id)} // Pasa la función de eliminar como prop al componente Card
-            />
-          ))}
-        </div>
+        {favorites?.length === 0 ? (
+          <div className={styles.divContainerH1}>
+            <h1 className={styles.h1Info}>
+              No tienen ningun producto en favoritos
+            </h1>
+          </div>
+        ) : (
+          <div className={styles.containerCards}>
+            {favorites
+              .slice(
+                (pagina - 1) * porPagina,
+                (pagina - 1) * porPagina + porPagina
+              )
+              .map((favorite) => (
+                <Card
+                  className={styles.cssCard}
+                  key={favorite.id}
+                  id={favorite.id}
+                  name={favorite.name}
+                  image={favorite.image}
+                  price={favorite.price}
+                  idUserFav={id}
+                />
+              ))}
+          </div>
+        )}
       </div>
 
-      <div>
+      {favorites?.length === 0 ? (
+        <Link to="/home" className={styles.navlink}>
+          <button className={styles.back_button}>Add a product</button>
+        </Link>
+      ) : (
         <Link to="/home" className={styles.navlink}>
           <button className={styles.back_button}>Back</button>
         </Link>
-      </div>
-    </>
+      )}
+
+      {favorites?.length === 0 ? null : favorites?.length >= 4 ? (
+        <Paginado2 pagina={pagina} setPagina={setPagina} maximo={maximo} />
+      ) : null}
+    </div>
   );
 };
 

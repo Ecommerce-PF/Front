@@ -5,9 +5,16 @@ import { addFavorite, deleteFavorite } from "../../redux/actions/actions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
+const Card = ({
+  name,
+  image,
+  id,
+  price,
+  onUpdateFavorites,
+  stock,
+  idUserFav,
+}) => {
   const dispatch = useDispatch();
- ;
   const [isFav, setIsFav] = useState(false);
   const { iniciado, userId, favorites } = useSelector((state) => ({
     iniciado: state.iniciado,
@@ -22,9 +29,10 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
   if (iniciado?.length !== 0) localStorage.setItem("sesions", iniciado);
   const sesions = localStorage.getItem("sesions");
 
+  const idForm = userId.id ? userId.id : idUserFav;
   const form = {
     id: id,
-    UserId: userId.id,
+    UserId: idForm,
   };
 
   const handleAddFavorite = async () => {
@@ -45,9 +53,7 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
       });
       setIsFav(!isFav);
       onUpdateFavorites(id); // Llama a la función de actualización para eliminar la carta de la lista de favoritos en FavoritesView
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   };
   return (
     <div className={style.mainContainer}>
@@ -80,15 +86,72 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
             </Link>
           </div>
         ) : (
-          <Link to={`/detail/${id}`}>
-            <img className={style.card} src={image} alt="" />
-          </Link>
+          <div>
+            <Link to={`/detail/${id}`}>
+              <img className={style.card} src={image} alt="" />
+            </Link>
+          </div>
         )}
 
         {stock === 0 ? null : <p className={style.price}>${price}</p>}
 
-        {isFav ? (
-          <button className={style.buttonFav} value={id} onClick={handleDeleteFavorite} >
+        {stock === 0 ? (
+          isFav ? (
+            <button
+              className={style.buttonFav2}
+              value={id}
+              onClick={handleDeleteFavorite}
+            >
+              <svg
+                className={style.svg2}
+                width="47px"
+                height="47px"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#ff0000"
+                transform="matrix(1, 0, 0, 1, 0, 0)"
+              >
+                <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokestrokelinejoin="round"
+                />
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                    fill="#e20808"
+                    stroke="#e20808"
+                    strokeWidth="1.2"
+                  />
+                </g>
+              </svg>
+            </button>
+          ) : (
+            <button className={style.buttonFav2} onClick={handleAddFavorite}>
+              <svg
+                className={style.svg3}
+                width="47px"
+                height="47px"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                  stroke="#121923"
+                  strokeWidth="1.2"
+                />
+              </svg>
+            </button>
+          )
+        ) : isFav ? (
+          <button
+            className={style.buttonFav}
+            value={id}
+            onClick={handleDeleteFavorite}
+          >
             <svg
               className={style.svg2}
               width="47px"
@@ -96,19 +159,29 @@ const Card = ({ name, image, id, price, onUpdateFavorites, stock }) => {
               viewBox="0 0 25 25"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              stroke="#ff0000"
+              transform="matrix(1, 0, 0, 1, 0, 0)"
             >
-              <path
-                d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
-                fill="#121923"
-                stroke="#121923"
-                strokeWidth="1.2"
+              <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokestrokelinejoin="round"
               />
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M17 16C15.8 17.3235 12.5 20.5 12.5 20.5C12.5 20.5 9.2 17.3235 8 16C5.2 12.9118 4.5 11.7059 4.5 9.5C4.5 7.29412 6.1 5.5 8.5 5.5C10.5 5.5 11.7 6.82353 12.5 8.14706C13.3 6.82353 14.5 5.5 16.5 5.5C18.9 5.5 20.5 7.29412 20.5 9.5C20.5 11.7059 19.8 12.9118 17 16Z"
+                  fill="#e20808"
+                  stroke="#e20808"
+                  strokeWidth="1.2"
+                />
+              </g>
             </svg>
           </button>
         ) : (
           <button className={style.buttonFav} onClick={handleAddFavorite}>
             <svg
-              className={style.svg2}
+              className={style.svg3}
               width="47px"
               height="47px"
               viewBox="0 0 25 25"

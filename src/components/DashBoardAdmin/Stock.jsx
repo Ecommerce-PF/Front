@@ -1,99 +1,129 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Stock.module.css";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import { getAllProducts } from "../../redux/actions/actions";
+import Swal from "sweetalert2";
 
 export default function Stock() {
   const dispatch = useDispatch();
-  //const product = useSelector((state) => state.productDetail);
   const products = useSelector((state) => state.products);
+  const [updatedProducts, setUpdatedProducts] = useState([]);
 
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
-  const handlerButtonMore = async (event) => {
-    const id = event.target.value;
-    const updatedProducts = [...products]; // Crear una copia del array products
+  const handlerButtonMore = (event) => {
+    const productId = event.target.value;
+    const updatedProduct = products.find((p) => p.id === productId);
 
-    const productToUpdate = updatedProducts.find((p) => p.id === id);
-    if (productToUpdate) {
-      productToUpdate.stock += 1; // Incrementar la cantidad de stock del producto en la copia
-    }
-
-    try {
-      await axios.put(`/products/${id}`, productToUpdate);
-      // Realizar acciones adicionales después de una respuesta exitosa aquí
-
-      dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
-    } catch (error) {
-      // Manejar el error aquí
+    if (updatedProduct) {
+      updatedProduct.stock += 1;
+      setUpdatedProducts((prevProducts) => [...prevProducts, updatedProduct]);
     }
   };
 
-  const handlerButtonLess = async (event) => {
-    const id = event.target.value;
-    const updatedProducts = [...products]; // Crear una copia del array products
+  const handlerButtonLess = (event) => {
+    const productId = event.target.value;
+    const updatedProduct = products.find((p) => p.id === productId);
 
-    const productToUpdate = updatedProducts.find((p) => p.id === id);
-    if (productToUpdate && productToUpdate.stock > 0) {
-      productToUpdate.stock -= 1; // Decrementar la cantidad de stock del producto en la copia
-    }
-
-    try {
-      await axios.put(`/products/${id}`, productToUpdate);
-      // Realizar acciones adicionales después de una respuesta exitosa aquí
-
-      dispatch({ type: 'UPDATE_PRODUCTS', payload: updatedProducts }); // Actualizar el estado global de products
-    } catch (error) {
-      // Manejar el error aquí
+    if (updatedProduct && updatedProduct.stock > 0) {
+      updatedProduct.stock -= 1;
+      setUpdatedProducts((prevProducts) => [...prevProducts, updatedProduct]);
     }
   };
 
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch,products]);
+  const handleSaveStock = async () => {
+    Swal.fire({
+      icon: "question",
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: "Don't save",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await Promise.all(
+            updatedProducts.map(async (product) => {
+              await axios.put(`/products/${product.id}`, product);
+            })
+          );
+
+          dispatch({ type: "UPDATE_PRODUCTS", payload: updatedProducts });
+          setUpdatedProducts([]);
+          Swal.fire("Saved!", "", "success");
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
 
   return (
     <>
-      <h1>Esto es stock</h1>
+      <div className={styles.all_container}>
+        <div className={styles.main_container}>
+          <h1>STOCK CONTROLLER</h1>
 
-      {products.map((product) => (
-        <div className={styles.container} key={product.id}>
-          <ul className={styles.ul}>
-            <span className={styles.span}>{product.name}</span>
-            <img className={styles.img} src={product.image} alt="" />
-            <span className={styles.span}>{product.stock}</span>
-            <span>Stock disponible</span>
-          </ul>
+          {updatedProducts.length > 0 && (
+            <button onClick={handleSaveStock} className={styles.button_save}>
+              Save Stock
+            </button>
+          )}
 
-          <div className={styles.buttonContainer}>
-            <button
-              value={product.id}
-              onClick={handlerButtonMore}
-              className={styles.button}
-            >
-              +
+          {products.map((product) => (
+            <div className={styles.container} key={product.id}>
+              <ul className={styles.ul}>
+                <span className={styles.span}>{product.name}</span>
+              </ul>
+              <img
+                className={styles.img}
+                src={product.image}
+                alt={product.name}
+              />
+              <span className={styles.span}> ${product.price}</span>
+              <span>Stock</span>
+              <span className={styles.span}> {product.stock}</span>
+
+              <div className={styles.buttonContainer}>
+                <button
+                  value={product.id}
+                  onClick={handlerButtonMore}
+                  className={styles.button}
+                >
+                  +
+                </button>
+                <button
+                  value={product.id}
+                  onClick={handlerButtonLess}
+                  className={styles.button}
+                >
+                  -
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {updatedProducts.length > 0 && (
+            <button onClick={handleSaveStock} className={styles.button_save}>
+              Save Stock
             </button>
-            <button
-              value={product.id}
-              onClick={handlerButtonLess}
-              className={styles.button}
-            >
-              -
-            </button>
+          )}
+          <div>
+            <Link to="/DashBoardAdmin">
+              <button className={styles.button_back}>
+                Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
+              </button>
+            </Link>
           </div>
         </div>
-      ))}
-
-                <Link to="/DashBoardAdmin">
-                <button className={styles.button_back}>
-                Back <FaArrowLeft className={styles.icon_back}></FaArrowLeft>
-                </button>
-              </Link>
+      </div>
     </>
   );
 }

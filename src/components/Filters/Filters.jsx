@@ -47,6 +47,7 @@ const Filters = ({ setprice }) => {
 const handleFilterByPrice = () => {
   dispatch(filterByPrice(priceRange, orderBy));
   dispatch(filterByCategory(selectedCategory));
+
 };
 
   const handleOrderByPrice = (event) => {

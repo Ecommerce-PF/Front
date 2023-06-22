@@ -6,6 +6,7 @@ import {
   getDetail,
   addCart,
   getUserById,
+  getCart,
 } from "../../redux/actions/actions.js";
 import { FaCartArrowDown, FaArrowLeft } from "react-icons/fa";
 import {
@@ -18,26 +19,41 @@ import styles from "./detail.module.css";
 export default function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const state = useSelector((state) => state.productDetail);
-  const idUser = useSelector((state) => state.idUsuario);
-  const user = useSelector((state) => state.userId);
-  const purchases = useSelector((state) => state.userPurchases);
-  
-  if (user.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("users", user.name);
-  }
-  // const userOnline = localStorage.getItem("users");
+  const { state, idUser, user, carritoState } = useSelector((state) => {
+    return {
+      state: state.productDetail,
+      idUser: state.idUsuario,
+      user: state.userId,
+      carritoState: state.cart,
+    };
+  });
 
+  const [card, setCard] = useState(false);
+  const [card2, setCard2] = useState(false);
   const [comments, setComments] = useState([]);
 
-  if (idUser.length === 0) {
-    // No hacer nada
-  } else {
-    localStorage.setItem("idUsers", idUser);
-  }
-  const idUsers = localStorage.getItem("idUsers");
+  useEffect(() => {
+    setCard2(true);
+    if (Array.isArray(carritoState)) {
+      const foundItem = carritoState.some((item) => item.id === id);
+      setCard2(foundItem);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [carritoState]);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        dispatch(getCart());
+      } catch (error) {}
+    };
+    fetchCart();
+  }, [dispatch]);
+
+  if (user.length !== 0) localStorage.setItem("users", user.name);
+  if (idUser.length !== 0) localStorage.setItem("idUsers", idUser);
+
+  const idUsers = localStorage.getItem("ids");
 
   const fecha = {
     fecha: new Date(),
@@ -52,9 +68,7 @@ export default function Detail() {
   });
 
   const hanleChange = (event) => {
-    const value = event.target.value; // Corregir 'targer' a 'target'
-    const name = event.target.name; // Corregir 'targer' a 'target'
-
+    const { value, name } = event.target;
     setForm({
       ...form,
       [name]: value,
@@ -70,25 +84,12 @@ export default function Detail() {
         console.error(error);
       }
     };
-  
+
     fetchData();
-  }, [id, purchases]); // Agregar 'purchases' como dependencia
+  }, [id]);
+
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (!idUser) {
-      // No se ha iniciado sesión
-      alert("Debe iniciar sesión para comentar y calificar el producto.");
-      return;
-    }
-
-   // Verificar si el usuario ha comprado el producto
-   const hasPurchased = Array.isArray(purchases) && purchases.some((purchase) => purchase.productId === id);
-   if (!hasPurchased) {
-     // El usuario no ha comprado el producto
-     alert("Debe comprar el producto para poder comentarlo y calificarlo.");
-     return;
-   }
-
     try {
       await axios.post(`/products/${id}/reviews`, JSON.stringify(form), {
         headers: {
@@ -105,30 +106,49 @@ export default function Detail() {
   const handleAddCart = () => {
     dispatch(addCart(state));
     const listaCart = JSON.parse(localStorage.getItem("carritoLS")) || [];
-    let isProductInCart = false;
-
-    for (var i = 0; i < listaCart.length; i++) {
-      if (listaCart[i].id === state.id) {
-        listaCart[i].quantity += 1;
-        isProductInCart = true;
+    setCard(false);
+    for (let i = 0; i < listaCart.length; i++) {
+      if (
+        listaCart[i].id === state.id &&
+        listaCart[i].quantity === state.stock
+      ) {
+        setCard(true);
         break;
       }
     }
+    if (card) {
+      Swal.fire({
+        text: "There is no more stock of this product!",
+        icon: "info",
+        footer: '<a href="/carrito">Would you like to see your cart?</a>',
+      });
+    } else {
+      let updatedCart = [...listaCart];
+      let productIndex = updatedCart.findIndex((item) => item.id === state.id);
 
-    if (!isProductInCart) {
-      listaCart.push({
-        ...state,
-        quantity: 1,
+      if (productIndex !== -1) {
+        if (updatedCart[productIndex].quantity < state.stock) {
+          updatedCart[productIndex].quantity += 1;
+        } else {
+          Swal.fire({
+            text: "There is no more stock of this product!",
+            icon: "info",
+            footer: '<a href="/carrito">Would you like to see your cart?</a>',
+          });
+          return;
+        }
+      } else {
+        updatedCart.push({ ...state, quantity: 1 });
+      }
+
+      localStorage.setItem("carritoLS", JSON.stringify(updatedCart));
+      Swal.fire({
+        icon: "success",
+        title: "¡Su producto se ha agregado al carrito!",
+        showConfirmButton: false,
+        timer: 1500,
       });
     }
-
-    localStorage.setItem("carritoLS", JSON.stringify(listaCart));
-    Swal.fire({
-      icon: "success",
-      title: "Su producto se ha agregado al carrito!!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
   };
 
   useEffect(() => {
@@ -210,21 +230,9 @@ export default function Detail() {
     }
   };
 
-  /* 
-  state?.color &&
-                  state.color.map((e) => (
-                    <option
-                      className={styles.option}
-                      name={e.ColorName}
-                      key={e.ColorName}
-                    >
-                      {e.ColorName}
-                    </option>
-                  ))
-  */
- const arrayColor = state?.color && state?.color.map((e) => (
-  e.ColorName ? e.ColorName: e.name
-))
+  const arrayColor =
+    state?.color &&
+    state?.color.map((e) => (e.ColorName ? e.ColorName : e.name));
   return (
     <div>
       <div className={styles.back}>
@@ -269,11 +277,7 @@ export default function Detail() {
                 <option className={styles.option}>None</option>
                 {arrayColor &&
                   arrayColor.map((e) => (
-                    <option
-                      className={styles.option}
-                      name={e}
-                      key={e}
-                    >
+                    <option className={styles.option} name={e} key={e}>
                       {e}
                     </option>
                   ))}
@@ -286,8 +290,7 @@ export default function Detail() {
                   name="size" /* onChange={handleChange} */
                 >
                   <option className={styles.option}>None</option>
-                  {
-                  sizesArr ?
+                  {sizesArr ? (
                     sizesArr.map((e) => (
                       <option
                         className={styles.option}
@@ -296,15 +299,16 @@ export default function Detail() {
                       >
                         {e.SizeName}
                       </option>
-                    )):
+                    ))
+                  ) : (
                     <option
-                        className={styles.option}
-                        name="default"
-                        key="default"
-                      >
-                        One size
-                      </option>
-                    }
+                      className={styles.option}
+                      name="default"
+                      key="default"
+                    >
+                      One size
+                    </option>
+                  )}
                 </select>
               </div>
             </div>
@@ -318,12 +322,17 @@ export default function Detail() {
               ></div>
             </div>
             <div className={styles.cart}>
-              {state.stock === 0 ? null : (
+              {card === true ? (
                 <button className={styles.button} onClick={handleAddCart}>
-                  Add to Cart
+                  Out of stock
+                </button>
+              ) : state.stock === 0 ? null : (
+                <button className={styles.button} onClick={handleAddCart}>
+                  {card2 === true ? "Add one more" : "Add to cart"}
                   <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
                 </button>
               )}
+
               <NavLink to="/home">
                 <button className={styles.button}>
                   Back <FaArrowLeft className={styles.icon}></FaArrowLeft>

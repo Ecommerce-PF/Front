@@ -168,15 +168,10 @@ const SignUp = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const users = result.user;
-      if (users.phoneNumber === null) {
-        var number = "No hay dato"
-      } else {
-        number = users.phoneNumber
-      }
       setGoogleUser({
         name: users.displayName,
         userName: users.displayName,
-        phone: number,
+        phone: "213123",
         email: users.email,
         password: users.accessToken,
         profileImage: users.photoURL,

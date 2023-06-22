@@ -31,7 +31,15 @@ export default function Detail() {
   const [card, setCard] = useState(false);
   const [card2, setCard2] = useState(false);
   const [comments, setComments] = useState([]);
-  const [showReviewForm, setShowReviewForm] = useState(false);
+
+  const purchase = user.Orders;
+
+  console.log(purchase);
+
+  const hasMatchingId = purchase?.some(
+    (item) =>
+      item.products?.some((item) => item.id === id) && item.status === "Pending"
+  );
 
   useEffect(() => {
     setCard2(true);
@@ -233,120 +241,120 @@ export default function Detail() {
   };
 
   const arrayColor =
-  state?.color &&
-  state?.color.map((e) => (e.ColorName ? e.ColorName : e.name));
+    state?.color &&
+    state?.color.map((e) => (e.ColorName ? e.ColorName : e.name));
 
-return (
-  <div>
-    <div className={styles.back}>
-      <div className={styles.mainContainer}>
-        <div className={styles.productImg}>
-          <h3>{state?.name}</h3>
-          <div className={styles.img}>
-            {coloresPrt && !!coloresPrt.length ? (
-              <div className={styles.divGaleryImg}>
-                <button onClick={changeLeft} className={styles.bttnArrow}>
-                  <MdOutlineArrowBackIos />
-                </button>
+  return (
+    <div>
+      <div className={styles.back}>
+        <div className={styles.mainContainer}>
+          <div className={styles.productImg}>
+            <h3>{state?.name}</h3>
+            <div className={styles.img}>
+              {coloresPrt && !!coloresPrt.length ? (
+                <div className={styles.divGaleryImg}>
+                  <button onClick={changeLeft} className={styles.bttnArrow}>
+                    <MdOutlineArrowBackIos />
+                  </button>
+                  <img
+                    src={coloresPrt[numberImg]}
+                    alt={state?.name}
+                    className={styles.imgProducto}
+                  />
+                  <button onClick={changeRigth} className={styles.bttnArrow}>
+                    <MdOutlineArrowForwardIos />
+                  </button>
+                </div>
+              ) : (
                 <img
-                  src={coloresPrt[numberImg]}
+                  src={state?.image}
                   alt={state?.name}
                   className={styles.imgProducto}
                 />
-                <button onClick={changeRigth} className={styles.bttnArrow}>
-                  <MdOutlineArrowForwardIos />
-                </button>
-              </div>
-            ) : (
-              <img
-                src={state?.image}
-                alt={state?.name}
-                className={styles.imgProducto}
-              />
-            )}
-          </div>
-          <div className={styles.buyNow}>
-            <h1>${state?.price}</h1>
-          </div>
+              )}
+            </div>
+            <div className={styles.buyNow}>
+              <h1>${state?.price}</h1>
+            </div>
 
-          <div className={styles.containerSA}>
-            <label htmlFor="color">Color:</label>
-            <select
-              className={styles.buttonSelect}
-              type="select"
-              name="color"
-              onChange={handleChange}
-            >
-              <option className={styles.option}>None</option>
-              {arrayColor &&
-                arrayColor.map((e) => (
-                  <option className={styles.option} name={e} key={e}>
-                    {e}
-                  </option>
-                ))}
-            </select>
-            <div>
-              <label htmlFor="color">Size:</label>
+            <div className={styles.containerSA}>
+              <label htmlFor="color">Color:</label>
               <select
                 className={styles.buttonSelect}
                 type="select"
-                name="size" /* onChange={handleChange} */
+                name="color"
+                onChange={handleChange}
               >
                 <option className={styles.option}>None</option>
-                {sizesArr ? (
-                  sizesArr.map((e) => (
+                {arrayColor &&
+                  arrayColor.map((e) => (
+                    <option className={styles.option} name={e} key={e}>
+                      {e}
+                    </option>
+                  ))}
+              </select>
+              <div>
+                <label htmlFor="color">Size:</label>
+                <select
+                  className={styles.buttonSelect}
+                  type="select"
+                  name="size" /* onChange={handleChange} */
+                >
+                  <option className={styles.option}>None</option>
+                  {sizesArr ? (
+                    sizesArr.map((e) => (
+                      <option
+                        className={styles.option}
+                        name={e.SizeName}
+                        key={e.SizeName}
+                      >
+                        {e.SizeName}
+                      </option>
+                    ))
+                  ) : (
                     <option
                       className={styles.option}
-                      name={e.SizeName}
-                      key={e.SizeName}
+                      name="default"
+                      key="default"
                     >
-                      {e.SizeName}
+                      One size
                     </option>
-                  ))
-                ) : (
-                  <option
-                    className={styles.option}
-                    name="default"
-                    key="default"
-                  >
-                    One size
-                  </option>
-                )}
-              </select>
+                  )}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.details}>
+            <div className={styles.description}>
+              <div
+                className={styles.textss}
+                dangerouslySetInnerHTML={{ __html: state?.description }}
+              ></div>
+            </div>
+            <div className={styles.cart}>
+              {card === true ? (
+                <button className={styles.button} onClick={handleAddCart}>
+                  Out of stock
+                </button>
+              ) : state.stock === 0 ? null : (
+                <button className={styles.button} onClick={handleAddCart}>
+                  {card2 === true ? "Add one more" : "Add to cart"}
+                  <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
+                </button>
+              )}
+
+              <NavLink to="/home">
+                <button className={styles.button}>
+                  Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>
-
-        <div className={styles.details}>
-          <div className={styles.description}>
-            <div
-              className={styles.textss}
-              dangerouslySetInnerHTML={{ __html: state?.description }}
-            ></div>
-          </div>
-          <div className={styles.cart}>
-            {card === true ? (
-              <button className={styles.button} onClick={handleAddCart}>
-                Out of stock
-              </button>
-            ) : state.stock === 0 ? null : (
-              <button className={styles.button} onClick={handleAddCart}>
-                {card2 === true ? "Add one more" : "Add to cart"}
-                <FaCartArrowDown className={styles.icon}></FaCartArrowDown>
-              </button>
-            )}
-
-            <NavLink to="/home">
-              <button className={styles.button}>
-                Back <FaArrowLeft className={styles.icon}></FaArrowLeft>
-              </button>
-            </NavLink>
-          </div>
-        </div>
       </div>
-    </div>
-    {card2 && Array.isArray(user.purchased) && user.purchased.includes(id) && (
-        <div className={styles.back2}>
+
+      <div className={styles.back2}>
         {comments.length === 0 ? (
           <div className={styles.reviewss2}>
             <h2 className={styles.sinPro}>
@@ -391,37 +399,42 @@ return (
           </div>
         )}
 
-        <h1>Agregue su comentario</h1>
-          <form action="" onSubmit={submitHandler}>
-            <div className={styles.enviarBut}>
-              <label htmlFor="">Review</label>
-              <input
-                name="review"
-                value={form.review}
-                onChange={hanleChange}
-                className={styles.inputC}
-                type="text"
-              ></input>
+        {hasMatchingId ? (
+          <div>
+            <h1>Agregue su comentario</h1>
+            <form className={styles.formContainer} onSubmit={submitHandler}>
+              <div className={styles.enviarBut}>
+                <label className={styles.textRating} htmlFor="review">Review</label>
+                <input
+                  name="review"
+                  value={form.review}
+                  onChange={handleChange}
+                  className={styles.inputC}
+                  type="text"
+                />
 
-              <label htmlFor="">Rating</label>
-              <input
-                name="rating"
-                value={form.rating}
-                onChange={hanleChange}
-                className={styles.inputC}
-                type="range"
-                min="1"
-                max="5"
-                step="1"
-              />
+                <label className={styles.textRating} htmlFor="rating">Rating</label>
+                <input
+                  name="rating"
+                  value={form.rating}
+                  onChange={handleChange}
+                  className={styles.inputC}
+                  type="range"
+                  min="1"
+                  max="5"
+                  step="1"
+                />
 
-              <span>{form.rating}</span>
+                <span>{form.rating}</span>
 
-              <button type="submit">Enviar</button>
-            </div>
-          </form>
-        </div>
-      )}
+                <button className={styles.buttonEnviar} type="submit">
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

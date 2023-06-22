@@ -123,7 +123,6 @@ export default function Delete() {
           "The Clothe have been pick out from estock",
           "Success"
         );
-        // window.location.reload();
       }
     });
   }

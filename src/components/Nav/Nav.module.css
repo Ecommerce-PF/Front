@@ -260,6 +260,11 @@
   transition: transform 0.2s;
 }
 
+.buttonAlert{
+  background-color: transparent;
+  border: none;
+}
+
 .containerFavorites {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 550;

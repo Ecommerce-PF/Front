@@ -48,7 +48,8 @@ export default function Detail() {
 
   const hasMatchingId = purchase?.some(
     (item) =>
-      item.products?.some((item) => item.id === id) && item.status === "approved"
+      item.products?.some((item) => item.id === id) &&
+      item.status === "approved"
   );
 
   useEffect(() => {
@@ -117,7 +118,13 @@ export default function Detail() {
           "Content-Type": "application/json",
         },
       });
-      alert("Formulario enviado correctamente");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        text: "Your comment was added correctly!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       window.location.reload();
     } catch (err) {
       alert(err);
@@ -166,7 +173,7 @@ export default function Detail() {
       setCard2(true);
       Swal.fire({
         icon: "success",
-        title: "¡Su producto se ha agregado al carrito!",
+        title: "¡Your product has been added to the cart!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -179,16 +186,16 @@ export default function Detail() {
 
       if (stock === 1 || stock === 2 || stock === 3) {
         Swal.fire({
-          title: "Apurate!",
-          text: "Quedan pocas unidades en stock",
+          title: "Hurry up.!",
+          text: "There are few units left in stock.",
           imageWidth: 400,
           imageHeight: 200,
           imageAlt: "Custom image",
         });
       } else if (stock === 0) {
         Swal.fire({
-          title: "No quedan más unidades disponibles!",
-          text: "Lo sentimos por las molestias...",
+          title: "There are no more units available!",
+          text: "We apologize for the inconvenience...",
           imageWidth: 400,
           imageHeight: 200,
           imageAlt: "Custom image",

@@ -38,7 +38,7 @@ export default function Detail() {
 
   const hasMatchingId = purchase?.some(
     (item) =>
-      item.products?.some((item) => item.id === id) && item.status === "Pending"
+      item.products?.some((item) => item.id === id) && item.status === "approved"
   );
 
   useEffect(() => {

@@ -32,6 +32,15 @@ export default function Detail() {
   const [card2, setCard2] = useState(false);
   const [comments, setComments] = useState([]);
 
+  const purchase = user.Orders;
+
+  console.log(purchase);
+
+  const hasMatchingId = purchase?.some(
+    (item) =>
+      item.products?.some((item) => item.id === id) && item.status === "Pending"
+  );
+
   useEffect(() => {
     setCard2(true);
     if (Array.isArray(carritoState)) {
@@ -142,6 +151,7 @@ export default function Detail() {
       }
 
       localStorage.setItem("carritoLS", JSON.stringify(updatedCart));
+      setCard2(true);
       Swal.fire({
         icon: "success",
         title: "¡Su producto se ha agregado al carrito!",
@@ -233,6 +243,7 @@ export default function Detail() {
   const arrayColor =
     state?.color &&
     state?.color.map((e) => (e.ColorName ? e.ColorName : e.name));
+
   return (
     <div>
       <div className={styles.back}>
@@ -342,6 +353,7 @@ export default function Detail() {
           </div>
         </div>
       </div>
+
       <div className={styles.back2}>
         {comments.length === 0 ? (
           <div className={styles.reviewss2}>
@@ -387,37 +399,41 @@ export default function Detail() {
           </div>
         )}
 
-        <h1>Agregue su comentario</h1>
-        <form action="" onSubmit={submitHandler}>
-          <div className={styles.enviarBut}>
-            <label htmlFor="">Review</label>
+        {hasMatchingId ? (
+          <div>
+            <h1>Agregue su comentario</h1>
+            <form className={styles.formContainer} onSubmit={submitHandler}>
+              <div className={styles.enviarBut}>
+                <label className={styles.textRating} htmlFor="review">Review</label>
+                <input
+                  name="review"
+                  value={form.review}
+                  onChange={handleChange}
+                  className={styles.inputC}
+                  type="text"
+                />
 
-            <input
-              name="review"
-              value={form.review}
-              onChange={hanleChange}
-              className={styles.inputC}
-              type="text"
-            ></input>
+                <label className={styles.textRating} htmlFor="rating">Rating</label>
+                <input
+                  name="rating"
+                  value={form.rating}
+                  onChange={handleChange}
+                  className={styles.inputC}
+                  type="range"
+                  min="1"
+                  max="5"
+                  step="1"
+                />
 
-            <label htmlFor="">Rating</label>
+                <span>{form.rating}</span>
 
-            <input
-              name="rating"
-              value={form.rating}
-              onChange={hanleChange}
-              className={styles.inputC}
-              type="range"
-              min="1"
-              max="5"
-              step="1"
-            />
-
-            <span>{form.rating}</span>
-
-            <button type="submit">Enviar</button>
+                <button className={styles.buttonEnviar} type="submit">
+                  Enviar
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        ) : null}
       </div>
     </div>
   );

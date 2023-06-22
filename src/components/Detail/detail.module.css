@@ -222,12 +222,16 @@
 
 .enviarBut {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+
 .inputC {
-  border: 1px solid black;
+
   width: 50dvh;
   height: 3dvh;
+  border-radius: 10px;
 }
 
 .reviewss {
@@ -259,4 +263,20 @@
 .sinPro {
   display: flex;
   align-items: center;
+}
+
+.buttonEnviar{
+  background-color: #252525;
+  border: none;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.buttonEnviar:hover{
+  cursor: pointer;
+}
+
+.textRating{
+  margin: 20px;
 }
